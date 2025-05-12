@@ -11,9 +11,9 @@
     --color-panel-bg: #1c1c1c;         /* Gris muy oscuro para paneles */
     --color-text-primary: #e0e0e0;     /* Blanco hueso / Gris muy claro */
     --color-text-secondary: #a0a0a0;   /* Gris medio para texto secundario */
-    --color-accent-sabbath-red: #4B0082; /* Rojo sangre oscuro (DarkRed) */
-    --color-accent-sabbath-red-hover: #a52a2a; /* Rojo más claro/marrón (Brown) para hover */
-    --color-accent-old-gold: #b8860b;  /* Dorado oscuro / Ocre (DarkGoldenRod) */
+    --color-accent-sabbath-red: #3A005E; /* Rojo sangre oscuro (DarkRed) */
+    --color-accent-sabbath-red-hover: #3A005E; /* Rojo más claro/marrón (Brown) para hover */
+    --color-accent-old-gold: #3A005E;  /* Dorado oscuro / Ocre (DarkGoldenRod) */
     --color-border: #333333;           /* Borde gris oscuro */
     --color-highlight: #ffffff;        /* Blanco puro para contrastes fuertes */
 
