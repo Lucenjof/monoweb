@@ -2,43 +2,50 @@
 /* -- VARIABLES Y ESTILOS BASE -- */
 /* -------------------------------- */
 
-/* Opcional: Importar fuentes con más carácter */
-/* @import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=UnifrakturMaguntia&family=Open+Sans:wght@400;600&family=Montserrat:wght@400;600&display=swap'); */
+/* Opcional: Importar fuentes con más carácter (si las usas en --font-sabbath-display) */
+/* @import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=UnifrakturMaguntia&family=Open+Sans:wght@400;600&family=Montserrat:wght@400;700&display=swap'); */
 
 :root {
-    /* Colores Base Inspirados en las Imágenes */
-    --img-color-bg-deep: #101215;         /* Negro muy oscuro, casi negro con un matiz azulado profundo */
-    --img-color-bg-panel: #2B303B;       /* Gris azulado oscuro, de las sombras de la pared y B&N */
-    --img-color-bg-texture-light: #D0D8E0; /* Gris muy claro / azul pálido, del busto y luces pared */
+    /* ===== PALETA MINIMALISTA / APPLE / BLACK SABBATH ===== */
 
-    --img-color-text-primary: #E8ECEF;   /* Blanco hueso / Casi blanco, para texto principal */
-    --img-color-text-secondary: #95A3B1; /* Gris azulado medio, para texto secundario */
+    /* --- Fondos Principales --- */
+    --color-bg-primary: #121212;
+    --color-bg-secondary: #1E1E1E;
+    --color-bg-tertiary: #2C2C2C;
 
-    /* Acento Principal (del azul/cian de la portada) */
-    --img-color-accent-blue: #5A7A90;    /* Azul grisáceo desaturado principal */
-    --img-color-accent-blue-hover: #7890A2; /* Un tono más claro del acento para hover */
-    --img-color-accent-blue-light: #A8B8C5; /* Azul muy pálido/grisáceo para toques sutiles */
+    /* --- Textos --- */
+    --color-text-primary: #F5F5F7;
+    --color-text-secondary: #A0A0A4;
+    --color-text-muted: #6E6E73;
+    --color-text-on-accent: #FFFFFF;
 
-    /* Contrastes Fuertes (del B&N y texto blanco) */
-    --img-color-white: #FFFFFF;
-    --img-color-black: #000000;
+    /* --- Acentos Principales (Interactividad - Inspiración Apple) --- */
+    --color-accent-interactive: #0A84FF;
+    --color-accent-interactive-hover: #0060D0;
 
-    /* Bordes y Separadores */
-    --img-color-border: #404854;         /* Gris oscuro para bordes */
+    /* --- Acentos Secundarios (Toque Black Sabbath - Sutil) --- */
+    --color-accent-sabbath-deep: #3B003B; /* Violeta muy oscuro */
+    /* Alternativa Rojo Oscuro: --color-accent-sabbath-deep: #4A0404; */
+    --color-accent-sabbath-highlight: #D4AF37; /* Oro viejo (usar con MUCHA moderación) */
 
-    /* Variables existentes que podemos mapear o reemplazar: */
-    /* --color-background: var(--img-color-bg-deep); */
-    /* --color-panel-bg: var(--img-color-bg-panel); */
-    /* --color-text-primary: var(--img-color-text-primary); */
-    /* --color-text-secondary: var(--img-color-text-secondary); */
-    /* --color-accent-sabbath-violet: var(--img-color-accent-blue); */ /* O elegir un nuevo acento si el violeta ya no encaja */
-    /* --color-accent-sabbath-violet-hover: var(--img-color-accent-blue-hover); */
-    /* --color-accent-old-gold: var(--img-color-accent-blue-light); */ /* El dorado podría reemplazarse por este azul claro */
-    /* --color-border: var(--img-color-border); */
-    /* --color-highlight: var(--img-color-white); */
+    /* --- Bordes y Separadores --- */
+    --color-border-primary: #38383A;
+    --color-border-secondary: #505052;
+    --color-border-accented: var(--color-accent-sabbath-deep);
+
+    /* --- Sombras (Sutiles - Estilo Apple) --- */
+    --shadow-color-soft: rgba(0, 0, 0, 0.3);
+    --shadow-color-medium: rgba(0, 0, 0, 0.5);
+
+    /* --- Fuentes --- */
+    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-heading: var(--font-main); /* O 'Montserrat', var(--font-main); si la importas */
+    --font-mono: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    /* Opcional para el nombre de la banda en el header: */
+    /* --font-sabbath-display: 'Metamorphous', 'UnifrakturMaguntia', serif; */
 }
 
- {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -50,31 +57,28 @@ html {
 
 body {
     font-family: var(--font-main);
-    background-color: var(--color-background);
+    background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    /* Padding superior para compensar el header fijo (ajusta si cambias altura header) */
-    padding-top: 70px;
+    padding-top: 70px; /* Ajustar si la altura del header cambia */
 }
 
-/* Scrollbar estilizado para el nuevo tema (WebKit y Firefox) */
-/* Para Webkit (Chrome, Safari, Edge) */
+/* Scrollbar estilizado */
 ::-webkit-scrollbar {
     width: 10px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--color-background);
+    background: var(--color-bg-secondary); /* Fondo de la pista del scroll */
 }
 ::-webkit-scrollbar-thumb {
-    background-color: var(--color-accent-sabbath-red);
+    background-color: var(--color-border-secondary); /* Color del "pulgar" del scroll */
     border-radius: 5px;
-    border: 2px solid var(--color-background);
+    border: 2px solid var(--color-bg-secondary); /* Borde alrededor del pulgar */
 }
-/* Para Firefox */
-html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
+html { /* Para Firefox */
     scrollbar-width: thin;
-    scrollbar-color: var(--color-accent-sabbath-red) var(--color-background);
+    scrollbar-color: var(--color-border-secondary) var(--color-bg-secondary);
 }
 
 
@@ -82,38 +86,40 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
 /* -- ENCABEZADO PRINCIPAL -- */
 /* -------------------------------- */
 .main-page-header {
-    background-color: #000000; /* Negro sólido */
+    background-color: var(--color-bg-secondary);
     padding: 15px 30px;
-    border-bottom: 3px solid var(--color-accent-sabbath-red); /* Borde rojo Sabbath */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid var(--color-border-primary);
+    box-shadow: 0 2px 8px var(--shadow-color-soft);
     text-align: center;
-    position: fixed; /* Fijo arriba */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1001; /* Asegura que esté sobre otros elementos */
-    height: 70px; /* Altura fija para calcular el padding del body */
+    z-index: 1001;
+    height: 70px;
 }
 
 .main-page-header h1 {
     margin: 0;
-    font-family: var(--font-heading); /* Fuente más temática */
-    font-size: 2em; /* Un poco más grande */
+    font-family: var(--font-heading);
+    /* Si usas una fuente display especial para el logo: */
+    /* font-family: var(--font-sabbath-display); */
+    /* color: var(--color-accent-sabbath-highlight); */
+    font-size: 1.8em;
+    font-weight: 600; /* Más peso para un look Apple */
     color: var(--color-text-primary);
-    font-weight: normal; /* Las fuentes góticas suelen ser bold por sí mismas */
-    letter-spacing: 1.5px;
-    text-shadow: 1px 1px 3px var(--color-accent-sabbath-red); /* Sombra de texto sutil */
-    line-height: 1; /* Ajustar para centrar verticalmente */
-    padding-top: 5px; /* Ajuste fino vertical */
+    letter-spacing: 0.5px;
+    line-height: 1;
+    padding-top: 7px; /* Ajuste fino vertical */
+    /* text-shadow: 1px 1px 2px var(--color-accent-sabbath-deep); */ /* Sombra sutil si se usa fuente temática */
 }
 
 .main-page-header .band-alias {
-    font-size: 0.6em;
+    font-size: 0.65em;
     color: var(--color-text-secondary);
-    font-weight: normal;
+    font-weight: 400;
     margin-left: 8px;
     vertical-align: middle;
-    font-family: var(--font-main); /* Alias en fuente normal */
     text-shadow: none;
 }
 
@@ -126,68 +132,66 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
 }
 
 .album-panel {
-    flex: 1 1 400px;
-    min-width: 300px;
-    background-color: var(--color-panel-bg);
-    padding: 40px 30px;
+    flex: 1 1 380px; /* Ligeramente más angosto */
+    min-width: 280px;
+    background-color: var(--color-bg-secondary);
+    padding: 30px 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1px solid var(--color-border); /* Borde sutil entre paneles */
+    border-right: 1px solid var(--color-border-primary);
     z-index: 10;
-    min-height: calc(100vh - 70px); /* Altura mínima = ventana - header */
+    min-height: calc(100vh - 70px);
 }
 
 .tracklist-panel {
-    flex: 2 1 600px;
-    padding: 40px 50px;
+    flex: 2 1 620px; /* Ligeramente más ancho */
+    padding: 35px 40px;
     overflow-y: auto;
-    background-color: var(--color-background);
-    min-height: calc(100vh - 70px); /* Para que ocupe altura */
+    background-color: var(--color-bg-primary);
+    min-height: calc(100vh - 70px);
 }
 
 /* -------------------------------- */
 /* -- ELEMENTOS EN COLUMNA IZQUIERDA -- */
 /* -------------------------------- */
 .album-cover-container {
-    width: 80%;
-    max-width: 350px;
+    width: 85%;
+    max-width: 320px;
     margin-bottom: 30px;
     position: relative;
     cursor: pointer;
     overflow: hidden;
-    border-radius: 3px;
+    border-radius: 6px; /* Bordes más redondeados, estilo Apple */
+    box-shadow: 0 8px 25px var(--shadow-color-medium); /* Sombra más pronunciada */
 }
 
 #album-cover-img {
     width: 100%;
     height: auto;
     display: block;
-    border: 2px solid var(--color-border); /* Borde más grueso */
-    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
-    transition: transform 0.3s ease, filter 0.3s ease;
+    border: none; /* Quitar borde si la sombra es suficiente */
+    transition: transform 0.3s ease-out; /* Transición más suave */
 }
 .album-cover-container:hover #album-cover-img {
-    transform: scale(1.03);
-    filter: brightness(1.05) contrast(1.1);
+    transform: scale(1.04);
 }
 
 .enlarge-icon {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: var(--color-highlight);
-    width: 30px;
-    height: 30px;
+    bottom: 12px;
+    right: 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--color-text-on-accent);
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    line-height: 1;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -199,99 +203,97 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
 /* Controles del Reproductor */
 .main-player-controls {
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     text-align: center;
     color: var(--color-text-secondary);
-    /* margin-top: auto; ELIMINADO */
-    margin-top: 40px; /* <-- AÑADIDO: Espacio fijo debajo de la portada */
-    padding-top: 0; /* Quitado o ajustado si es necesario */
+    margin-top: auto;
+    padding-top: 25px;
 }
 
 #player-current-track-title {
     font-family: var(--font-heading);
     color: var(--color-text-primary);
-    font-size: 1.1em;
+    font-size: 1.05em; /* Ligeramente más pequeño y limpio */
     margin-bottom: 15px;
     min-height: 1.2em;
-    font-weight: normal;
+    font-weight: 500; /* Peso medio */
     transition: color 0.3s;
-    text-shadow: 1px 1px 2px #000;
 }
 .progress-container {
     width: 100%;
     cursor: pointer;
     margin-bottom: 10px;
-    background-color: var(--color-border);
-    height: 8px;
-    border-radius: 4px;
+    background-color: var(--color-border-primary);
+    height: 6px; /* Barra más delgada */
+    border-radius: 3px;
     position: relative;
     transition: opacity 0.3s;
 }
 .progress-bar {
-    background-color: var(--color-background);
+    background-color: var(--color-bg-tertiary);
     height: 100%;
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
 }
 .progress {
-    background-color: var(--color-accent-sabbath-red);
+    background-color: var(--color-accent-interactive); /* Azul Apple para progreso */
     height: 100%;
     width: 0%;
-    border-radius: 4px;
+    border-radius: 3px;
     transition: width 0.1s linear;
 }
 .time-display {
     display: flex;
     justify-content: space-between;
-    font-size: 0.8em;
+    font-size: 0.75em; /* Más pequeño */
     color: var(--color-text-secondary);
-    margin-top: 5px;
-    padding: 0 5px;
+    margin-top: 6px;
+    padding: 0 3px;
 }
 .main-player-controls .buttons {
-    margin-top: 20px;
+    margin-top: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 12px; /* Menos gap */
 }
 .main-player-controls button {
     background-color: transparent;
-    border: 1px solid var(--color-text-secondary);
+    border: 1px solid var(--color-border-secondary);
     color: var(--color-text-secondary);
-    padding: 8px 12px;
-    border-radius: 4px;
+    padding: 7px 10px; /* Ligeramente más pequeños */
+    border-radius: 5px; /* Bordes más redondeados */
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.95em;
     transition: all 0.2s ease;
 }
 .main-player-controls button:hover:not(:disabled) {
-    background-color: var(--color-accent-sabbath-red);
-    color: var(--color-highlight);
-    border-color: var(--color-accent-sabbath-red-hover);
+    background-color: var(--color-accent-interactive);
+    color: var(--color-text-on-accent);
+    border-color: var(--color-accent-interactive);
     transform: translateY(-1px);
 }
 .main-player-controls button:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
     background-color: transparent !important;
     transform: none;
 }
 .main-player-controls button#play-pause-btn {
-    font-size: 1.3em;
-    padding: 8px 15px;
-    width: 45px;
+    font-size: 1.2em;
+    padding: 7px 13px;
+    width: 42px;
     text-align: center;
 }
 .main-player-controls button#play-all-btn {
-    background-color: var(--color-accent-sabbath-red);
-    color: var(--color-highlight);
-    border-color: var(--color-accent-sabbath-red);
-    padding: 10px 18px;
-    font-weight: bold;
+    background-color: var(--color-accent-interactive);
+    color: var(--color-text-on-accent);
+    border-color: var(--color-accent-interactive);
+    padding: 8px 15px;
+    font-weight: 500;
 }
 .main-player-controls button#play-all-btn:hover:not(:disabled) {
-    background-color: var(--color-accent-sabbath-red-hover);
+    background-color: var(--color-accent-interactive-hover);
 }
 
 
@@ -299,19 +301,18 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
 /* -- ELEMENTOS EN COLUMNA DERECHA -- */
 /* -------------------------------- */
 .tracklist-header {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     text-align: center;
-    border-bottom: 2px solid var(--color-border);
-    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-border-primary);
+    padding-bottom: 18px;
 }
 .tracklist-header h2 {
     font-family: var(--font-heading);
-    font-size: 2.2em;
-    color: var(--color-highlight);
+    font-size: 2em; /* Más limpio */
+    color: var(--color-text-primary);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     font-weight: 600;
-     text-shadow: 1px 1px 3px #000;
 }
 
 /* Tracklist */
@@ -319,236 +320,239 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
     list-style: none;
     padding: 0;
     margin: 0;
-    border: 1px solid var(--color-border); /* Añadir borde al contenedor de la lista */
-    border-radius: 4px;
-    overflow: hidden; /* Para que el borde redondeado funcione */
+    border: 1px solid var(--color-border-primary);
+    border-radius: 8px; /* Bordes más redondeados estilo Apple */
+    overflow: hidden;
+    background-color: var(--color-bg-secondary); /* Fondo para la lista entera */
 }
 .track-item {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border-primary);
     margin-bottom: 0;
-    transition: background-color 0.2s;
+    transition: background-color 0.15s ease-out;
 }
 .track-item:last-child {
     border-bottom: none;
 }
 .track-item.active {
-     background-color: rgba(139, 0, 0, 0.15); /* Fondo rojo muy sutil para el activo */
-     border-left: 3px solid var(--color-accent-sabbath-red-hover);
-     margin-left: -3px; /* Compensar borde */
+     background-color: var(--color-bg-tertiary); /* Fondo más oscuro para activo */
+     border-left: 3px solid var(--color-accent-interactive); /* Acento azul Apple */
+     margin-left: -3px;
 }
-.track-item.active .track-title-button { color: var(--color-highlight); font-weight: 600;}
-.track-item.active .track-number { color: var(--color-accent-sabbath-red-hover); }
+.track-item.active .track-title-button { color: var(--color-text-primary); font-weight: 600;}
+.track-item.active .track-number { color: var(--color-accent-interactive); }
 
 .track-title-container {
     display: flex;
     align-items: center;
     width: 100%;
     cursor: default;
-    transition: background-color 0.2s;
-    padding: 5px 0;
+    transition: background-color 0.15s ease-out;
+    padding: 3px 0 3px 5px; /* Ajustar padding */
 }
 .track-title-container:hover {
-    background-color: var(--color-panel-bg);
+    /* El hover se maneja en .track-title-button para no interferir con el botón de play */
 }
 
 .play-track-btn {
     background: transparent;
     border: none;
-    color: var(--color-text-secondary); /* Color base más apagado */
-    font-size: 1.4em;
+    color: var(--color-text-secondary);
+    font-size: 1.3em; /* Ligeramente más pequeño */
     cursor: pointer;
-    padding: 8px 12px;
-    margin: 0 5px 0 8px;
+    padding: 7px 10px;
+    margin: 0 4px 0 5px;
     line-height: 1;
     border-radius: 50%;
-    width: 36px; height: 36px;
+    width: 34px; height: 34px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease-out;
 }
 .play-track-btn:hover {
-    color: var(--color-highlight);
-    background-color: var(--color-accent-sabbath-red);
+    color: var(--color-text-on-accent);
+    background-color: var(--color-accent-interactive);
 }
 .track-item.playing .play-track-btn {
-    color: var(--color-highlight);
-    background-color: var(--color-accent-sabbath-red-hover);
+    color: var(--color-text-on-accent);
+    background-color: var(--color-accent-interactive-hover);
 }
 
 .track-title-button {
     flex-grow: 1;
     background: transparent;
     border: none;
-    padding: 10px 5px 10px 0;
+    padding: 10px 8px 10px 0; /* Ajustar padding */
     text-align: left;
     font-family: var(--font-main);
     color: var(--color-text-secondary);
-    font-size: 1.1em;
+    font-size: 1.05em; /* Ligeramente más pequeño */
     display: flex;
     align-items: center;
     cursor: pointer;
     width: 100%;
-    transition: color 0.2s;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out;
+    border-radius: 5px; /* Redondeo para el hover */
 }
-.track-title-button:hover .track-name {
-     color: var(--color-accent-old-gold); /* Dorado al pasar el mouse */
+.track-title-button:hover {
+     background-color: var(--color-bg-tertiary); /* Solo el área del título con hover */
+     color: var(--color-text-primary);
 }
 .track-number {
-    min-width: 25px;
-    font-weight: bold;
+    min-width: 22px; /* Más compacto */
+    font-weight: 500;
     color: var(--color-text-secondary);
-    transition: color 0.2s;
+    transition: color 0.15s ease-out;
 }
 .track-name {
     flex-grow: 1;
-    margin-left: 5px;
+    margin-left: 8px; /* Más espacio */
     pointer-events: none;
-    transition: color 0.2s;
+    transition: color 0.15s ease-out;
 }
 .expand-icon {
-    font-size: 1.4em;
+    font-size: 1.3em;
     font-weight: bold;
-    margin-left: 15px;
+    margin-left: 12px;
     padding: 5px;
     pointer-events: none;
-    transition: transform 0.3s ease, color 0.2s;
+    transition: transform 0.25s ease-out, color 0.15s ease-out;
 }
 .track-item.open .expand-icon {
     transform: rotate(45deg);
-    color: var(--color-accent-sabbath-red-hover);
+    color: var(--color-accent-interactive); /* Acento azul */
 }
 
 .track-details {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), border-top-color 0.4s ease;
+    transition: max-height 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), padding 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
     background-color: transparent;
-    padding: 0 20px 0 60px;
-    border-top: 1px solid transparent;
+    padding: 0 20px 0 50px; /* Indentación del contenido */
+    border-top: 1px solid transparent; /* Se hará visible al abrir */
 }
 .track-item.open .track-details {
-    padding-top: 20px;
-    padding-bottom: 30px;
-    border-top-color: var(--color-border);
+    padding-top: 18px;
+    padding-bottom: 25px;
+    border-top-color: var(--color-border-primary);
 }
 
 .track-details h4 {
     font-family: var(--font-heading);
-    color: var(--color-accent-old-gold); /* Dorado viejo para "Letra: ..." */
-    margin-bottom: 15px;
-    font-size: 1.2em;
+    color: var(--color-text-primary); /* Texto primario para título de letra */
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 1.1em;
 }
 .track-details pre {
     font-family: var(--font-mono);
-    background-color: rgba(10, 10, 10, 0.4); /* Fondo muy oscuro para letras */
-    padding: 15px;
-    border-radius: 3px;
-    color: var(--color-text-primary);
+    background-color: var(--color-bg-primary); /* Fondo igual al principal para que se integre */
+    padding: 12px 15px;
+    border-radius: 6px;
+    color: var(--color-text-secondary); /* Letras en color secundario */
     font-size: 0.9em;
-    border-left: 3px solid var(--color-accent-sabbath-red); /* Borde rojo más grueso */
+    line-height: 1.6;
+    border: 1px solid var(--color-border-primary);
     white-space: pre-wrap;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
 }
 .track-details .track-extra-info {
-    font-size: 0.85em;
-    color: var(--color-text-secondary);
-    margin-top: 15px;
+    font-size: 0.8em;
+    color: var(--color-text-muted);
+    margin-top: 12px;
     font-style: italic;
 }
 
 /* Sección Sobre la Banda */
 .about-band-section {
-    background-color: var(--color-panel-bg);
-    padding: 30px;
-    margin-top: 40px; /* Espacio después de la lista de canciones */
-    margin-bottom: 40px;
-    border-radius: 5px;
-    border: 1px solid var(--color-border); /* Añadir borde general */
-    border-left: 5px solid var(--color-accent-sabbath-red); /* Borde izq más grueso */
-    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+    background-color: var(--color-bg-secondary);
+    padding: 25px 30px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border-primary);
+    /* border-left: 4px solid var(--color-accent-sabbath-deep); /* Borde Sabbath si se quiere */
 }
 .about-band-section h2 {
     font-family: var(--font-heading);
-    font-size: 1.8em;
-    color: var(--color-highlight);
-    margin-bottom: 25px;
+    font-size: 1.7em;
+    color: var(--color-text-primary);
+    margin-bottom: 20px;
     text-align: left;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 10px;
-    text-shadow: 1px 1px 2px #000;
+    border-bottom: 1px solid var(--color-border-secondary);
+    padding-bottom: 12px;
+    font-weight: 600;
 }
-.about-band-section h2::after { display: none; } /* Asegurar que no haya línea decorativa */
+.about-band-section h2::after { display: none; }
 
 .band-members, .band-bio {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 .band-members:last-child, .band-bio:last-child {
      margin-bottom: 0;
- }
+}
 .band-members h4, .band-bio h4 {
     font-family: var(--font-heading);
-    color: var(--color-accent-old-gold);
-    font-size: 1.3em;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 8px;
-    font-weight: 600;
+    color: var(--color-text-primary); /* Títulos internos más brillantes */
+    font-size: 1.2em;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--color-border-secondary);
+    padding-bottom: 6px;
+    font-weight: 500;
 }
 .band-members ul {
     list-style: none;
     padding-left: 0;
 }
 .band-members li {
-    margin-bottom: 8px;
-    font-size: 1em;
-    color: var(--color-text-primary);
+    margin-bottom: 7px;
+    font-size: 0.95em;
+    color: var(--color-text-secondary);
 }
 .band-members li strong {
-    color: var(--color-text-primary); /* Mantener nombre normal */
-    font-weight: 600;
+    color: var(--color-text-primary);
+    font-weight: 500;
 }
 .band-bio p {
-     font-size: 1em;
-     color: var(--color-text-primary);
-     margin-bottom: 1em;
-     line-height: 1.7;
-     text-align: justify;
+     font-size: 0.95em;
+     color: var(--color-text-secondary); /* Bio en color secundario */
+     margin-bottom: 0.9em;
+     line-height: 1.65;
+     text-align: left; /* Para leer mejor bloques largos */
 }
 
 /* Sección Foto Banda */
 .band-photo-section {
-    margin-top: 40px; /* Ajustar espacio si es necesario */
-    padding-top: 30px;
-    border-top: 2px solid var(--color-border); /* Borde superior más grueso */
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid var(--color-border-primary);
 }
 .band-photo-section img {
     display: block;
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-    border: 2px solid var(--color-border);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    border-radius: 3px;
-    filter: grayscale(0.5) sepia(0.1) contrast(1.1) brightness(0.9); /* Efecto más marcado */
+    border: 1px solid var(--color-border-secondary);
+    box-shadow: 0 5px 15px var(--shadow-color-soft);
+    border-radius: 6px;
+    filter: grayscale(0.8) contrast(1.1); /* Estilo B&N más marcado */
 }
 
 /* Footer */
 .tracklist-panel footer {
     text-align: center;
-    margin-top: 40px;
-    padding: 20px 0;
-    border-top: 3px solid var(--color-border); /* Borde superior más grueso */
-    font-size: 0.9em;
-    color: var(--color-text-secondary);
+    margin-top: 35px;
+    padding: 18px 0;
+    border-top: 1px solid var(--color-border-primary);
+    font-size: 0.85em;
+    color: var(--color-text-muted);
 }
 .tracklist-panel footer a {
     color: var(--color-text-secondary);
-    margin: 0 10px;
+    margin: 0 8px;
     transition: color 0.2s;
 }
 .tracklist-panel footer a:hover {
-    color: var(--color-accent-old-gold); /* Enlaces del footer en dorado hover */
+    color: var(--color-accent-interactive);
 }
 
 
@@ -564,10 +568,10 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: var(--color-modal-bg);
-    padding-top: 60px;
+    background-color: var(--color-modal-bg); /* Usar variable de :root */
+    padding-top: 50px;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.3s ease-out;
 }
 .modal.active {
     display: block;
@@ -577,45 +581,47 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
 .modal-content {
     margin: auto;
     display: block;
-    width: 85%; /* Un poco más grande */
-    max-width: 800px;
-    animation: zoomIn 0.4s ease;
-    background-color: var(--color-modal-content-bg);
-    padding: 8px; /* Padding alrededor de la imagen */
-    border: 2px solid var(--color-border);
-    box-shadow: 0 0 35px rgba(0,0,0,0.8);
+    width: auto; /* Ajustar al contenido */
+    max-width: 90%;
+    max-height: 85vh; /* Alto máximo para que quepa el caption y close */
+    animation: zoomInModal 0.3s ease-out;
+    background-color: var(--color-bg-secondary); /* Fondo para la imagen */
+    padding: 6px;
+    border: 1px solid var(--color-border-secondary);
+    border-radius: 6px;
+    box-shadow: 0 10px 30px var(--shadow-color-medium);
 }
 
-@keyframes zoomIn {
-    from { transform: scale(0.7) rotate(-3deg); opacity: 0; }
-    to { transform: scale(1) rotate(0deg); opacity: 1; }
+@keyframes zoomInModal {
+    from { transform: scale(0.85) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0px); opacity: 1; }
 }
 
 .modal-caption {
-    margin: 15px auto;
+    margin: 12px auto;
     display: block;
     width: 80%;
     max-width: 700px;
     text-align: center;
     color: var(--color-text-secondary);
-    font-size: 0.9em;
+    font-size: 0.85em;
 }
 
 .modal-close {
     position: absolute;
-    top: 15px;
-    right: 35px;
-    color: var(--color-highlight);
-    font-size: 45px; /* Más grande */
+    top: 12px;
+    right: 25px;
+    color: var(--color-text-primary);
+    font-size: 35px;
     font-weight: bold;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
     cursor: pointer;
-    text-shadow: 0 0 5px #000;
+    text-shadow: 0 0 8px var(--color-bg-primary); /* Sombra para destacar sobre imagen clara */
 }
 .modal-close:hover,
 .modal-close:focus {
-    color: var(--color-accent-sabbath-red-hover);
-    transform: rotate(90deg);
+    color: var(--color-accent-interactive);
+    transform: scale(1.1);
 }
 
 
@@ -623,60 +629,54 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
 /* -- RESPONSIVIDAD (Ajustes) -- */
 /* ----------------------------- */
 @media (max-width: 900px) {
-     body { padding-top: 60px; }
+    body { padding-top: 60px; }
     .main-page-header { height: 60px; padding: 12px 20px; }
-    .main-page-header h1 { font-size: 1.6em; padding-top: 2px;}
+    .main-page-header h1 { font-size: 1.6em; padding-top: 4px;}
     .album-panel {
-    flex: 1 1 400px;
-    min-width: 300px;
-    background-color: var(--color-panel-bg);
-    padding: 40px 30px;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: flex-start; */ /* (O simplemente no poner nada aquí para el default) */
-    align-items: center;
-    border-right: 1px solid var(--color-border);
-    z-index: 10;
-    min-height: calc(100vh - 70px);
-}
-    .tracklist-panel { padding: 30px 15px; }
-    .about-band-section { padding: 20px 15px; }
-    .about-band-section h2 { font-size: 1.6em; }
-    .band-members h4, .band-bio h4 { font-size: 1.2em; }
-    .band-members li, .band-bio p { font-size: 0.95em; }
+        min-height: auto;
+        box-shadow: 0 5px 15px var(--shadow-color-soft);
+        padding: 25px 20px;
+        border-right: none;
+     }
+    .tracklist-panel { padding: 25px 15px; }
+    .tracklist-header h2 { font-size: 1.7em; }
+    .about-band-section { padding: 20px; }
+    .about-band-section h2 { font-size: 1.5em; }
+    .band-members h4, .band-bio h4 { font-size: 1.15em; }
+    .band-members li, .band-bio p { font-size: 0.92em; }
     .track-title-button { font-size: 1em; }
-    .play-track-btn { font-size: 1.2em; width: 34px; height: 34px; }
-    .track-item.open .track-details { padding: 15px 15px 20px 30px; } /* Ajustar padding */
-    .track-details pre { font-size: 0.9em; padding: 10px; }
-    .band-photo-section img { max-width: 90%; filter: grayscale(0.4) sepia(0.15) contrast(1.05) brightness(0.95); }
-    .tracklist-panel footer { font-size: 0.85em; }
-     .modal-content { width: 90%; }
+    .play-track-btn { font-size: 1.15em; width: 32px; height: 32px; }
+    .track-item.open .track-details { padding: 15px 15px 20px 30px; }
+    .track-details pre { font-size: 0.88em; padding: 10px; }
+    .band-photo-section img { max-width: 90%; filter: grayscale(0.7) contrast(1.05); }
+    .tracklist-panel footer { font-size: 0.82em; }
+    .modal-content { max-width: 90%; max-height: 80vh; }
 }
 
 @media (max-width: 480px) {
     body { padding-top: 50px; }
-     .main-page-header { height: 50px; padding: 10px 15px; }
-    .main-page-header h1 { font-size: 1.3em; }
-    .main-page-header .band-alias { display: block; font-size: 0.55em; }
+    .main-page-header { height: 50px; padding: 10px 15px; }
+    .main-page-header h1 { font-size: 1.25em; }
+    .main-page-header .band-alias { display: block; font-size: 0.5em; margin-left:0; }
     .album-panel { padding: 20px 15px; }
     .album-cover-container { width: 70%; max-width: 180px; }
-    .main-player-controls .buttons { gap: 5px; }
-    .main-player-controls button { font-size: 0.85em; padding: 5px 8px; }
-    .main-player-controls button#play-pause-btn { font-size: 1em; padding: 5px 10px; width: 40px; }
-    .main-player-controls button#play-all-btn { margin-top: 8px; width: 75%; padding: 8px 15px; }
-    .tracklist-panel { padding: 25px 10px; }
-    .tracklist-header h2 { font-size: 1.5em; }
-    .about-band-section { padding: 15px 10px; }
-    .about-band-section h2 { font-size: 1.4em; }
-     .band-members h4, .band-bio h4 { font-size: 1.1em; }
-     .band-members li, .band-bio p { font-size: 0.9em; }
-    .track-title-button { font-size: 0.9em; }
-    .play-track-btn { font-size: 1.1em; width: 30px; height: 30px; padding: 4px 8px; margin: 0 2px 0 5px; }
-    .track-item.open .track-details { padding: 10px 10px 15px 25px; }
-    .track-details pre { font-size: 0.85em; line-height: 1.5; padding: 8px; }
-    .band-photo-section { margin-top: 30px; padding-top: 20px; }
-    .band-photo-section img { max-width: 95%; filter: grayscale(0.6) sepia(0.1) contrast(1.0) brightness(1.0); } /* Ajustar filtro para móvil */
-    .tracklist-panel footer { font-size: 0.8em; }
-     .modal-content { width: 95%; }
-     .modal-close { font-size: 35px; top: 10px; right: 15px; }
+    .main-player-controls .buttons { gap: 6px; }
+    .main-player-controls button { font-size: 0.8em; padding: 5px 8px; }
+    .main-player-controls button#play-pause-btn { font-size: 1em; padding: 5px 10px; width: 38px; }
+    .main-player-controls button#play-all-btn { margin-top: 8px; width: 75%; padding: 7px 12px; }
+    .tracklist-panel { padding: 20px 10px; }
+    .tracklist-header h2 { font-size: 1.4em; }
+    .about-band-section { padding: 15px; }
+    .about-band-section h2 { font-size: 1.3em; }
+    .band-members h4, .band-bio h4 { font-size: 1.1em; }
+    .band-members li, .band-bio p { font-size: 0.88em; }
+    .track-title-button { font-size: 0.88em; }
+    .play-track-btn { font-size: 1.05em; width: 28px; height: 28px; padding: 4px 7px; margin: 0 2px 0 4px; }
+    .track-item.open .track-details { padding: 10px 10px 15px 20px; }
+    .track-details pre { font-size: 0.82em; line-height: 1.55; padding: 8px; }
+    .band-photo-section { margin-top: 25px; padding-top: 15px; }
+    .band-photo-section img { max-width: 95%; filter: grayscale(0.8) contrast(1.0); }
+    .tracklist-panel footer { font-size: 0.78em; }
+    .modal-content { max-width: 95%; max-height: 75vh; }
+    .modal-close { font-size: 30px; top: 8px; right: 12px; }
 }
