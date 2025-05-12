@@ -170,8 +170,13 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-border-secondary) var
 
 /* Controles del Reproductor */
 .main-player-controls {
-    width: 100%; max-width: 350px; text-align: center; color: var(--color-text-secondary);
-    margin-top: auto; padding-top: 20px; /* margin-top:auto lo empuja hacia abajo si hay espacio */
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    color: var(--color-text-secondary);
+    /* margin-top: auto; ELIMINADO */
+    margin-top: 40px; /* <-- AÑADIDO: Espacio fijo debajo de la portada */
+    padding-top: 0; /* Quitado o ajustado si es necesario */
 }
 #player-current-track-title {
     font-family: var(--font-heading); color: var(--color-text-primary); font-size: 1.05em;
@@ -333,7 +338,19 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-border-secondary) var
     body { padding-top: 60px; }
     .main-page-header { height: 60px; padding: 12px 20px; }
     .main-page-header h1 { font-size: 1.6em; padding-top: 4px;}
-    .album-panel { min-height: auto; box-shadow: 0 5px 15px var(--shadow-color-soft); padding: 25px 20px; border-right: none; }
+    .album-panel {
+    flex: 1 1 400px;
+    min-width: 300px;
+    background-color: var(--color-panel-bg);
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-start; */ /* (O simplemente no poner nada aquí para el default) */
+    align-items: center;
+    border-right: 1px solid var(--color-border);
+    z-index: 10;
+    min-height: calc(100vh - 70px);
+}
     .album-cover-container { max-width: 280px; margin-bottom: 15px;}
     .album-title-display h3 { font-size: 1.3em; }
     .album-info-editable { font-size: 0.82em; margin-bottom: 20px;}
