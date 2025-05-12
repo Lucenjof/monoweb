@@ -1,58 +1,131 @@
 /* -------------------------------- */
 /* -- VARIABLES Y ESTILOS BASE -- */
 /* -------------------------------- */
+
+/* Opcional: Importar fuentes con más carácter */
+/* @import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=UnifrakturMaguntia&family=Open+Sans:wght@400;600&family=Montserrat:wght@400;600&display=swap'); */
+
 :root {
-    --color-background: #1a2026;
-    --color-panel-bg: #242b33;
-    --color-text-primary: #d0d8e0;
-    --color-text-secondary: #8593a2;
-    --color-accent: #7b98b3;
-    --color-accent-hover: #a0b8cf;
-    --color-highlight: #ffffff;
-    --color-border: #3a4450;
-    --color-play-btn: #6a8aa3;
-    --color-play-btn-hover: var(--color-accent-hover);
-    --color-play-btn-active: #c1e0ff; /* Color más brillante cuando está activo */
+    /* Paleta Black Sabbath "Jugada" */
+    --color-background: #0a0a0a;         /* Negro casi puro para fondo principal */
+    --color-panel-bg: #1c1c1c;         /* Gris muy oscuro para paneles */
+    --color-text-primary: #e0e0e0;     /* Blanco hueso / Gris muy claro */
+    --color-text-secondary: #a0a0a0;   /* Gris medio para texto secundario */
+    --color-accent-sabbath-red: #8B0000; /* Rojo sangre oscuro (DarkRed) */
+    --color-accent-sabbath-red-hover: #a52a2a; /* Rojo más claro/marrón (Brown) para hover */
+    --color-accent-old-gold: #b8860b;  /* Dorado oscuro / Ocre (DarkGoldenRod) */
+    --color-border: #333333;           /* Borde gris oscuro */
+    --color-highlight: #ffffff;        /* Blanco puro para contrastes fuertes */
 
-    /* Añadir variables para el modal */
-    --color-modal-bg: rgba(10, 15, 20, 0.9); /* Fondo oscuro semi-transparente */
-    --color-modal-content-bg: #1a2026;
+    /* Modal (puede mantenerse oscuro o ajustarse) */
+    --color-modal-bg: rgba(0, 0, 0, 0.92); /* Fondo modal más opaco */
+    --color-modal-content-bg: #111111;    /* Fondo del contenido del modal */
 
+    /* Fuentes */
     --font-main: 'Open Sans', 'Lato', 'Montserrat', sans-serif;
-    --font-heading: 'Montserrat', 'Lato', var(--font-main);
+    /* Prueba fuentes temáticas aquí si descomentas el @import */
+    --font-heading: 'Montserrat', 'Metamorphous', 'UnifrakturMaguntia', var(--font-main);
     --font-mono: 'Courier New', Courier, monospace;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-main);
     background-color: var(--color-background);
     color: var(--color-text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    /* Padding superior para compensar el header fijo (ajusta si cambias altura header) */
+    padding-top: 70px;
+}
+
+/* Scrollbar estilizado para el nuevo tema (WebKit y Firefox) */
+/* Para Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-accent-sabbath-red);
+    border-radius: 5px;
+    border: 2px solid var(--color-background);
+}
+/* Para Firefox */
+html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent-sabbath-red) var(--color-background);
+}
+
+
+/* -------------------------------- */
+/* -- ENCABEZADO PRINCIPAL -- */
+/* -------------------------------- */
+.main-page-header {
+    background-color: #000000; /* Negro sólido */
+    padding: 15px 30px;
+    border-bottom: 3px solid var(--color-accent-sabbath-red); /* Borde rojo Sabbath */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    position: fixed; /* Fijo arriba */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001; /* Asegura que esté sobre otros elementos */
+    height: 70px; /* Altura fija para calcular el padding del body */
+}
+
+.main-page-header h1 {
+    margin: 0;
+    font-family: var(--font-heading); /* Fuente más temática */
+    font-size: 2em; /* Un poco más grande */
+    color: var(--color-text-primary);
+    font-weight: normal; /* Las fuentes góticas suelen ser bold por sí mismas */
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 3px var(--color-accent-sabbath-red); /* Sombra de texto sutil */
+    line-height: 1; /* Ajustar para centrar verticalmente */
+    padding-top: 5px; /* Ajuste fino vertical */
+}
+
+.main-page-header .band-alias {
+    font-size: 0.6em;
+    color: var(--color-text-secondary);
+    font-weight: normal;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-family: var(--font-main); /* Alias en fuente normal */
+    text-shadow: none;
 }
 
 /* -------------------------------- */
-/* -- LAYOUT PRINCIPAL -- */
+/* -- LAYOUT Y PANELES -- */
 /* -------------------------------- */
-.main-container { display: flex; min-height: 100vh; flex-wrap: wrap; }
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .album-panel {
     flex: 1 1 400px;
     min-width: 300px;
     background-color: var(--color-panel-bg);
-    padding: 30px;
+    padding: 40px 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+    border-right: 1px solid var(--color-border); /* Borde sutil entre paneles */
     z-index: 10;
-    transition: transform 0.3s ease; /* Para futuras animaciones */
+    min-height: calc(100vh - 70px); /* Altura mínima = ventana - header */
 }
 
 .tracklist-panel {
@@ -60,88 +133,35 @@ body {
     padding: 40px 50px;
     overflow-y: auto;
     background-color: var(--color-background);
-    /* Añadir scrollbar estilizado (opcional, cross-browser limitado) */
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-border) var(--color-panel-bg);
+    min-height: calc(100vh - 70px); /* Para que ocupe altura */
 }
-/* Para Webkit (Chrome, Safari) */
-.tracklist-panel::-webkit-scrollbar { width: 8px; }
-.tracklist-panel::-webkit-scrollbar-track { background: var(--color-panel-bg); }
-.tracklist-panel::-webkit-scrollbar-thumb { background-color: var(--color-border); border-radius: 4px; }
-
-/* Estilos para la sección "Sobre la Banda" (Añadir/Ajustar) */
-.about-band-section {
-    /* ... (estilos existentes) ... */
-    margin-bottom: 50px; /* Más espacio antes del tracklist */
-}
-
-.about-band-section h2 {
-    /* ... (estilos existentes) ... */
-    margin-bottom: 25px; /* Más espacio después del título principal */
-}
-
-.band-members, .band-bio {
-    margin-bottom: 25px; /* Espacio entre secciones (integrantes y bio) */
-}
-
-.band-members h4, .band-bio h4 {
-    font-family: var(--font-heading);
-    color: var(--color-accent-hover);
-    font-size: 1.3em;
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 5px;
-    font-weight: 600;
-}
-
-.band-members ul {
-    list-style: none; /* Quitar viñetas por defecto */
-    padding-left: 0;
-}
-
-.band-members li {
-    margin-bottom: 8px;
-    font-size: 1em;
-    color: var(--color-text-primary);
-}
-
-.band-members li strong {
-    color: var(--color-highlight); /* Resaltar nombre del integrante */
-}
-
-.band-bio p {
-     /* ... (estilos existentes para párrafos) ... */
-     font-size: 1em; /* Ajustar si es necesario */
-     margin-bottom: 1em; /* Párrafos estándar */
-}
-
 
 /* -------------------------------- */
-/* -- ESTILOS COLUMNA IZQUIERDA -- */
+/* -- ELEMENTOS EN COLUMNA IZQUIERDA -- */
 /* -------------------------------- */
 .album-cover-container {
     width: 80%;
     max-width: 350px;
     margin-bottom: 30px;
     position: relative;
-    cursor: pointer; /* Indica que es clickeable */
-    overflow: hidden; /* Para contener el icono */
-    border-radius: 3px; /* Suavizar bordes */
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 3px;
 }
 
 #album-cover-img {
     width: 100%;
     height: auto;
     display: block;
-    border: 1px solid var(--color-border);
-    transition: transform 0.3s ease, filter 0.3s ease; /* Transición para hover */
+    border: 2px solid var(--color-border); /* Borde más grueso */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 .album-cover-container:hover #album-cover-img {
-    transform: scale(1.03); /* Ligero zoom al pasar el mouse */
-    filter: brightness(1.1);
+    transform: scale(1.03);
+    filter: brightness(1.05) contrast(1.1);
 }
 
-/* Icono para indicar que se puede agrandar */
 .enlarge-icon {
     position: absolute;
     bottom: 10px;
@@ -154,119 +174,195 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: sans-serif; /* Usar fuente simple para el símbolo */
+    font-family: sans-serif;
     font-size: 18px;
     font-weight: bold;
     line-height: 1;
-    opacity: 0; /* Oculto por defecto */
+    opacity: 0;
     transition: opacity 0.3s ease;
-    pointer-events: none; /* No interfiere con el click en la imagen */
-     /* Símbolo de Lupa o + sería mejor, usando FontAwesome o SVG */
-     /* Este es un placeholder visual 'L' por 'Large' */
+    pointer-events: none;
 }
 .album-cover-container:hover .enlarge-icon {
-    opacity: 1; /* Mostrar al hacer hover en el contenedor */
+    opacity: 1;
 }
 
-
+/* Controles del Reproductor */
 .main-player-controls {
     width: 100%;
     max-width: 400px;
     text-align: center;
     color: var(--color-text-secondary);
+    margin-top: auto; /* Empujar controles hacia abajo si hay espacio */
+    padding-top: 20px; /* Espacio por si se pegan arriba */
 }
-#player-current-track-title { font-family: var(--font-heading); color: var(--color-text-primary); font-size: 1.1em; margin-bottom: 15px; min-height: 1.2em; font-weight: normal; transition: color 0.3s; }
-.progress-container { width: 100%; cursor: pointer; margin-bottom: 10px; background-color: var(--color-border); height: 8px; border-radius: 4px; position: relative; transition: opacity 0.3s; }
-.progress-bar { background-color: var(--color-background); height: 100%; border-radius: 4px; overflow: hidden; }
-.progress { background-color: var(--color-accent); height: 100%; width: 0%; border-radius: 4px; transition: width 0.1s linear; }
-.time-display { display: flex; justify-content: space-between; font-size: 0.8em; color: var(--color-text-secondary); margin-top: 5px; padding: 0 5px; }
-.main-player-controls .buttons { margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 15px; }
-.main-player-controls button { background-color: transparent; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }
-.main-player-controls button:hover:not(:disabled) { background-color: var(--color-accent); color: var(--color-highlight); border-color: var(--color-accent); transform: translateY(-1px); /* Efecto hover sutil */ }
-.main-player-controls button:disabled { opacity: 0.5; cursor: not-allowed; background-color: transparent !important; transform: none; }
-.main-player-controls button#play-pause-btn { font-size: 1.3em; padding: 8px 15px; width: 45px; /* Ancho fijo para evitar saltos al cambiar icono */ text-align: center; }
-.main-player-controls button#play-all-btn { background-color: var(--color-accent); color: var(--color-highlight); border-color: var(--color-accent); padding: 10px 18px; font-weight: bold; }
-.main-player-controls button#play-all-btn:hover:not(:disabled) { background-color: var(--color-accent-hover); }
 
-/* -------------------------------- */
-/* -- ESTILOS COLUMNA DERECHA -- */
-/* -------------------------------- */
-
-/* Sección "Sobre la Banda" */
-.about-band-section {
-    background-color: var(--color-panel-bg); /* Fondo ligeramente diferente */
-    padding: 30px;
-    margin-bottom: 40px; /* Espacio antes del tracklist */
-    border-radius: 5px;
-    border-left: 3px solid var(--color-accent);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-.about-band-section h2 {
+#player-current-track-title {
     font-family: var(--font-heading);
-    font-size: 1.8em;
-    color: var(--color-highlight);
-    margin-bottom: 15px;
-    text-align: left; /* Alineado a la izquierda dentro de la sección */
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 10px;
-}
-/* Quitar la línea decorativa si la tenía antes */
-.about-band-section h2::after { display: none; }
-
-.about-band-section p {
-    font-size: 1em;
     color: var(--color-text-primary);
+    font-size: 1.1em;
     margin-bottom: 15px;
-    line-height: 1.7;
-    text-align: justify; /* Justificado para look de texto */
+    min-height: 1.2em;
+    font-weight: normal;
+    transition: color 0.3s;
+    text-shadow: 1px 1px 2px #000;
 }
-.about-band-section p:last-child {
+.progress-container {
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 10px;
+    background-color: var(--color-border);
+    height: 8px;
+    border-radius: 4px;
+    position: relative;
+    transition: opacity 0.3s;
+}
+.progress-bar {
+    background-color: var(--color-background);
+    height: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress {
+    background-color: var(--color-accent-sabbath-red);
+    height: 100%;
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.1s linear;
+}
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+    color: var(--color-text-secondary);
+    margin-top: 5px;
+    padding: 0 5px;
+}
+.main-player-controls .buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.main-player-controls button {
+    background-color: transparent;
+    border: 1px solid var(--color-text-secondary);
+    color: var(--color-text-secondary);
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.2s ease;
+}
+.main-player-controls button:hover:not(:disabled) {
+    background-color: var(--color-accent-sabbath-red);
+    color: var(--color-highlight);
+    border-color: var(--color-accent-sabbath-red-hover);
+    transform: translateY(-1px);
+}
+.main-player-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: transparent !important;
+    transform: none;
+}
+.main-player-controls button#play-pause-btn {
+    font-size: 1.3em;
+    padding: 8px 15px;
+    width: 45px;
+    text-align: center;
+}
+.main-player-controls button#play-all-btn {
+    background-color: var(--color-accent-sabbath-red);
+    color: var(--color-highlight);
+    border-color: var(--color-accent-sabbath-red);
+    padding: 10px 18px;
+    font-weight: bold;
+}
+.main-player-controls button#play-all-btn:hover:not(:disabled) {
+    background-color: var(--color-accent-sabbath-red-hover);
+}
+
+
+/* -------------------------------- */
+/* -- ELEMENTOS EN COLUMNA DERECHA -- */
+/* -------------------------------- */
+.tracklist-header {
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 20px;
+}
+.tracklist-header h2 {
+    font-family: var(--font-heading);
+    font-size: 2.2em;
+    color: var(--color-highlight);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+     text-shadow: 1px 1px 3px #000;
+}
+
+/* Tracklist */
+.track-list-accordion {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--color-border); /* Añadir borde al contenedor de la lista */
+    border-radius: 4px;
+    overflow: hidden; /* Para que el borde redondeado funcione */
+}
+.track-item {
+    border-bottom: 1px solid var(--color-border);
     margin-bottom: 0;
+    transition: background-color 0.2s;
 }
-
-
-.tracklist-header { margin-bottom: 30px; text-align: center; border-bottom: 1px solid var(--color-border); padding-bottom: 20px; }
-.tracklist-header h2 { font-family: var(--font-heading); font-size: 2.2em; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-
-.track-list-accordion { list-style: none; padding: 0; margin: 0; }
-.track-item { border-bottom: 1px solid var(--color-border); margin-bottom: 0; /* Quitar margen, manejar con padding */ transition: background-color 0.2s; }
-.track-item:last-child { border-bottom: none; }
-/* Resaltado más fuerte para la pista activa */
+.track-item:last-child {
+    border-bottom: none;
+}
 .track-item.active {
-     background-color: rgba(123, 152, 179, 0.1); /* Fondo azulado muy sutil */
-     border-left: 3px solid var(--color-accent-hover); /* Borde izquierdo */
+     background-color: rgba(139, 0, 0, 0.15); /* Fondo rojo muy sutil para el activo */
+     border-left: 3px solid var(--color-accent-sabbath-red-hover);
      margin-left: -3px; /* Compensar borde */
 }
-.track-item.active .track-title-button { color: var(--color-highlight); font-weight: 600;} /* Texto más resaltado */
-.track-item.active .track-number { color: var(--color-accent-hover); }
+.track-item.active .track-title-button { color: var(--color-highlight); font-weight: 600;}
+.track-item.active .track-number { color: var(--color-accent-sabbath-red-hover); }
 
-
-.track-title-container { display: flex; align-items: center; width: 100%; cursor: default; /* Contenedor no es clickeable */ transition: background-color 0.2s; padding: 5px 0; }
-.track-title-container:hover { background-color: var(--color-panel-bg); }
+.track-title-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    cursor: default;
+    transition: background-color 0.2s;
+    padding: 5px 0;
+}
+.track-title-container:hover {
+    background-color: var(--color-panel-bg);
+}
 
 .play-track-btn {
     background: transparent;
     border: none;
-    color: var(--color-play-btn);
+    color: var(--color-text-secondary); /* Color base más apagado */
     font-size: 1.4em;
     cursor: pointer;
-    padding: 8px 12px; /* Más área de click */
-    margin: 0 5px 0 8px; /* Ajustar márgenes */
+    padding: 8px 12px;
+    margin: 0 5px 0 8px;
     line-height: 1;
-    border-radius: 50%; /* Hacerlo redondo */
-    width: 36px; height: 36px; /* Tamaño fijo */
-    display: inline-flex; /* Alinear icono */
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     transition: all 0.2s ease;
 }
 .play-track-btn:hover {
     color: var(--color-highlight);
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-sabbath-red);
 }
-.track-item.playing .play-track-btn { /* Estilo cuando está reproduciendo */
+.track-item.playing .play-track-btn {
     color: var(--color-highlight);
-    background-color: var(--color-accent-hover);
+    background-color: var(--color-accent-sabbath-red-hover);
 }
 
 .track-title-button {
@@ -280,81 +376,208 @@ body {
     font-size: 1.1em;
     display: flex;
     align-items: center;
-    cursor: pointer; /* Botón SÍ es clickeable */
+    cursor: pointer;
     width: 100%;
     transition: color 0.2s;
 }
-/* Hover solo en el botón de título, no en todo el contenedor */
 .track-title-button:hover .track-name {
-     color: var(--color-accent-hover);
+     color: var(--color-accent-old-gold); /* Dorado al pasar el mouse */
 }
-.track-number { min-width: 25px; font-weight: bold; color: var(--color-text-secondary); transition: color 0.2s; }
-.track-name { flex-grow: 1; margin-left: 5px; pointer-events: none; transition: color 0.2s; }
-.expand-icon { font-size: 1.4em; font-weight: bold; margin-left: 15px; padding: 5px; pointer-events: none; transition: transform 0.3s ease, color 0.2s; }
-.track-item.open .expand-icon { transform: rotate(45deg); color: var(--color-accent-hover); }
+.track-number {
+    min-width: 25px;
+    font-weight: bold;
+    color: var(--color-text-secondary);
+    transition: color 0.2s;
+}
+.track-name {
+    flex-grow: 1;
+    margin-left: 5px;
+    pointer-events: none;
+    transition: color 0.2s;
+}
+.expand-icon {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-left: 15px;
+    padding: 5px;
+    pointer-events: none;
+    transition: transform 0.3s ease, color 0.2s;
+}
+.track-item.open .expand-icon {
+    transform: rotate(45deg);
+    color: var(--color-accent-sabbath-red-hover);
+}
 
 .track-details {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), border-top-color 0.4s ease; /* Transición suave */
-    background-color: transparent; /* Quitar fondo para que se vea el del item activo */
-    padding: 0 20px 0 60px; /* Mayor indentación */
+    transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), border-top-color 0.4s ease;
+    background-color: transparent;
+    padding: 0 20px 0 60px;
     border-top: 1px solid transparent;
 }
 .track-item.open .track-details {
     padding-top: 20px;
     padding-bottom: 30px;
-    border-top-color: var(--color-border); /* Mostrar borde solo al abrir */
+    border-top-color: var(--color-border);
 }
 
-.track-details h4 { font-family: var(--font-heading); color: var(--color-accent-hover); margin-bottom: 15px; font-size: 1.2em; }
-.track-details pre { font-family: var(--font-mono); background-color: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 3px; color: var(--color-text-primary); font-size: 0.9em; border-left: 2px solid var(--color-accent); white-space: pre-wrap; }
-.track-details .track-extra-info { font-size: 0.85em; color: var(--color-text-secondary); margin-top: 15px; font-style: italic; }
+.track-details h4 {
+    font-family: var(--font-heading);
+    color: var(--color-accent-old-gold); /* Dorado viejo para "Letra: ..." */
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+.track-details pre {
+    font-family: var(--font-mono);
+    background-color: rgba(10, 10, 10, 0.4); /* Fondo muy oscuro para letras */
+    padding: 15px;
+    border-radius: 3px;
+    color: var(--color-text-primary);
+    font-size: 0.9em;
+    border-left: 3px solid var(--color-accent-sabbath-red); /* Borde rojo más grueso */
+    white-space: pre-wrap;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+.track-details .track-extra-info {
+    font-size: 0.85em;
+    color: var(--color-text-secondary);
+    margin-top: 15px;
+    font-style: italic;
+}
+
+/* Sección Sobre la Banda */
+.about-band-section {
+    background-color: var(--color-panel-bg);
+    padding: 30px;
+    margin-top: 40px; /* Espacio después de la lista de canciones */
+    margin-bottom: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color-border); /* Añadir borde general */
+    border-left: 5px solid var(--color-accent-sabbath-red); /* Borde izq más grueso */
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+}
+.about-band-section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.8em;
+    color: var(--color-highlight);
+    margin-bottom: 25px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 10px;
+    text-shadow: 1px 1px 2px #000;
+}
+.about-band-section h2::after { display: none; } /* Asegurar que no haya línea decorativa */
+
+.band-members, .band-bio {
+    margin-bottom: 25px;
+}
+.band-members:last-child, .band-bio:last-child {
+     margin-bottom: 0;
+ }
+.band-members h4, .band-bio h4 {
+    font-family: var(--font-heading);
+    color: var(--color-accent-old-gold);
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    font-weight: 600;
+}
+.band-members ul {
+    list-style: none;
+    padding-left: 0;
+}
+.band-members li {
+    margin-bottom: 8px;
+    font-size: 1em;
+    color: var(--color-text-primary);
+}
+.band-members li strong {
+    color: var(--color-text-primary); /* Mantener nombre normal */
+    font-weight: 600;
+}
+.band-bio p {
+     font-size: 1em;
+     color: var(--color-text-primary);
+     margin-bottom: 1em;
+     line-height: 1.7;
+     text-align: justify;
+}
 
 /* Sección Foto Banda */
-.band-photo-section { margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--color-border); }
-.band-photo-section img { display: block; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--color-border); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); border-radius: 3px; }
+.band-photo-section {
+    margin-top: 40px; /* Ajustar espacio si es necesario */
+    padding-top: 30px;
+    border-top: 2px solid var(--color-border); /* Borde superior más grueso */
+}
+.band-photo-section img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border: 2px solid var(--color-border);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border-radius: 3px;
+    filter: grayscale(0.5) sepia(0.1) contrast(1.1) brightness(0.9); /* Efecto más marcado */
+}
 
 /* Footer */
-.tracklist-panel footer { text-align: center; margin-top: 40px; padding: 20px 0; border-top: 1px solid var(--color-border); font-size: 0.9em; color: var(--color-text-secondary); }
+.tracklist-panel footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 3px solid var(--color-border); /* Borde superior más grueso */
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+}
+.tracklist-panel footer a {
+    color: var(--color-text-secondary);
+    margin: 0 10px;
+    transition: color 0.2s;
+}
+.tracklist-panel footer a:hover {
+    color: var(--color-accent-old-gold); /* Enlaces del footer en dorado hover */
+}
 
 
 /* ----------------------------- */
 /* -- ESTILOS DEL MODAL IMAGEN -- */
 /* ----------------------------- */
 .modal {
-    display: none; /* Oculto por defecto */
-    position: fixed; /* Se queda fijo en la pantalla */
-    z-index: 1001; /* Por encima de todo */
+    display: none;
+    position: fixed;
+    z-index: 1001;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Permite scroll si la imagen es muy grande */
+    overflow: auto;
     background-color: var(--color-modal-bg);
-    padding-top: 60px; /* Espacio para el botón de cerrar */
-    opacity: 0; /* Para animación */
+    padding-top: 60px;
+    opacity: 0;
     transition: opacity 0.4s ease;
 }
 .modal.active {
-    display: block; /* Mostrar al activar */
+    display: block;
     opacity: 1;
 }
 
 .modal-content {
     margin: auto;
     display: block;
-    width: 80%;
-    max-width: 700px; /* Tamaño máximo de la imagen */
-    animation: zoomIn 0.4s ease; /* Animación de entrada */
-    background-color: var(--color-modal-content-bg); /* Fondo por si la imagen tarda */
-    padding: 5px;
-    border: 1px solid var(--color-border);
+    width: 85%; /* Un poco más grande */
+    max-width: 800px;
+    animation: zoomIn 0.4s ease;
+    background-color: var(--color-modal-content-bg);
+    padding: 8px; /* Padding alrededor de la imagen */
+    border: 2px solid var(--color-border);
+    box-shadow: 0 0 35px rgba(0,0,0,0.8);
 }
 
 @keyframes zoomIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from { transform: scale(0.7) rotate(-3deg); opacity: 0; }
+    to { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
 .modal-caption {
@@ -372,116 +595,70 @@ body {
     top: 15px;
     right: 35px;
     color: var(--color-highlight);
-    font-size: 40px;
+    font-size: 45px; /* Más grande */
     font-weight: bold;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
+    text-shadow: 0 0 5px #000;
 }
 .modal-close:hover,
 .modal-close:focus {
-    color: var(--color-accent-hover);
-    text-decoration: none;
+    color: var(--color-accent-sabbath-red-hover);
+    transform: rotate(90deg);
 }
 
 
 /* ----------------------------- */
 /* -- RESPONSIVIDAD (Ajustes) -- */
 /* ----------------------------- */
-/* ... (Estilos generales y de escritorio van aquí arriba) ... */
-
-
-/* ----------------------------- */
-/* -- RESPONSIVIDAD -- */
-/* ----------------------------- */
-
-/* --- Estilos para Tablets y Móviles Grandes (Hasta 900px) --- */
 @media (max-width: 900px) {
-    .main-container { flex-direction: column; }
+     body { padding-top: 60px; }
+    .main-page-header { height: 60px; padding: 12px 20px; }
+    .main-page-header h1 { font-size: 1.6em; padding-top: 2px;}
     .album-panel {
-        position: relative;
-        height: auto;
-        width: 100%;
-        padding: 30px 20px; /* Reducir padding vertical un poco */
+        min-height: auto;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    .album-cover-container { width: 60%; max-width: 250px; }
-    .main-player-controls { max-width: 90%; }
-
-    .tracklist-panel {
-        padding: 30px 20px; /* Reducir padding horizontal */
-        min-height: auto; /* Altura automática */
-    }
-    .tracklist-header h2 { font-size: 1.8em; }
-
-    /* Ajustes para la lista y detalles en móvil */
-    .track-title-button { font-size: 1em; } /* Mantener tamaño legible */
-    .play-track-btn { font-size: 1.2em; width: 34px; height: 34px; } /* Ligeramente más pequeño */
-    .track-item.open .track-details {
-        padding: 15px 15px 20px 25px; /* REDUCIR padding izquierdo para dar más espacio a las letras */
-    }
-    .track-details h4 { font-size: 1.1em; } /* Título de letra un poco más pequeño */
-    .track-details pre {
-        font-size: 0.9em;  /* Aumentar ligeramente tamaño de letra */
-        padding: 10px;     /* Reducir padding interno del bloque de letra */
-    }
-
-    /* Sección Sobre la Banda */
-     .about-band-section { padding: 20px 15px; }
-     .about-band-section h2 { font-size: 1.6em; }
-     .about-band-section h4 { font-size: 1.2em; } /* Títulos internos (Integrantes, Bio) */
-     .band-members li, .band-bio p { font-size: 0.95em; } /* Tamaño de texto de bio */
-
-    /* Sección Foto Banda */
-    .band-photo-section img { max-width: 90%; }
+        padding: 30px 20px;
+        border-right: none; /* Quitar borde en tablet/móvil */
+     }
+    .tracklist-panel { padding: 30px 15px; }
+    .about-band-section { padding: 20px 15px; }
+    .about-band-section h2 { font-size: 1.6em; }
+    .band-members h4, .band-bio h4 { font-size: 1.2em; }
+    .band-members li, .band-bio p { font-size: 0.95em; }
+    .track-title-button { font-size: 1em; }
+    .play-track-btn { font-size: 1.2em; width: 34px; height: 34px; }
+    .track-item.open .track-details { padding: 15px 15px 20px 30px; } /* Ajustar padding */
+    .track-details pre { font-size: 0.9em; padding: 10px; }
+    .band-photo-section img { max-width: 90%; filter: grayscale(0.4) sepia(0.15) contrast(1.05) brightness(0.95); }
     .tracklist-panel footer { font-size: 0.85em; }
-
-     /* Modal */
      .modal-content { width: 90%; }
 }
 
-/* --- Estilos para Móviles Pequeños (Hasta 480px) --- */
 @media (max-width: 480px) {
-    .album-panel { padding: 20px 15px; } /* Menos padding aún */
-    .album-cover-container { width: 70%; max-width: 180px; } /* Más pequeño */
-    .enlarge-icon { display: none; }
-
-    /* Ajustar tamaño y espaciado de botones principales */
+    body { padding-top: 50px; }
+     .main-page-header { height: 50px; padding: 10px 15px; }
+    .main-page-header h1 { font-size: 1.3em; }
+    .main-page-header .band-alias { display: block; font-size: 0.55em; }
+    .album-panel { padding: 20px 15px; }
+    .album-cover-container { width: 70%; max-width: 180px; }
     .main-player-controls .buttons { gap: 5px; }
     .main-player-controls button { font-size: 0.85em; padding: 5px 8px; }
-    .main-player-controls button#play-pause-btn { font-size: 1em; padding: 5px 10px; width: 36px; }
+    .main-player-controls button#play-pause-btn { font-size: 1em; padding: 5px 10px; width: 40px; }
     .main-player-controls button#play-all-btn { margin-top: 8px; width: 75%; padding: 8px 15px; }
-
-    .tracklist-panel { padding: 25px 10px; } /* Menos padding */
+    .tracklist-panel { padding: 25px 10px; }
     .tracklist-header h2 { font-size: 1.5em; }
-
-     /* Ajustes más finos para la lista */
-    .track-title-button { font-size: 0.9em; }
-    .play-track-btn { font-size: 1em; width: 30px; height: 30px; padding: 4px 8px; margin: 0 2px 0 5px; }
-    .track-number { min-width: 20px; } /* Reducir espacio número */
-    .expand-icon { margin-left: 8px; } /* Acercar icono expandir */
-
-    /* Detalles y Letras en Móviles Pequeños */
-    .track-item.open .track-details {
-        padding: 10px 10px 15px 15px; /* MENOS padding izquierdo aún */
-    }
-     .track-details h4 { font-size: 1em; }
-     .track-details pre {
-        font-size: 0.85em; /* Tamaño legible pero compacto */
-        padding: 8px;
-        line-height: 1.5; /* Asegurar buen espaciado vertical */
-    }
-
-     /* Bio en móviles pequeños */
-     .about-band-section { padding: 15px 10px; }
-     .about-band-section h2 { font-size: 1.4em; }
-     .about-band-section h4 { font-size: 1.1em; }
+    .about-band-section { padding: 15px 10px; }
+    .about-band-section h2 { font-size: 1.4em; }
+     .band-members h4, .band-bio h4 { font-size: 1.1em; }
      .band-members li, .band-bio p { font-size: 0.9em; }
-
+    .track-title-button { font-size: 0.9em; }
+    .play-track-btn { font-size: 1.1em; width: 30px; height: 30px; padding: 4px 8px; margin: 0 2px 0 5px; }
+    .track-item.open .track-details { padding: 10px 10px 15px 25px; }
+    .track-details pre { font-size: 0.85em; line-height: 1.5; padding: 8px; }
     .band-photo-section { margin-top: 30px; padding-top: 20px; }
-    .band-photo-section img { max-width: 95%; }
+    .band-photo-section img { max-width: 95%; filter: grayscale(0.6) sepia(0.1) contrast(1.0) brightness(1.0); } /* Ajustar filtro para móvil */
     .tracklist-panel footer { font-size: 0.8em; }
-
-     /* Modal en móviles pequeños */
      .modal-content { width: 95%; }
-     .modal-close { font-size: 30px; top: 10px; right: 15px; }
+     .modal-close { font-size: 35px; top: 10px; right: 15px; }
 }
