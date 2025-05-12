@@ -12,10 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentTimeEl = document.getElementById('current-time');
     const durationEl = document.getElementById('duration');
     const playerCurrentTrackTitle = document.getElementById('player-current-track-title');
-    // Elementos del Modal
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
-    const coverImageContainer = document.querySelector('.album-cover-container'); // Contenedor de la portada
+    const coverImageContainer = document.querySelector('.album-cover-container');
     const closeModalBtn = document.querySelector('.modal-close');
 
     // --- ESTADO DEL REPRODUCTOR ---
@@ -38,13 +37,12 @@ document.addEventListener('DOMContentLoaded', function() {
         checkAudioButtonsAvailability();
     }
 
-    function loadTrack(index, playImmediately = false) {
+    function loadTrack(index, playImmediately = false, autoPlayNext = false) {
         if (index >= 0 && index < tracksData.length) {
-             const previousTrackIndex = currentTrackIndex; // Guardar índice anterior
+            const previousTrackIndex = currentTrackIndex;
 
-             if (index !== currentTrackIndex || !audioPlayer.src || audioPlayer.src !== tracksData[index].src) {
-                 // Quitar estado visual de 'playing' del botón anterior si existe y el índice era válido
-                if (previousTrackIndex !== -1 && tracksData[previousTrackIndex] && tracksData[previousTrackIndex].playBtn) {
+            if (index !== currentTrackIndex || !audioPlayer.src || audioPlayer.currentSrc !== tracksData[index].src) {
+                if (previousTrackIndex !== -1 && tracksData[previousTrackIndex]?.playBtn) {
                     tracksData[previousTrackIndex].playBtn.textContent = '▶';
                     tracksData[previousTrackIndex].element.classList.remove('playing');
                 }
@@ -58,73 +56,85 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (playImmediately) {
                         playTrack();
                     }
+                    // Manejo del acordeón cuando es autoPlayNext
+                    if (autoPlayNext) {
+                        closeAllAccordions(); // Cierra todos
+                        // Opcional: abrir el de la nueva canción
+                        // if (tracksData[currentTrackIndex]) {
+                        //     toggleAccordion(tracksData[currentTrackIndex].element, true); // true para forzar apertura
+                        // }
+                    }
                 };
                 audioPlayer.onerror = () => {
-                     console.error(`Error al cargar la pista: ${tracksData[index]?.src || 'desconocida'}`);
-                     playerCurrentTrackTitle.textContent = "Error al cargar pista";
-                     // Resetear estado visual del botón que falló
-                     if (tracksData[index] && tracksData[index].playBtn) {
-                         tracksData[index].playBtn.textContent = '▶';
-                         tracksData[index].element.classList.remove('playing');
-                     }
-                     currentTrackIndex = -1; // O intentar la siguiente? Por ahora reseteamos
-                     updatePlayerUI(); // Actualiza título a error
-                     checkAudioButtonsAvailability();
+                    console.error(`Error al cargar la pista: ${tracksData[index]?.src || 'desconocida'}`);
+                    playerCurrentTrackTitle.textContent = "Error al cargar pista";
+                    if (tracksData[index]?.playBtn) {
+                        tracksData[index].playBtn.textContent = '▶';
+                        tracksData[index].element.classList.remove('playing');
+                    }
+                    currentTrackIndex = -1;
+                    updatePlayerUI();
+                    checkAudioButtonsAvailability();
+                }
+                audioPlayer.load();
+            } else if (playImmediately && !isPlaying) {
+                playTrack();
+                 if (autoPlayNext) { // Si es la misma pista (improbable en autoPlayNext, pero por si acaso)
+                    closeAllAccordions();
                  }
-                 audioPlayer.load();
-
-             } else if (playImmediately && !isPlaying) {
-                 playTrack();
-             } else if (!playImmediately) {
-                 updatePlayerUI(); // Solo actualiza UI (reset visual progreso)
-             }
-             updateActiveTrackVisuals(); // Siempre actualiza el resaltado de la lista
+            } else if (!playImmediately) {
+                updatePlayerUI();
+            }
+            updateActiveTrackVisuals();
         } else {
-            console.error(`Índice de pista inválido: ${index}`);
+            console.warn(`Índice de pista inválido para cargar: ${index}`);
+            // Si se llega al final de la lista por nextTrack y no hay loop, detener.
+            if (autoPlayNext) { // Solo si venía de un 'ended'
+                pauseTrack(); // Detener la reproducción
+                currentTrackIndex = -1; // Resetear
+                updatePlayerUI();
+                checkAudioButtonsAvailability();
+                updateActiveTrackVisuals();
+                closeAllAccordions();
+            }
         }
     }
 
     // --- FUNCIONES DE REPRODUCCIÓN ---
     function playTrack() {
         if (currentTrackIndex === -1 && tracksData.length > 0) {
-             loadTrack(0, true);
-             return;
+            loadTrack(0, true, true); // Carga la primera, reproduce y marca como autoPlayNext para acordeón
+            return;
         }
-        if (currentTrackIndex !== -1) {
-            // Verificar si el audio está listo (readyState > 0)
-            if (audioPlayer.readyState > 0) {
+        if (currentTrackIndex !== -1 && tracksData[currentTrackIndex]) {
+            if (audioPlayer.readyState >= 2) { // HAVE_CURRENT_DATA o superior
                 audioPlayer.play().then(() => {
                     isPlaying = true;
-                    playPauseBtn.textContent = '⏸';
-                    if (tracksData[currentTrackIndex]?.playBtn) {
-                        tracksData[currentTrackIndex].playBtn.textContent = '⏸'; // Icono pausa individual
-                    }
-                    tracksData[currentTrackIndex]?.element.classList.add('playing');
-                }).catch(error => console.error("Error al reproducir:", error));
+                    // La actualización de UI y visuales se hará con los eventos 'play'/'pause' del audioPlayer
+                }).catch(error => {
+                    console.error("Error al reproducir:", error);
+                    isPlaying = false; // Asegurar estado correcto
+                    updatePlayerUI(); // Actualiza botones si falla el play
+                    updateActiveTrackVisuals();
+                });
             } else {
-                // Si no está listo, esperar a 'canplay' o reintentar (más complejo)
-                 console.warn("Audio no listo para reproducir, esperando...");
-                 // Una vez que pueda reproducir, intentar de nuevo (simple)
-                 audioPlayer.oncanplay = () => {
-                     if (!isPlaying && currentTrackIndex !== -1) { // Solo si no empezó a sonar ya
-                         playTrack();
-                     }
-                     audioPlayer.oncanplay = null; // Remover listener para evitar múltiples llamadas
-                 };
+                console.warn("Audio no listo para reproducir, esperando 'canplaythrough' o 'canplay'");
+                // Escuchar 'canplay' para intentar reproducir tan pronto sea posible
+                const tryPlayWhenReady = () => {
+                    if (!isPlaying && currentTrackIndex !== -1 && tracksData[currentTrackIndex]) {
+                        playTrack(); // Intenta de nuevo
+                    }
+                    audioPlayer.removeEventListener('canplay', tryPlayWhenReady);
+                };
+                audioPlayer.addEventListener('canplay', tryPlayWhenReady);
             }
         }
     }
 
-
     function pauseTrack() {
         if (currentTrackIndex !== -1) {
             audioPlayer.pause();
-            isPlaying = false;
-            playPauseBtn.textContent = '▶';
-            if (tracksData[currentTrackIndex]?.playBtn) {
-                tracksData[currentTrackIndex].playBtn.textContent = '▶';
-            }
-            tracksData[currentTrackIndex]?.element.classList.remove('playing');
+            // isPlaying y UI se actualizan con el evento 'pause' del audioPlayer
         }
     }
 
@@ -136,113 +146,132 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function nextTrack() {
-        const wasPlaying = isPlaying;
-        let newIndex = currentTrackIndex === -1 ? 0 : (currentTrackIndex + 1) % tracksData.length;
-        loadTrack(newIndex, wasPlaying);
+    function nextTrack(eventFromEnded = false) { // Nuevo parámetro
+        const wasPlaying = isPlaying || eventFromEnded; // Si terminó, se considera que "estaba sonando" para la siguiente
+        let newIndex = currentTrackIndex === -1 ? 0 : (currentTrackIndex + 1);
+
+        if (newIndex >= tracksData.length) {
+            // Opción 1: Detener al final de la lista
+             // newIndex = -1; // Para indicar que no hay más pistas y detener
+             // loadTrack(newIndex, false, eventFromEnded); // Carga "nada", no reproduce, maneja acordeón
+            // Opción 2: Volver al inicio (Loop)
+            newIndex = 0;
+            loadTrack(newIndex, wasPlaying, eventFromEnded);
+        } else {
+            loadTrack(newIndex, wasPlaying, eventFromEnded);
+        }
     }
 
     function prevTrack() {
         const wasPlaying = isPlaying;
         let newIndex = currentTrackIndex - 1;
         if (newIndex < 0) newIndex = tracksData.length - 1;
-        if (currentTrackIndex === -1) newIndex = tracksData.length - 1; // Si no había nada, ir a la última
-        loadTrack(newIndex, wasPlaying);
+        if (currentTrackIndex === -1) newIndex = tracksData.length - 1;
+        loadTrack(newIndex, wasPlaying, false); // El false es para autoPlayNext, no aplica aquí
     }
 
     function playAllTracks() {
-        loadTrack(0, true);
-        closeAllAccordions(); // Cerrar todos al darle play all
+        loadTrack(0, true, true); // El segundo true es para autoPlayNext para manejo de acordeón
+        // closeAllAccordions(); // Ya se maneja en loadTrack si es autoPlayNext
     }
 
-
     // --- ACTUALIZACIONES VISUALES Y UI ---
-    function formatTime(seconds) { /* ... (sin cambios) ... */ if (isNaN(seconds) || seconds < 0) return '0:00'; const minutes = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; }
-    function updateProgress() { /* ... (sin cambios) ... */ const { duration, currentTime } = audioPlayer; if (duration && !isNaN(duration)) { const progressPercent = (currentTime / duration) * 100; progress.style.width = `${progressPercent}%`; currentTimeEl.textContent = formatTime(currentTime); } else { progress.style.width = '0%'; currentTimeEl.textContent = formatTime(currentTime); } }
-    function displayDuration() { /* ... (sin cambios) ... */ const { duration } = audioPlayer; if (duration && !isNaN(duration)) { durationEl.textContent = formatTime(duration); } else { durationEl.textContent = '0:00'; } }
-    function setProgress(e) { /* ... (sin cambios) ... */ const width = progressContainer.clientWidth; const clickX = e.offsetX; const duration = audioPlayer.duration; if (duration && !isNaN(duration)) { audioPlayer.currentTime = (clickX / width) * duration; if (!isPlaying) updateProgress(); } }
+    function formatTime(seconds) { if (isNaN(seconds) || seconds < 0) return '0:00'; const minutes = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; }
+    function updateProgress() { const { duration, currentTime } = audioPlayer; if (duration && !isNaN(duration)) { const progressPercent = (currentTime / duration) * 100; progress.style.width = `${progressPercent}%`; currentTimeEl.textContent = formatTime(currentTime); } else { progress.style.width = '0%'; currentTimeEl.textContent = formatTime(currentTime); } }
+    function displayDuration() { const { duration } = audioPlayer; if (duration && !isNaN(duration)) { durationEl.textContent = formatTime(duration); } else { durationEl.textContent = '0:00'; } }
+    function setProgress(e) { const width = progressContainer.clientWidth; const clickX = e.offsetX; const duration = audioPlayer.duration; if (duration && !isNaN(duration)) { audioPlayer.currentTime = (clickX / width) * duration; if (!isPlaying) updateProgress(); } }
 
     function updateActiveTrackVisuals() {
         trackItems.forEach((item, index) => {
             const playBtn = tracksData[index]?.playBtn;
             if (index === currentTrackIndex) {
                 item.classList.add('active');
-                // Actualizar icono play/pause individual
-                if (playBtn) {
-                    playBtn.textContent = isPlaying ? '⏸' : '▶';
-                }
-                 if(isPlaying) {
-                     item.classList.add('playing');
-                 } else {
-                     item.classList.remove('playing');
-                 }
+                if (playBtn) playBtn.textContent = isPlaying ? '⏸' : '▶';
+                if(isPlaying) item.classList.add('playing');
+                else item.classList.remove('playing');
             } else {
                 item.classList.remove('active');
                 item.classList.remove('playing');
-                if (playBtn) {
-                    playBtn.textContent = '▶'; // Asegurar icono play en las no activas
-                }
+                if (playBtn) playBtn.textContent = '▶';
             }
         });
     }
 
-     function updatePlayerUI() {
+    function updatePlayerUI() {
         if (currentTrackIndex !== -1 && tracksData[currentTrackIndex]) {
             playerCurrentTrackTitle.textContent = `${currentTrackIndex + 1}. ${tracksData[currentTrackIndex].title}`;
-             displayDuration();
+            displayDuration();
         } else {
             playerCurrentTrackTitle.textContent = "-- Selecciona una Pista --";
             durationEl.textContent = '0:00';
             currentTimeEl.textContent = '0:00';
             progress.style.width = '0%';
         }
-        // Actualizar estado visual de botones play/pause también
         playPauseBtn.textContent = isPlaying ? '⏸' : '▶';
-        if (currentTrackIndex !== -1 && tracksData[currentTrackIndex]?.playBtn) {
-            tracksData[currentTrackIndex].playBtn.textContent = isPlaying ? '⏸' : '▶';
-        }
+        // No es necesario actualizar botones individuales aquí, se hace en updateActiveTrackVisuals
     }
 
-     function checkAudioButtonsAvailability() { /* ... (sin cambios) ... */ const hasTrackLoaded = currentTrackIndex !== -1 && !isNaN(audioPlayer.duration); playPauseBtn.disabled = !hasTrackLoaded && tracksData.length === 0; prevBtn.disabled = tracksData.length <= 1; nextBtn.disabled = tracksData.length <= 1; playAllBtn.disabled = tracksData.length === 0; progressContainer.style.pointerEvents = hasTrackLoaded ? 'auto' : 'none'; progressContainer.style.opacity = hasTrackLoaded ? '1' : '0.5'; }
+    function checkAudioButtonsAvailability() {
+        const hasValidTrackSelected = currentTrackIndex !== -1 && tracksData.length > 0;
+        const canPlaySomething = tracksData.length > 0;
+
+        playPauseBtn.disabled = !canPlaySomething;
+        prevBtn.disabled = !canPlaySomething; // Se podría deshabilitar si es la primera y no hay loop
+        nextBtn.disabled = !canPlaySomething; // Se podría deshabilitar si es la última y no hay loop
+        playAllBtn.disabled = !canPlaySomething;
+
+        progressContainer.style.pointerEvents = hasValidTrackSelected ? 'auto' : 'none';
+        progressContainer.style.opacity = hasValidTrackSelected ? '1' : '0.5';
+    }
+
 
     // --- LÓGICA DEL ACORDEÓN ---
-    function toggleAccordion(itemToToggle) { /* ... (lógica sin cambios significativos) ... */ const detailsDiv = itemToToggle.querySelector('.track-details'); const icon = itemToToggle.querySelector('.expand-icon'); const currentlyOpen = itemToToggle.classList.contains('open'); closeAllAccordions(itemToToggle); if (!currentlyOpen) { itemToToggle.classList.add('open'); requestAnimationFrame(() => { detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px"; }); icon.textContent = '−'; } else { itemToToggle.classList.remove('open'); detailsDiv.style.maxHeight = null; icon.textContent = '+'; } }
-    function closeAllAccordions(exceptItem = null) { /* ... (sin cambios) ... */ trackItems.forEach(item => { if (item !== exceptItem && item.classList.contains('open')) { item.classList.remove('open'); item.querySelector('.track-details').style.maxHeight = null; item.querySelector('.expand-icon').textContent = '+'; } }); }
+    function toggleAccordion(itemToToggle, forceOpen = false) { // Nuevo parámetro forceOpen
+        const detailsDiv = itemToToggle.querySelector('.track-details');
+        const icon = itemToToggle.querySelector('.expand-icon');
+        const currentlyOpen = itemToToggle.classList.contains('open');
+
+        closeAllAccordions(itemToToggle);
+
+        if (forceOpen || !currentlyOpen) { // Si se fuerza la apertura o no está abierto
+            itemToToggle.classList.add('open');
+            requestAnimationFrame(() => { // Asegura que el DOM se actualice antes de medir scrollHeight
+                detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px";
+            });
+            icon.textContent = '−';
+        } else if (!forceOpen && currentlyOpen) { // Si no se fuerza y ya está abierto, lo cierra
+            itemToToggle.classList.remove('open');
+            detailsDiv.style.maxHeight = null;
+            icon.textContent = '+';
+        }
+    }
+
+    function closeAllAccordions(exceptItem = null) {
+        trackItems.forEach(item => {
+            if (item !== exceptItem && item.classList.contains('open')) {
+                item.classList.remove('open');
+                item.querySelector('.track-details').style.maxHeight = null;
+                item.querySelector('.expand-icon').textContent = '+';
+            }
+        });
+    }
 
     // --- LÓGICA DEL MODAL IMAGEN ---
-    function openModal() {
-        if (modal && modalImage && coverImageContainer) {
-            const imgSrc = coverImageContainer.querySelector('img')?.src;
-            if(imgSrc) {
-                modalImage.src = imgSrc;
-                modal.classList.add('active'); // Usar clase para mostrar/ocultar con transición
-                // Opcional: Deshabilitar scroll del body mientras el modal está abierto
-                document.body.style.overflow = 'hidden';
-            }
-        }
-    }
-
-    function closeModal() {
-        if (modal) {
-            modal.classList.remove('active');
-             // Opcional: Rehabilitar scroll del body
-             document.body.style.overflow = '';
-        }
-    }
-
+    function openModal() { if (modal && modalImage && coverImageContainer) { const imgSrc = coverImageContainer.querySelector('img')?.src; if(imgSrc) { modalImage.src = imgSrc; modal.classList.add('active'); document.body.style.overflow = 'hidden'; } } }
+    function closeModal() { if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; } }
 
     // --- EVENT LISTENERS ---
     if (playPauseBtn) playPauseBtn.addEventListener('click', playPauseToggle);
-    if (nextBtn) nextBtn.addEventListener('click', nextTrack);
+    if (nextBtn) nextBtn.addEventListener('click', () => nextTrack(false)); // false: no es desde 'ended'
     if (prevBtn) prevBtn.addEventListener('click', prevTrack);
     if (playAllBtn) playAllBtn.addEventListener('click', playAllTracks);
+
     if (audioPlayer) {
         audioPlayer.addEventListener('timeupdate', updateProgress);
-        audioPlayer.addEventListener('ended', nextTrack);
-         // Usar los eventos 'play' y 'pause' para actualizar el estado de forma más fiable
-         audioPlayer.addEventListener('play', () => { isPlaying = true; updatePlayerUI(); updateActiveTrackVisuals(); });
-         audioPlayer.addEventListener('pause', () => { isPlaying = false; updatePlayerUI(); updateActiveTrackVisuals(); });
-         audioPlayer.addEventListener('loadedmetadata', updatePlayerUI); // Asegura UI actualizada al cargar meta
+        audioPlayer.addEventListener('ended', () => nextTrack(true)); // true: sí es desde 'ended'
+        audioPlayer.addEventListener('play', () => { isPlaying = true; updatePlayerUI(); updateActiveTrackVisuals(); });
+        audioPlayer.addEventListener('pause', () => { isPlaying = false; updatePlayerUI(); updateActiveTrackVisuals(); });
+        audioPlayer.addEventListener('loadedmetadata', updatePlayerUI);
     }
     if (progressContainer) progressContainer.addEventListener('click', setProgress);
 
@@ -258,33 +287,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (trackIndex === currentTrackIndex && isPlaying) {
                     pauseTrack();
                 } else {
-                    loadTrack(trackIndex, true);
-                     // Opcional: Abrir acordeón al darle play individual si no está abierto
-                     // if (!item.classList.contains('open')) {
-                     //    toggleAccordion(item);
-                     // }
+                    loadTrack(trackIndex, true, false); // El false es para autoPlayNext, no aplica aquí
+                    // No es necesario abrir el acordeón aquí, el usuario lo controla
                 }
             });
         }
     });
 
-    // Event Listeners para el Modal
     if (coverImageContainer) coverImageContainer.addEventListener('click', openModal);
     if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-    // Cerrar modal al hacer clic fuera de la imagen (en el fondo oscuro)
-    if (modal) {
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) { // Si el clic fue directamente en el fondo del modal
-                closeModal();
-            }
-        });
-    }
+    if (modal) modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
 
     // --- INICIALIZAR ---
     gatherTrackData();
-
-    // Footer year
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
-
-}); // Fin de 'DOMContentLoaded'
+});
