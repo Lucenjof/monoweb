@@ -387,37 +387,101 @@ body {
 /* ----------------------------- */
 /* -- RESPONSIVIDAD (Ajustes) -- */
 /* ----------------------------- */
+/* ... (Estilos generales y de escritorio van aquí arriba) ... */
+
+
+/* ----------------------------- */
+/* -- RESPONSIVIDAD -- */
+/* ----------------------------- */
+
+/* --- Estilos para Tablets y Móviles Grandes (Hasta 900px) --- */
 @media (max-width: 900px) {
     .main-container { flex-direction: column; }
-    .album-panel { position: relative; height: auto; width: 100%; padding: 30px 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-    .album-cover-container { width: 60%; max-width: 250px; } /* Más pequeño */
+    .album-panel {
+        position: relative;
+        height: auto;
+        width: 100%;
+        padding: 30px 20px; /* Reducir padding vertical un poco */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    .album-cover-container { width: 60%; max-width: 250px; }
     .main-player-controls { max-width: 90%; }
-    .tracklist-panel { padding: 30px 15px; min-height: auto; } /* Ajustar padding */
+
+    .tracklist-panel {
+        padding: 30px 20px; /* Reducir padding horizontal */
+        min-height: auto; /* Altura automática */
+    }
     .tracklist-header h2 { font-size: 1.8em; }
-    .about-band-section { padding: 20px; }
-    .about-band-section h2 { font-size: 1.6em; }
-    .track-title-button { font-size: 1em; }
-    .play-track-btn { font-size: 1.2em; width: 32px; height: 32px; }
-    .track-item.open .track-details { padding: 15px 15px 20px 40px; } /* Ajustar padding */
+
+    /* Ajustes para la lista y detalles en móvil */
+    .track-title-button { font-size: 1em; } /* Mantener tamaño legible */
+    .play-track-btn { font-size: 1.2em; width: 34px; height: 34px; } /* Ligeramente más pequeño */
+    .track-item.open .track-details {
+        padding: 15px 15px 20px 25px; /* REDUCIR padding izquierdo para dar más espacio a las letras */
+    }
+    .track-details h4 { font-size: 1.1em; } /* Título de letra un poco más pequeño */
+    .track-details pre {
+        font-size: 0.9em;  /* Aumentar ligeramente tamaño de letra */
+        padding: 10px;     /* Reducir padding interno del bloque de letra */
+    }
+
+    /* Sección Sobre la Banda */
+     .about-band-section { padding: 20px 15px; }
+     .about-band-section h2 { font-size: 1.6em; }
+     .about-band-section h4 { font-size: 1.2em; } /* Títulos internos (Integrantes, Bio) */
+     .band-members li, .band-bio p { font-size: 0.95em; } /* Tamaño de texto de bio */
+
+    /* Sección Foto Banda */
     .band-photo-section img { max-width: 90%; }
+    .tracklist-panel footer { font-size: 0.85em; }
+
+     /* Modal */
      .modal-content { width: 90%; }
 }
 
+/* --- Estilos para Móviles Pequeños (Hasta 480px) --- */
 @media (max-width: 480px) {
-    .album-cover-container { width: 70%; max-width: 200px; }
-    .enlarge-icon { display: none; } /* Ocultar icono en móviles */
-    .main-player-controls .buttons { gap: 8px; flex-wrap: wrap; justify-content: center; }
-    .main-player-controls button { font-size: 0.9em; padding: 6px 10px; }
-    .main-player-controls button#play-pause-btn { font-size: 1.1em; padding: 6px 12px; width: 40px; }
-    .main-player-controls button#play-all-btn { margin-top: 10px; width: 80%; }
-    .tracklist-header h2 { font-size: 1.6em; }
-    .about-band-section { padding: 15px; }
-    .about-band-section h2 { font-size: 1.4em; }
+    .album-panel { padding: 20px 15px; } /* Menos padding aún */
+    .album-cover-container { width: 70%; max-width: 180px; } /* Más pequeño */
+    .enlarge-icon { display: none; }
+
+    /* Ajustar tamaño y espaciado de botones principales */
+    .main-player-controls .buttons { gap: 5px; }
+    .main-player-controls button { font-size: 0.85em; padding: 5px 8px; }
+    .main-player-controls button#play-pause-btn { font-size: 1em; padding: 5px 10px; width: 36px; }
+    .main-player-controls button#play-all-btn { margin-top: 8px; width: 75%; padding: 8px 15px; }
+
+    .tracklist-panel { padding: 25px 10px; } /* Menos padding */
+    .tracklist-header h2 { font-size: 1.5em; }
+
+     /* Ajustes más finos para la lista */
     .track-title-button { font-size: 0.9em; }
-    .play-track-btn { font-size: 1.1em; width: 30px; height: 30px; padding: 6px 10px; margin: 0 3px 0 5px; }
-    .track-item.open .track-details { padding: 10px 10px 15px 30px; } /* Menos indentación */
-    .track-details pre { font-size: 0.8em; }
+    .play-track-btn { font-size: 1em; width: 30px; height: 30px; padding: 4px 8px; margin: 0 2px 0 5px; }
+    .track-number { min-width: 20px; } /* Reducir espacio número */
+    .expand-icon { margin-left: 8px; } /* Acercar icono expandir */
+
+    /* Detalles y Letras en Móviles Pequeños */
+    .track-item.open .track-details {
+        padding: 10px 10px 15px 15px; /* MENOS padding izquierdo aún */
+    }
+     .track-details h4 { font-size: 1em; }
+     .track-details pre {
+        font-size: 0.85em; /* Tamaño legible pero compacto */
+        padding: 8px;
+        line-height: 1.5; /* Asegurar buen espaciado vertical */
+    }
+
+     /* Bio en móviles pequeños */
+     .about-band-section { padding: 15px 10px; }
+     .about-band-section h2 { font-size: 1.4em; }
+     .about-band-section h4 { font-size: 1.1em; }
+     .band-members li, .band-bio p { font-size: 0.9em; }
+
+    .band-photo-section { margin-top: 30px; padding-top: 20px; }
     .band-photo-section img { max-width: 95%; }
+    .tracklist-panel footer { font-size: 0.8em; }
+
+     /* Modal en móviles pequeños */
      .modal-content { width: 95%; }
-     .modal-close { font-size: 30px; top: 10px; right: 20px; }
+     .modal-close { font-size: 30px; top: 10px; right: 15px; }
 }
