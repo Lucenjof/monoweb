@@ -11,18 +11,37 @@
 <body>
 
     <header class="main-page-header">
-        <h1>MONOCIEN Y LOS CUERPOS CELESTES</h1>
+        <h1>Monocien y los cuerpos celestes <span class="band-alias">(MYLCC)</span></h1>
     </header>
+
     <div class="main-container">
 
         <aside class="album-panel">
             <div class="album-cover-container">
-                <img src="img/album-cover.jpg" alt="Portada del Álbum Monocien y los cuerpos celestes" id="album-cover-img"
+                <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC" id="album-cover-img"
                     class="enlargeable-cover">
-                <div class="enlarge-icon" title="Agrandar Portada"> L </div> </div>
+                <div class="enlarge-icon" title="Agrandar Portada"> L </div>
+            </div>
 
+            <div class="album-title-display">
+                <h3>MYLCC</h3>
+            </div>
+
+            <div class="album-info-editable">
+                <p class="album-info-artist">Artista: Monocien y los cuerpos celestes</p>
+                <p class="album-info-year">Año de Lanzamiento: 2018</p>
+                <p class="album-info-credits">Grabado y Mezclado en: Marfil Estudios</p>
+                <div class="album-info-description">
+                    <h4>Sobre el Álbum:</h4>
+                    <p>
+                        "MYLCC" es una exploración sonora que se sumerge en las texturas del rock alternativo
+                        con tintes introspectivos. Cada pista es un capítulo en un relato de búsqueda y reflexión,
+                        marcado por la crudeza instrumental y la lírica evocadora que caracteriza a la banda.
+                    </p>
+                </div>
+                </div>
             <div class="main-player-controls">
-                <h3 id="player-current-track-title">-- Selecciona una Pista --</h3>
+                <h3 id="player-current-track-title">-- | --</h3>
                 <div class="progress-container" id="progress-container">
                     <div class="progress-bar">
                         <div class="progress" id="progress"></div>
@@ -35,20 +54,18 @@
                     <button id="prev-btn" title="Anterior">⏮</button>
                     <button id="play-pause-btn" title="Reproducir/Pausar">▶</button>
                     <button id="next-btn" title="Siguiente">⏭</button>
-                    <button id="play-all-btn" title="Reproducir Todo">Reproducir Álbum</button>
+                    <button id="play-all-btn" title="Reproducir Todo">Reproducir</button>
                 </div>
-                <audio id="audio-player"></audio> </div>
+                <audio id="audio-player"></audio>
+            </div>
         </aside>
 
         <main class="tracklist-panel">
-
             <div class="tracklist-header">
-                <h2>MYLCC</h2>
-                </div>
+                        </div>
 
             <ul class="track-list-accordion">
-                <li class="track-item" data-track-index="0" data-src="audio/track1.mp3">
-                    <div class="track-title-container">
+                <li class="track-item" data-track-index="0" data-src="audio/track1.mp3"> <div class="track-title-container">
                         <button class="play-track-btn" title="Reproducir Pista">▶</button>
                         <button class="track-title-button">
                             <span class="track-number">1.</span>
@@ -57,7 +74,7 @@
                         </button>
                     </div>
                     <div class="track-details">
-                        <h4>Letra: Oeste</h4>
+                        <h4>Oeste</h4>
                         <pre>
 A no ser que la luz
 me quiera dejar
@@ -87,7 +104,7 @@ Ohhh estaré mejor aquí.
                         </button>
                     </div>
                     <div class="track-details">
-                        <h4>Letra: Nada es Perfecto</h4>
+                        <h4>Nada es Perfecto</h4>
                         <pre>
 Hoy, puede que camine con la piel mi voz,
 no se va a notar, quieren más...
@@ -128,7 +145,7 @@ que nunca regresen, que solo el tiempo está.
                         </button>
                     </div>
                     <div class="track-details">
-                        <h4>Letra: Caída Libre</h4>
+                        <h4>Caída Libre</h4>
                         <pre>
 Desatándonos, soltando lo que era uno.
 Rompiéndonos del pasado.
@@ -162,7 +179,7 @@ Nuestra unión ha cambiado para siempre.
                         </button>
                     </div>
                     <div class="track-details">
-                        <h4>Letra: Liberanos</h4>
+                        <h4>Liberanos</h4>
                         <pre>
 Agua que de agua cuelga,
 solo el río sabe cómo llegar.
@@ -171,7 +188,7 @@ solo el río sabe cómo, que puedas progresar.
 
 Agua, libéranos del mal,
                         </pre>
-                        </div>
+                    </div>
                 </li>
 
                 <li class="track-item" data-track-index="4" data-src="audio/track5.mp3">
@@ -184,7 +201,7 @@ Agua, libéranos del mal,
                         </button>
                     </div>
                     <div class="track-details">
-                        <h4>Letra: Buda Mono</h4>
+                        <h4>Buda Mono</h4>
                         <pre>
 Tanta medicina, tanta vitamina, mira,
 mono buda va a bostezar.
@@ -199,13 +216,12 @@ mono buda, exento del mal.
 En la esquina universal
 busca un sol que devorar.
                         </pre>
-                        <p class="track-extra-info"><em>El cierre del viaje.</em></p>
+                        <p class="track-extra-info"><em>.</em></p>
                     </div>
                 </li>
             </ul>
             <section class="about-band-section">
-                <h2>Monocien y los cuerpos celestes</h2>
-
+                <h2>Acerca de nosotros</h2>
                 <div class="band-members">
                     <h4>Integrantes:</h4>
                     <ul>
@@ -214,7 +230,6 @@ busca un sol que devorar.
                         <li><strong>Salvador Bucolo:</strong> Batería</li>
                     </ul>
                 </div>
-
                 <div class="band-bio">
                     <h4>Biografía:</h4>
                     <p>
@@ -232,11 +247,9 @@ busca un sol que devorar.
                 </div>
             </section>
 
-
             <div class="band-photo-section">
                 <img src="img/band-photo.jpg" alt="Monocien y los cuerpos celestes en vivo">
             </div>
-
 
             <footer>
                 <p>&copy; <span id="current-year"></span> Monocien y los cuerpos celestes. Mendoza, Argentina.</p>
@@ -246,10 +259,9 @@ busca un sol que devorar.
     </div> <div id="imageModal" class="modal">
         <span class="modal-close" title="Cerrar">&times;</span>
         <img class="modal-content" id="modalImage">
-        <div class="modal-caption">Portada del Álbum - Monocien y los cuerpos celestes</div>
+        <div class="modal-caption">Portada del Álbum - MYLCC</div>
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
