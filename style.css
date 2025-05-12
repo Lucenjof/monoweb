@@ -2,85 +2,49 @@
 /* -- VARIABLES Y ESTILOS BASE -- */
 /* -------------------------------- */
 
-/* Opcional: Importar fuentes con más carácter (si las usas en --font-sabbath-display) */
+/* Opcional: Importar fuentes */
 /* @import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=UnifrakturMaguntia&family=Open+Sans:wght@400;600&family=Montserrat:wght@400;700&display=swap'); */
 
 :root {
     /* ===== PALETA MINIMALISTA / APPLE / BLACK SABBATH ===== */
-
-    /* --- Fondos Principales --- */
     --color-bg-primary: #121212;
     --color-bg-secondary: #1E1E1E;
     --color-bg-tertiary: #2C2C2C;
-
-    /* --- Textos --- */
     --color-text-primary: #F5F5F7;
     --color-text-secondary: #A0A0A4;
     --color-text-muted: #6E6E73;
     --color-text-on-accent: #FFFFFF;
-
-    /* --- Acentos Principales (Interactividad - Inspiración Apple) --- */
     --color-accent-interactive: #0A84FF;
     --color-accent-interactive-hover: #0060D0;
-
-    /* --- Acentos Secundarios (Toque Black Sabbath - Sutil) --- */
     --color-accent-sabbath-deep: #3B003B; /* Violeta muy oscuro */
-    /* Alternativa Rojo Oscuro: --color-accent-sabbath-deep: #4A0404; */
-    --color-accent-sabbath-highlight: #D4AF37; /* Oro viejo (usar con MUCHA moderación) */
-
-    /* --- Bordes y Separadores --- */
+    --color-accent-sabbath-highlight: #D4AF37; /* Oro viejo */
     --color-border-primary: #38383A;
     --color-border-secondary: #505052;
     --color-border-accented: var(--color-accent-sabbath-deep);
-
-    /* --- Sombras (Sutiles - Estilo Apple) --- */
     --shadow-color-soft: rgba(0, 0, 0, 0.3);
     --shadow-color-medium: rgba(0, 0, 0, 0.5);
-
-    /* --- Fuentes --- */
     --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --font-heading: var(--font-main); /* O 'Montserrat', var(--font-main); si la importas */
+    --font-heading: var(--font-main);
     --font-mono: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    /* Opcional para el nombre de la banda en el header: */
     /* --font-sabbath-display: 'Metamorphous', 'UnifrakturMaguntia', serif; */
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
     font-family: var(--font-main);
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    padding-top: 70px; /* Ajustar si la altura del header cambia */
+    padding-top: 70px;
 }
 
 /* Scrollbar estilizado */
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-    background: var(--color-bg-secondary); /* Fondo de la pista del scroll */
-}
-::-webkit-scrollbar-thumb {
-    background-color: var(--color-border-secondary); /* Color del "pulgar" del scroll */
-    border-radius: 5px;
-    border: 2px solid var(--color-bg-secondary); /* Borde alrededor del pulgar */
-}
-html { /* Para Firefox */
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-border-secondary) var(--color-bg-secondary);
-}
-
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg-secondary); }
+::-webkit-scrollbar-thumb { background-color: var(--color-border-secondary); border-radius: 5px; border: 2px solid var(--color-bg-secondary); }
+html { scrollbar-width: thin; scrollbar-color: var(--color-border-secondary) var(--color-bg-secondary); }
 
 /* -------------------------------- */
 /* -- ENCABEZADO PRINCIPAL -- */
@@ -91,539 +55,276 @@ html { /* Para Firefox */
     border-bottom: 1px solid var(--color-border-primary);
     box-shadow: 0 2px 8px var(--shadow-color-soft);
     text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1001;
-    height: 70px;
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1001; height: 70px;
 }
-
 .main-page-header h1 {
-    margin: 0;
-    font-family: var(--font-heading);
-    /* Si usas una fuente display especial para el logo: */
-    /* font-family: var(--font-sabbath-display); */
-    /* color: var(--color-accent-sabbath-highlight); */
-    font-size: 1.8em;
-    font-weight: 600; /* Más peso para un look Apple */
-    color: var(--color-text-primary);
-    letter-spacing: 0.5px;
-    line-height: 1;
-    padding-top: 7px; /* Ajuste fino vertical */
-    /* text-shadow: 1px 1px 2px var(--color-accent-sabbath-deep); */ /* Sombra sutil si se usa fuente temática */
+    margin: 0; font-family: var(--font-heading); font-size: 1.8em; font-weight: 600;
+    color: var(--color-text-primary); letter-spacing: 0.5px; line-height: 1; padding-top: 7px;
 }
-
 .main-page-header .band-alias {
-    font-size: 0.65em;
-    color: var(--color-text-secondary);
-    font-weight: 400;
-    margin-left: 8px;
-    vertical-align: middle;
-    text-shadow: none;
+    font-size: 0.65em; color: var(--color-text-secondary); font-weight: 400;
+    margin-left: 8px; vertical-align: middle; text-shadow: none;
 }
 
 /* -------------------------------- */
 /* -- LAYOUT Y PANELES -- */
 /* -------------------------------- */
-.main-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
+.main-container { display: flex; flex-wrap: wrap; }
 .album-panel {
-    flex: 1 1 380px; /* Ligeramente más angosto */
-    min-width: 280px;
-    background-color: var(--color-bg-secondary);
-    padding: 30px 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-right: 1px solid var(--color-border-primary);
-    z-index: 10;
+    flex: 1 1 380px; min-width: 280px; background-color: var(--color-bg-secondary);
+    padding: 30px 25px; display: flex; flex-direction: column; align-items: center;
+    border-right: 1px solid var(--color-border-primary); z-index: 10;
     min-height: calc(100vh - 70px);
 }
-
 .tracklist-panel {
-    flex: 2 1 620px; /* Ligeramente más ancho */
-    padding: 35px 40px;
-    overflow-y: auto;
-    background-color: var(--color-bg-primary);
-    min-height: calc(100vh - 70px);
+    flex: 2 1 620px; padding: 35px 40px; overflow-y: auto;
+    background-color: var(--color-bg-primary); min-height: calc(100vh - 70px);
 }
 
 /* -------------------------------- */
 /* -- ELEMENTOS EN COLUMNA IZQUIERDA -- */
 /* -------------------------------- */
 .album-cover-container {
-    width: 85%;
-    max-width: 320px;
-    margin-bottom: 30px;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    border-radius: 6px; /* Bordes más redondeados, estilo Apple */
-    box-shadow: 0 8px 25px var(--shadow-color-medium); /* Sombra más pronunciada */
+    width: 85%; max-width: 320px; margin-bottom: 20px; /* Reducido para dar espacio al título e info */
+    position: relative; cursor: pointer; overflow: hidden;
+    border-radius: 6px; box-shadow: 0 8px 25px var(--shadow-color-medium);
 }
-
 #album-cover-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: none; /* Quitar borde si la sombra es suficiente */
-    transition: transform 0.3s ease-out; /* Transición más suave */
+    width: 100%; height: auto; display: block; border: none;
+    transition: transform 0.3s ease-out;
 }
-.album-cover-container:hover #album-cover-img {
-    transform: scale(1.04);
+.album-cover-container:hover #album-cover-img { transform: scale(1.04); }
+.enlarge-icon {
+    position: absolute; bottom: 12px; right: 12px; background-color: rgba(0, 0, 0, 0.5);
+    color: var(--color-text-on-accent); width: 28px; height: 28px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; font-family: sans-serif;
+    font-size: 16px; font-weight: bold; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.album-cover-container:hover .enlarge-icon { opacity: 1; }
+
+/* Título del Álbum Debajo de Portada */
+.album-title-display {
+    width: 100%; text-align: center; margin-top: 0; /* El cover ya tiene margin-bottom */
+    margin-bottom: 15px; /* Espacio antes de la info del álbum */
+}
+.album-title-display h3 {
+    font-family: var(--font-heading); font-size: 1.5em; color: var(--color-text-primary);
+    font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin: 0;
 }
 
-.enlarge-icon {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: var(--color-text-on-accent);
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
+/* ========= NUEVOS ESTILOS: INFORMACIÓN DEL ÁLBUM EDITABLE ========= */
+.album-info-editable {
+    width: 100%;
+    max-width: 320px; /* Para que no se extienda demasiado */
+    text-align: center;
+    margin-bottom: 25px; /* Espacio antes de los controles */
+    padding: 0 10px; /* Padding lateral si es necesario */
+    font-size: 0.85em; /* Tamaño base para esta sección */
+    color: var(--color-text-secondary);
 }
-.album-cover-container:hover .enlarge-icon {
-    opacity: 1;
+.album-info-editable p {
+    margin-bottom: 6px; /* Espaciado entre líneas de info */
+    line-height: 1.5;
 }
+.album-info-editable .album-info-artist {
+    font-weight: 500;
+    color: var(--color-text-primary); /* Artista un poco más destacado */
+    font-size: 0.95em;
+}
+.album-info-editable .album-info-year,
+.album-info-editable .album-info-label,
+.album-info-editable .album-info-credits {
+    color: var(--color-text-muted); /* Detalles en color más apagado */
+}
+.album-info-editable .album-info-description {
+    margin-top: 12px;
+    text-align: left; /* Descripción puede ser más larga, mejor alineada a la izquierda */
+    border-top: 1px solid var(--color-border-primary);
+    padding-top: 12px;
+}
+.album-info-editable .album-info-description h4 {
+    font-family: var(--font-heading);
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.album-info-editable .album-info-description p {
+    font-size: 0.85em; /* Descripción del álbum un poco más pequeña */
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+}
+.album-info-editable .album-info-purchase-link { /* Estilo para enlace opcional */
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--color-accent-interactive);
+    font-size: 0.9em;
+}
+.album-info-editable .album-info-purchase-link:hover {
+    color: var(--color-accent-interactive-hover);
+}
+/* ================================================================= */
+
 
 /* Controles del Reproductor */
 .main-player-controls {
-    width: 100%;
-    max-width: 350px;
-    text-align: center;
-    color: var(--color-text-secondary);
-    margin-top: auto;
-    padding-top: 25px;
+    width: 100%; max-width: 350px; text-align: center; color: var(--color-text-secondary);
+    margin-top: auto; padding-top: 20px; /* margin-top:auto lo empuja hacia abajo si hay espacio */
 }
-
 #player-current-track-title {
-    font-family: var(--font-heading);
-    color: var(--color-text-primary);
-    font-size: 1.05em; /* Ligeramente más pequeño y limpio */
-    margin-bottom: 15px;
-    min-height: 1.2em;
-    font-weight: 500; /* Peso medio */
-    transition: color 0.3s;
+    font-family: var(--font-heading); color: var(--color-text-primary); font-size: 1.05em;
+    margin-bottom: 15px; min-height: 1.2em; font-weight: 500; transition: color 0.3s;
 }
 .progress-container {
-    width: 100%;
-    cursor: pointer;
-    margin-bottom: 10px;
-    background-color: var(--color-border-primary);
-    height: 6px; /* Barra más delgada */
-    border-radius: 3px;
-    position: relative;
-    transition: opacity 0.3s;
+    width: 100%; cursor: pointer; margin-bottom: 10px; background-color: var(--color-border-primary);
+    height: 6px; border-radius: 3px; position: relative; transition: opacity 0.3s;
 }
-.progress-bar {
-    background-color: var(--color-bg-tertiary);
-    height: 100%;
-    border-radius: 3px;
-    overflow: hidden;
-}
-.progress {
-    background-color: var(--color-accent-interactive); /* Azul Apple para progreso */
-    height: 100%;
-    width: 0%;
-    border-radius: 3px;
-    transition: width 0.1s linear;
-}
-.time-display {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75em; /* Más pequeño */
-    color: var(--color-text-secondary);
-    margin-top: 6px;
-    padding: 0 3px;
-}
-.main-player-controls .buttons {
-    margin-top: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px; /* Menos gap */
-}
+.progress-bar { background-color: var(--color-bg-tertiary); height: 100%; border-radius: 3px; overflow: hidden; }
+.progress { background-color: var(--color-accent-interactive); height: 100%; width: 0%; border-radius: 3px; transition: width 0.1s linear; }
+.time-display { display: flex; justify-content: space-between; font-size: 0.75em; color: var(--color-text-secondary); margin-top: 6px; padding: 0 3px; }
+.main-player-controls .buttons { margin-top: 18px; display: flex; justify-content: center; align-items: center; gap: 12px; }
 .main-player-controls button {
-    background-color: transparent;
-    border: 1px solid var(--color-border-secondary);
-    color: var(--color-text-secondary);
-    padding: 7px 10px; /* Ligeramente más pequeños */
-    border-radius: 5px; /* Bordes más redondeados */
-    cursor: pointer;
-    font-size: 0.95em;
-    transition: all 0.2s ease;
+    background-color: transparent; border: 1px solid var(--color-border-secondary); color: var(--color-text-secondary);
+    padding: 7px 10px; border-radius: 5px; cursor: pointer; font-size: 0.95em; transition: all 0.2s ease;
 }
 .main-player-controls button:hover:not(:disabled) {
-    background-color: var(--color-accent-interactive);
-    color: var(--color-text-on-accent);
-    border-color: var(--color-accent-interactive);
-    transform: translateY(-1px);
+    background-color: var(--color-accent-interactive); color: var(--color-text-on-accent);
+    border-color: var(--color-accent-interactive); transform: translateY(-1px);
 }
-.main-player-controls button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    background-color: transparent !important;
-    transform: none;
-}
-.main-player-controls button#play-pause-btn {
-    font-size: 1.2em;
-    padding: 7px 13px;
-    width: 42px;
-    text-align: center;
-}
+.main-player-controls button:disabled { opacity: 0.4; cursor: not-allowed; background-color: transparent !important; transform: none; }
+.main-player-controls button#play-pause-btn { font-size: 1.2em; padding: 7px 13px; width: 42px; text-align: center; }
 .main-player-controls button#play-all-btn {
-    background-color: var(--color-accent-interactive);
-    color: var(--color-text-on-accent);
-    border-color: var(--color-accent-interactive);
-    padding: 8px 15px;
-    font-weight: 500;
+    background-color: var(--color-accent-interactive); color: var(--color-text-on-accent);
+    border-color: var(--color-accent-interactive); padding: 8px 15px; font-weight: 500;
 }
-.main-player-controls button#play-all-btn:hover:not(:disabled) {
-    background-color: var(--color-accent-interactive-hover);
-}
-
+.main-player-controls button#play-all-btn:hover:not(:disabled) { background-color: var(--color-accent-interactive-hover); }
 
 /* -------------------------------- */
 /* -- ELEMENTOS EN COLUMNA DERECHA -- */
 /* -------------------------------- */
-.tracklist-header {
-    margin-bottom: 25px;
-    text-align: center;
-    border-bottom: 1px solid var(--color-border-primary);
-    padding-bottom: 18px;
-}
+.tracklist-header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid var(--color-border-primary); padding-bottom: 18px; }
 .tracklist-header h2 {
-    font-family: var(--font-heading);
-    font-size: 2em; /* Más limpio */
-    color: var(--color-text-primary);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 600;
+    font-family: var(--font-heading); font-size: 2em; color: var(--color-text-primary);
+    text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;
 }
-
-/* Tracklist */
 .track-list-accordion {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    border: 1px solid var(--color-border-primary);
-    border-radius: 8px; /* Bordes más redondeados estilo Apple */
-    overflow: hidden;
-    background-color: var(--color-bg-secondary); /* Fondo para la lista entera */
+    list-style: none; padding: 0; margin: 0; border: 1px solid var(--color-border-primary);
+    border-radius: 8px; overflow: hidden; background-color: var(--color-bg-secondary);
 }
-.track-item {
-    border-bottom: 1px solid var(--color-border-primary);
-    margin-bottom: 0;
-    transition: background-color 0.15s ease-out;
-}
-.track-item:last-child {
-    border-bottom: none;
-}
-.track-item.active {
-     background-color: var(--color-bg-tertiary); /* Fondo más oscuro para activo */
-     border-left: 3px solid var(--color-accent-interactive); /* Acento azul Apple */
-     margin-left: -3px;
-}
+.track-item { border-bottom: 1px solid var(--color-border-primary); margin-bottom: 0; transition: background-color 0.15s ease-out; }
+.track-item:last-child { border-bottom: none; }
+.track-item.active { background-color: var(--color-bg-tertiary); border-left: 3px solid var(--color-accent-interactive); margin-left: -3px; }
 .track-item.active .track-title-button { color: var(--color-text-primary); font-weight: 600;}
 .track-item.active .track-number { color: var(--color-accent-interactive); }
-
-.track-title-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    cursor: default;
-    transition: background-color 0.15s ease-out;
-    padding: 3px 0 3px 5px; /* Ajustar padding */
-}
-.track-title-container:hover {
-    /* El hover se maneja en .track-title-button para no interferir con el botón de play */
-}
-
+.track-title-container { display: flex; align-items: center; width: 100%; cursor: default; transition: background-color 0.15s ease-out; padding: 3px 0 3px 5px; }
 .play-track-btn {
-    background: transparent;
-    border: none;
-    color: var(--color-text-secondary);
-    font-size: 1.3em; /* Ligeramente más pequeño */
-    cursor: pointer;
-    padding: 7px 10px;
-    margin: 0 4px 0 5px;
-    line-height: 1;
-    border-radius: 50%;
-    width: 34px; height: 34px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.15s ease-out;
+    background: transparent; border: none; color: var(--color-text-secondary); font-size: 1.3em;
+    cursor: pointer; padding: 7px 10px; margin: 0 4px 0 5px; line-height: 1; border-radius: 50%;
+    width: 34px; height: 34px; display: inline-flex; justify-content: center; align-items: center; transition: all 0.15s ease-out;
 }
-.play-track-btn:hover {
-    color: var(--color-text-on-accent);
-    background-color: var(--color-accent-interactive);
-}
-.track-item.playing .play-track-btn {
-    color: var(--color-text-on-accent);
-    background-color: var(--color-accent-interactive-hover);
-}
-
+.play-track-btn:hover { color: var(--color-text-on-accent); background-color: var(--color-accent-interactive); }
+.track-item.playing .play-track-btn { color: var(--color-text-on-accent); background-color: var(--color-accent-interactive-hover); }
 .track-title-button {
-    flex-grow: 1;
-    background: transparent;
-    border: none;
-    padding: 10px 8px 10px 0; /* Ajustar padding */
-    text-align: left;
-    font-family: var(--font-main);
-    color: var(--color-text-secondary);
-    font-size: 1.05em; /* Ligeramente más pequeño */
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.15s ease-out, color 0.15s ease-out;
-    border-radius: 5px; /* Redondeo para el hover */
+    flex-grow: 1; background: transparent; border: none; padding: 10px 8px 10px 0; text-align: left;
+    font-family: var(--font-main); color: var(--color-text-secondary); font-size: 1.05em;
+    display: flex; align-items: center; cursor: pointer; width: 100%;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out; border-radius: 5px;
 }
-.track-title-button:hover {
-     background-color: var(--color-bg-tertiary); /* Solo el área del título con hover */
-     color: var(--color-text-primary);
-}
-.track-number {
-    min-width: 22px; /* Más compacto */
-    font-weight: 500;
-    color: var(--color-text-secondary);
-    transition: color 0.15s ease-out;
-}
-.track-name {
-    flex-grow: 1;
-    margin-left: 8px; /* Más espacio */
-    pointer-events: none;
-    transition: color 0.15s ease-out;
-}
+.track-title-button:hover { background-color: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.track-number { min-width: 22px; font-weight: 500; color: var(--color-text-secondary); transition: color 0.15s ease-out; }
+.track-name { flex-grow: 1; margin-left: 8px; pointer-events: none; transition: color 0.15s ease-out; }
 .expand-icon {
-    font-size: 1.3em;
-    font-weight: bold;
-    margin-left: 12px;
-    padding: 5px;
-    pointer-events: none;
-    transition: transform 0.25s ease-out, color 0.15s ease-out;
+    font-size: 1.3em; font-weight: bold; margin-left: 12px; padding: 5px;
+    pointer-events: none; transition: transform 0.25s ease-out, color 0.15s ease-out;
 }
-.track-item.open .expand-icon {
-    transform: rotate(45deg);
-    color: var(--color-accent-interactive); /* Acento azul */
-}
-
+.track-item.open .expand-icon { transform: rotate(45deg); color: var(--color-accent-interactive); }
 .track-details {
-    max-height: 0;
-    overflow: hidden;
+    max-height: 0; overflow: hidden;
     transition: max-height 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), padding 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
-    background-color: transparent;
-    padding: 0 20px 0 50px; /* Indentación del contenido */
-    border-top: 1px solid transparent; /* Se hará visible al abrir */
+    background-color: transparent; padding: 0 20px 0 50px; border-top: 1px solid transparent;
 }
-.track-item.open .track-details {
-    padding-top: 18px;
-    padding-bottom: 25px;
-    border-top-color: var(--color-border-primary);
-}
-
+.track-item.open .track-details { padding-top: 18px; padding-bottom: 25px; border-top-color: var(--color-border-primary); }
 .track-details h4 {
-    font-family: var(--font-heading);
-    color: var(--color-text-primary); /* Texto primario para título de letra */
-    font-weight: 600;
-    margin-bottom: 12px;
-    font-size: 1.1em;
+    font-family: var(--font-heading); color: var(--color-text-primary); font-weight: 600;
+    margin-bottom: 12px; font-size: 1.1em;
 }
 .track-details pre {
-    font-family: var(--font-mono);
-    background-color: var(--color-bg-primary); /* Fondo igual al principal para que se integre */
-    padding: 12px 15px;
-    border-radius: 6px;
-    color: var(--color-text-secondary); /* Letras en color secundario */
-    font-size: 0.9em;
-    line-height: 1.6;
-    border: 1px solid var(--color-border-primary);
-    white-space: pre-wrap;
+    font-family: var(--font-mono); background-color: var(--color-bg-primary); padding: 12px 15px;
+    border-radius: 6px; color: var(--color-text-secondary); font-size: 0.9em; line-height: 1.6;
+    border: 1px solid var(--color-border-primary); white-space: pre-wrap;
 }
-.track-details .track-extra-info {
-    font-size: 0.8em;
-    color: var(--color-text-muted);
-    margin-top: 12px;
-    font-style: italic;
-}
+.track-details .track-extra-info { font-size: 0.8em; color: var(--color-text-muted); margin-top: 12px; font-style: italic; }
 
 /* Sección Sobre la Banda */
 .about-band-section {
-    background-color: var(--color-bg-secondary);
-    padding: 25px 30px;
-    margin-top: 35px;
-    margin-bottom: 35px;
-    border-radius: 8px;
-    border: 1px solid var(--color-border-primary);
-    /* border-left: 4px solid var(--color-accent-sabbath-deep); /* Borde Sabbath si se quiere */
+    background-color: var(--color-bg-secondary); padding: 25px 30px; margin-top: 35px; margin-bottom: 35px;
+    border-radius: 8px; border: 1px solid var(--color-border-primary);
 }
 .about-band-section h2 {
-    font-family: var(--font-heading);
-    font-size: 1.7em;
-    color: var(--color-text-primary);
-    margin-bottom: 20px;
-    text-align: left;
-    border-bottom: 1px solid var(--color-border-secondary);
-    padding-bottom: 12px;
-    font-weight: 600;
+    font-family: var(--font-heading); font-size: 1.7em; color: var(--color-text-primary);
+    margin-bottom: 20px; text-align: left; border-bottom: 1px solid var(--color-border-secondary);
+    padding-bottom: 12px; font-weight: 600;
 }
 .about-band-section h2::after { display: none; }
-
-.band-members, .band-bio {
-    margin-bottom: 20px;
-}
-.band-members:last-child, .band-bio:last-child {
-     margin-bottom: 0;
-}
+.band-members, .band-bio { margin-bottom: 20px; }
+.band-members:last-child, .band-bio:last-child { margin-bottom: 0; }
 .band-members h4, .band-bio h4 {
-    font-family: var(--font-heading);
-    color: var(--color-text-primary); /* Títulos internos más brillantes */
-    font-size: 1.2em;
-    margin-bottom: 12px;
-    border-bottom: 1px solid var(--color-border-secondary);
-    padding-bottom: 6px;
-    font-weight: 500;
+    font-family: var(--font-heading); color: var(--color-text-primary); font-size: 1.2em;
+    margin-bottom: 12px; border-bottom: 1px solid var(--color-border-secondary);
+    padding-bottom: 6px; font-weight: 500;
 }
-.band-members ul {
-    list-style: none;
-    padding-left: 0;
-}
-.band-members li {
-    margin-bottom: 7px;
-    font-size: 0.95em;
-    color: var(--color-text-secondary);
-}
-.band-members li strong {
-    color: var(--color-text-primary);
-    font-weight: 500;
-}
-.band-bio p {
-     font-size: 0.95em;
-     color: var(--color-text-secondary); /* Bio en color secundario */
-     margin-bottom: 0.9em;
-     line-height: 1.65;
-     text-align: left; /* Para leer mejor bloques largos */
-}
+.band-members ul { list-style: none; padding-left: 0; }
+.band-members li { margin-bottom: 7px; font-size: 0.95em; color: var(--color-text-secondary); }
+.band-members li strong { color: var(--color-text-primary); font-weight: 500; }
+.band-bio p { font-size: 0.95em; color: var(--color-text-secondary); margin-bottom: 0.9em; line-height: 1.65; text-align: left; }
 
 /* Sección Foto Banda */
-.band-photo-section {
-    margin-top: 35px;
-    padding-top: 25px;
-    border-top: 1px solid var(--color-border-primary);
-}
+.band-photo-section { margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--color-border-primary); }
 .band-photo-section img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid var(--color-border-secondary);
-    box-shadow: 0 5px 15px var(--shadow-color-soft);
-    border-radius: 6px;
-    filter: grayscale(0.8) contrast(1.1); /* Estilo B&N más marcado */
+    display: block; max-width: 100%; height: auto; margin: 0 auto;
+    border: 1px solid var(--color-border-secondary); box-shadow: 0 5px 15px var(--shadow-color-soft);
+    border-radius: 6px; filter: grayscale(0.8) contrast(1.1);
 }
 
 /* Footer */
 .tracklist-panel footer {
-    text-align: center;
-    margin-top: 35px;
-    padding: 18px 0;
-    border-top: 1px solid var(--color-border-primary);
-    font-size: 0.85em;
-    color: var(--color-text-muted);
+    text-align: center; margin-top: 35px; padding: 18px 0; border-top: 1px solid var(--color-border-primary);
+    font-size: 0.85em; color: var(--color-text-muted);
 }
-.tracklist-panel footer a {
-    color: var(--color-text-secondary);
-    margin: 0 8px;
-    transition: color 0.2s;
-}
-.tracklist-panel footer a:hover {
-    color: var(--color-accent-interactive);
-}
-
+.tracklist-panel footer a { color: var(--color-text-secondary); margin: 0 8px; transition: color 0.2s; }
+.tracklist-panel footer a:hover { color: var(--color-accent-interactive); }
 
 /* ----------------------------- */
 /* -- ESTILOS DEL MODAL IMAGEN -- */
 /* ----------------------------- */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: var(--color-modal-bg); /* Usar variable de :root */
-    padding-top: 50px;
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
+    display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%;
+    overflow: auto; background-color: var(--color-modal-bg); padding-top: 50px;
+    opacity: 0; transition: opacity 0.3s ease-out;
 }
-.modal.active {
-    display: block;
-    opacity: 1;
-}
-
+.modal.active { display: block; opacity: 1; }
 .modal-content {
-    margin: auto;
-    display: block;
-    width: auto; /* Ajustar al contenido */
-    max-width: 90%;
-    max-height: 85vh; /* Alto máximo para que quepa el caption y close */
-    animation: zoomInModal 0.3s ease-out;
-    background-color: var(--color-bg-secondary); /* Fondo para la imagen */
-    padding: 6px;
-    border: 1px solid var(--color-border-secondary);
-    border-radius: 6px;
+    margin: auto; display: block; width: auto; max-width: 90%; max-height: 85vh;
+    animation: zoomInModal 0.3s ease-out; background-color: var(--color-bg-secondary);
+    padding: 6px; border: 1px solid var(--color-border-secondary); border-radius: 6px;
     box-shadow: 0 10px 30px var(--shadow-color-medium);
 }
-
 @keyframes zoomInModal {
     from { transform: scale(0.85) translateY(20px); opacity: 0; }
     to { transform: scale(1) translateY(0px); opacity: 1; }
 }
-
 .modal-caption {
-    margin: 12px auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: var(--color-text-secondary);
-    font-size: 0.85em;
+    margin: 12px auto; display: block; width: 80%; max-width: 700px; text-align: center;
+    color: var(--color-text-secondary); font-size: 0.85em;
 }
-
 .modal-close {
-    position: absolute;
-    top: 12px;
-    right: 25px;
-    color: var(--color-text-primary);
-    font-size: 35px;
-    font-weight: bold;
-    transition: color 0.2s ease, transform 0.2s ease;
-    cursor: pointer;
-    text-shadow: 0 0 8px var(--color-bg-primary); /* Sombra para destacar sobre imagen clara */
+    position: absolute; top: 12px; right: 25px; color: var(--color-text-primary);
+    font-size: 35px; font-weight: bold; transition: color 0.2s ease, transform 0.2s ease;
+    cursor: pointer; text-shadow: 0 0 8px var(--color-bg-primary);
 }
-.modal-close:hover,
-.modal-close:focus {
-    color: var(--color-accent-interactive);
-    transform: scale(1.1);
-}
-
+.modal-close:hover, .modal-close:focus { color: var(--color-accent-interactive); transform: scale(1.1); }
 
 /* ----------------------------- */
 /* -- RESPONSIVIDAD (Ajustes) -- */
@@ -632,12 +333,10 @@ html { /* Para Firefox */
     body { padding-top: 60px; }
     .main-page-header { height: 60px; padding: 12px 20px; }
     .main-page-header h1 { font-size: 1.6em; padding-top: 4px;}
-    .album-panel {
-        min-height: auto;
-        box-shadow: 0 5px 15px var(--shadow-color-soft);
-        padding: 25px 20px;
-        border-right: none;
-     }
+    .album-panel { min-height: auto; box-shadow: 0 5px 15px var(--shadow-color-soft); padding: 25px 20px; border-right: none; }
+    .album-cover-container { max-width: 280px; margin-bottom: 15px;}
+    .album-title-display h3 { font-size: 1.3em; }
+    .album-info-editable { font-size: 0.82em; margin-bottom: 20px;}
     .tracklist-panel { padding: 25px 15px; }
     .tracklist-header h2 { font-size: 1.7em; }
     .about-band-section { padding: 20px; }
@@ -659,7 +358,10 @@ html { /* Para Firefox */
     .main-page-header h1 { font-size: 1.25em; }
     .main-page-header .band-alias { display: block; font-size: 0.5em; margin-left:0; }
     .album-panel { padding: 20px 15px; }
-    .album-cover-container { width: 70%; max-width: 180px; }
+    .album-cover-container { width: 70%; max-width: 200px; margin-bottom: 12px;}
+    .album-title-display h3 { font-size: 1.1em; }
+    .album-info-editable { font-size: 0.8em; margin-bottom: 18px;}
+    .album-info-editable .album-info-description p { font-size: 0.8em; }
     .main-player-controls .buttons { gap: 6px; }
     .main-player-controls button { font-size: 0.8em; padding: 5px 8px; }
     .main-player-controls button#play-pause-btn { font-size: 1em; padding: 5px 10px; width: 38px; }
