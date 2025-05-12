@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYLCC - Monocien y los cuerpos celestes</title>
+    <title>Monocien y los cuerpos celestes - MYLCC</title>
     <link rel="stylesheet" href="style.css">
-</head>
+    </head>
 
 <body>
+
+    <header class="main-page-header">
+        <h1>Monocien y los cuerpos celestes <span class="band-alias">(MYLCC)</span></h1>
+    </header>
     <div class="main-container">
 
         <aside class="album-panel">
             <div class="album-cover-container">
-                <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC" id="album-cover-img"
+                <img src="img/album-cover.jpg" alt="Portada del Álbum Monocien y los cuerpos celestes" id="album-cover-img"
                     class="enlargeable-cover">
-                <div class="enlarge-icon" title="Agrandar Portada"> L </div>
-            </div>
+                <div class="enlarge-icon" title="Agrandar Portada"> L </div> </div>
 
             <div class="main-player-controls">
                 <h3 id="player-current-track-title">-- Selecciona una Pista --</h3>
@@ -34,14 +37,14 @@
                     <button id="next-btn" title="Siguiente">⏭</button>
                     <button id="play-all-btn" title="Reproducir Todo">Reproducir Álbum</button>
                 </div>
-                <audio id="audio-player"></audio>
-            </div>
+                <audio id="audio-player"></audio> </div>
         </aside>
 
         <main class="tracklist-panel">
+
             <div class="tracklist-header">
-                <h2>Monocien y los cuerpos celestes - MYLCC</h2>
-            </div>
+                <h2>Canciones del Álbum</h2>
+                </div>
 
             <ul class="track-list-accordion">
                 <li class="track-item" data-track-index="0" data-src="audio/track1.mp3">
@@ -168,7 +171,7 @@ solo el río sabe cómo, que puedas progresar.
 
 Agua, libéranos del mal,
                         </pre>
-                    </div>
+                        </div>
                 </li>
 
                 <li class="track-item" data-track-index="4" data-src="audio/track5.mp3">
@@ -200,9 +203,9 @@ busca un sol que devorar.
                     </div>
                 </li>
             </ul>
-
             <section class="about-band-section">
                 <h2>Monocien y los cuerpos celestes</h2>
+
                 <div class="band-members">
                     <h4>Integrantes:</h4>
                     <ul>
@@ -211,6 +214,7 @@ busca un sol que devorar.
                         <li><strong>Salvador Bucolo:</strong> Batería</li>
                     </ul>
                 </div>
+
                 <div class="band-bio">
                     <h4>Biografía:</h4>
                     <p>
@@ -228,22 +232,24 @@ busca un sol que devorar.
                 </div>
             </section>
 
+
             <div class="band-photo-section">
-                <img src="img/band-photo.jpg" alt="MYLCC en vivo">
+                <img src="img/band-photo.jpg" alt="Monocien y los cuerpos celestes en vivo">
             </div>
 
+
             <footer>
-                <p>&copy; <span id="current-year"></span> MYLCC. Mendoza, Argentina.</p>
+                <p>&copy; <span id="current-year"></span> Monocien y los cuerpos celestes. Mendoza, Argentina.</p>
             </footer>
         </main>
 
-    </div>
-    <div id="imageModal" class="modal">
+    </div> <div id="imageModal" class="modal">
         <span class="modal-close" title="Cerrar">&times;</span>
         <img class="modal-content" id="modalImage">
-        <div class="modal-caption">Portada del Álbum - MYLCC</div>
+        <div class="modal-caption">Portada del Álbum - Monocien y los cuerpos celestes</div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
