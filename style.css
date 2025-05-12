@@ -6,26 +6,36 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=UnifrakturMaguntia&family=Open+Sans:wght@400;600&family=Montserrat:wght@400;600&display=swap'); */
 
 :root {
-    /* Paleta Black Sabbath "Jugada" */
-    --color-background: #0a0a0a;         /* Negro casi puro para fondo principal */
-    --color-panel-bg: #1c1c1c;         /* Gris muy oscuro para paneles */
-    --color-text-primary: #e0e0e0;     /* Blanco hueso / Gris muy claro */
-    --color-text-secondary: #a0a0a0;   /* Gris medio para texto secundario */
-    --color-accent-sabbath-red: #3A005E; /* Rojo sangre oscuro (DarkRed) */
-    --color-accent-sabbath-red-hover: #3A005E; /* Rojo más claro/marrón (Brown) para hover */
-    --color-accent-old-gold: #3A005E;  /* Dorado oscuro / Ocre (DarkGoldenRod) */
-    --color-border: #333333;           /* Borde gris oscuro */
-    --color-highlight: #ffffff;        /* Blanco puro para contrastes fuertes */
+    /* Colores Base Inspirados en las Imágenes */
+    --img-color-bg-deep: #101215;         /* Negro muy oscuro, casi negro con un matiz azulado profundo */
+    --img-color-bg-panel: #2B303B;       /* Gris azulado oscuro, de las sombras de la pared y B&N */
+    --img-color-bg-texture-light: #D0D8E0; /* Gris muy claro / azul pálido, del busto y luces pared */
 
-    /* Modal (puede mantenerse oscuro o ajustarse) */
-    --color-modal-bg: rgba(0, 0, 0, 0.92); /* Fondo modal más opaco */
-    --color-modal-content-bg: #111111;    /* Fondo del contenido del modal */
+    --img-color-text-primary: #E8ECEF;   /* Blanco hueso / Casi blanco, para texto principal */
+    --img-color-text-secondary: #95A3B1; /* Gris azulado medio, para texto secundario */
 
-    /* Fuentes */
-    --font-main: 'Open Sans', 'Lato', 'Montserrat', sans-serif;
-    /* Prueba fuentes temáticas aquí si descomentas el @import */
-    --font-heading: 'Montserrat', 'Metamorphous', 'UnifrakturMaguntia', var(--font-main);
-    --font-mono: 'Courier New', Courier, monospace;
+    /* Acento Principal (del azul/cian de la portada) */
+    --img-color-accent-blue: #5A7A90;    /* Azul grisáceo desaturado principal */
+    --img-color-accent-blue-hover: #7890A2; /* Un tono más claro del acento para hover */
+    --img-color-accent-blue-light: #A8B8C5; /* Azul muy pálido/grisáceo para toques sutiles */
+
+    /* Contrastes Fuertes (del B&N y texto blanco) */
+    --img-color-white: #FFFFFF;
+    --img-color-black: #000000;
+
+    /* Bordes y Separadores */
+    --img-color-border: #404854;         /* Gris oscuro para bordes */
+
+    /* Variables existentes que podemos mapear o reemplazar: */
+    /* --color-background: var(--img-color-bg-deep); */
+    /* --color-panel-bg: var(--img-color-bg-panel); */
+    /* --color-text-primary: var(--img-color-text-primary); */
+    /* --color-text-secondary: var(--img-color-text-secondary); */
+    /* --color-accent-sabbath-violet: var(--img-color-accent-blue); */ /* O elegir un nuevo acento si el violeta ya no encaja */
+    /* --color-accent-sabbath-violet-hover: var(--img-color-accent-blue-hover); */
+    /* --color-accent-old-gold: var(--img-color-accent-blue-light); */ /* El dorado podría reemplazarse por este azul claro */
+    /* --color-border: var(--img-color-border); */
+    /* --color-highlight: var(--img-color-white); */
 }
 
 * {
