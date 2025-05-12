@@ -192,8 +192,9 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
     max-width: 400px;
     text-align: center;
     color: var(--color-text-secondary);
-    margin-top: auto; /* Empujar controles hacia abajo si hay espacio */
-    padding-top: 20px; /* Espacio por si se pegan arriba */
+    /* margin-top: auto; ELIMINADO */
+    margin-top: 40px; /* <-- AÑADIDO: Espacio fijo debajo de la portada */
+    padding-top: 0; /* Quitado o ajustado si es necesario */
 }
 
 #player-current-track-title {
@@ -616,11 +617,18 @@ html { /* O aplica directamente a .tracklist-panel si solo lo quieres ahí */
     .main-page-header { height: 60px; padding: 12px 20px; }
     .main-page-header h1 { font-size: 1.6em; padding-top: 2px;}
     .album-panel {
-        min-height: auto;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        padding: 30px 20px;
-        border-right: none; /* Quitar borde en tablet/móvil */
-     }
+    flex: 1 1 400px;
+    min-width: 300px;
+    background-color: var(--color-panel-bg);
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-start; */ /* (O simplemente no poner nada aquí para el default) */
+    align-items: center;
+    border-right: 1px solid var(--color-border);
+    z-index: 10;
+    min-height: calc(100vh - 70px);
+}
     .tracklist-panel { padding: 30px 15px; }
     .about-band-section { padding: 20px 15px; }
     .about-band-section h2 { font-size: 1.6em; }
