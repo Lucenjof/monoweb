@@ -1,286 +1,266 @@
-<!DOCTYPE html>
-<html lang="es">
+/* -------------------------------- */
+/* -- VARIABLES Y ESTILOS BASE -- */
+/* -------------------------------- */
+:root {
+    --color-background: #101010;
+    --color-panel-bg: #181818;
+    --color-text-primary: #e8e8e8;
+    --color-text-secondary: #b3b3b3;
+    --color-accent: #a8835f;
+    --color-accent-hover: #c5a07c;
+    --color-highlight: #f0f0f0;
+    --color-border: #2a2a2a;
+    --color-control-icon: var(--color-text-secondary);
+    --color-control-icon-hover: var(--color-highlight);
+    --color-slider-track: #383838;
+    --color-slider-thumb: var(--color-accent);
+    --color-slider-thumb-hover: var(--color-accent-hover);
+    --color-modal-bg: rgba(0, 0, 0, 0.96);
+    --color-modal-content-bg: #0a0a0a;
+    --font-main: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: 'Montserrat', "Helvetica Neue", Arial, sans-serif;
+    --font-lyrics: 'Roboto Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    --font-booklet-text: 'Georgia', 'Times New Roman', Times, serif;
+    --header-height: 55px;
+    --player-fixed-height: 55px; /* Reproductor más compacto */
+    --color-accent-rgb: 168, 131, 95;
+    --color-panel-bg-rgb: 24, 24, 24;
+    --color-border-rgb: 42, 42, 42;
+    --color-text-secondary-rgb: 179,179,179;
+    --video-opacity: 0.15;
+    --booklet-bg-original: #ffffff00;
+    --booklet-bg-celeste: #171b1b;  /* Color celeste, puedes ajustarlo */
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONOCIEN Y LOS CUERPOS CELESTES</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
-</head>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
 
-<body>
+/* VIDEO, SPLASH, MAIN CONTENT WRAPPER, HEADER */
+.background-video-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -2; }
+#background-video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out; }
+#background-video.visible { opacity: var(--video-opacity); }
+.splash-screen ~ .background-video-container #background-video { opacity: 0 !important; }
+.splash-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--color-background); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; cursor: pointer; opacity: 1; visibility: visible; transform: scale(1); transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0s linear 0.6s; }
+.splash-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; visibility: hidden; }
+#splash-cover-img { max-width: 75vmin; max-height: 75vmin; width: auto; height: auto; object-fit: contain; box-shadow: 0 8px 25px rgba(0,0,0,0.6); border-radius: 5px; transition: transform 0.3s ease-out; }
+.splash-screen:hover #splash-cover-img { transform: scale(1.02); }
+.splash-enter-prompt { margin-top: 20px; color: var(--color-text-secondary); font-size: 0.85rem; font-family: var(--font-heading); letter-spacing: 0.5px; opacity: 0.6; transition: opacity 0.3s ease-out; }
+.splash-screen:hover .splash-enter-prompt { opacity: 0.9; }
+.main-content-wrapper { opacity: 0; transform: translateY(15px); visibility: hidden; transition: opacity 0.5s ease-in 0.1s, transform 0.5s ease-in 0.1s, visibility 0s linear 0s; position: relative; z-index: 1; padding-bottom: var(--player-fixed-height); }
+.main-content-wrapper.visible { opacity: 1; transform: translateY(0); padding-top: var(--header-height); visibility: visible; }
+.main-page-header { background-color: rgba(10,10,10,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 0 25px; border-bottom: 1px solid var(--color-border); box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5); text-align: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 1001; height: var(--header-height); display: flex; align-items: center; justify-content: center; }
+.main-page-header h1 { margin: 0; font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-text-primary); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.main-page-header h1 a.header-band-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+.main-page-header h1 a.header-band-link:hover { color: var(--color-accent-hover); }
 
-    <div class="background-video-container">
-        <video id="background-video" loop muted playsinline autoplay></video>
-    </div>
+/* LAYOUT PRINCIPAL DE DOS COLUMNAS */
+.main-container { display: flex; flex-wrap: nowrap; width: 100%; max-width: 1400px; margin: 0 auto; }
+.album-panel { flex: 0 0 360px; background-color: transparent(--color-panel-bg); padding: 25px; display: flex; flex-direction: column; align-items: center; z-index: 10; min-height: calc(100vh - var(--header-height) - var(--player-fixed-height)); justify-content: flex-start; padding-top: 30px; border-right: 1px solid #0a0a0a; }
+.tracklist-panel.booklet-style { flex-grow: 1; padding: 25px 35px; overflow-y: auto; background-color: var(--booklet-bg-original); color: #d1c7b8; font-family: var(--font-booklet-text); border-left: 1px solid #0a0a0a; scrollbar-width: thin; scrollbar-color: var(--color-border) var(--color-background); transition: background-color 0.5s ease-in-out; }
+.tracklist-panel.booklet-style.alt-bg { background-color: var(--booklet-bg-celeste); }
+.tracklist-panel.booklet-style::-webkit-scrollbar { width: 7px; }
+.tracklist-panel.booklet-style::-webkit-scrollbar-track { background: var(--color-background); }
+.tracklist-panel.booklet-style::-webkit-scrollbar-thumb { background-color: var(--color-border); border-radius: 3px; border: 1px solid var(--color-background); }
 
-    <div id="splash-screen" class="splash-screen">
-        <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC - Clic para entrar" id="splash-cover-img">
-        <div class="splash-enter-prompt">
-            <p>Clic en la portada para escuchar</p>
-        </div>
-    </div>
+/* COLUMNA IZQUIERDA (ALBUM PANEL) */
+.album-cover-container { width: 100%; max-width: 260px; margin-bottom: 18px; position: relative; cursor: pointer; border-radius: 5px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.45); }
+#album-cover-img-panel { width: 100%; display: block; transition: transform 0.3s ease-out, filter 0.3s ease-out; }
+.album-cover-container:hover #album-cover-img-panel { transform: scale(1.04); filter: brightness(1.12); }
+.enlarge-icon { position: absolute; bottom: 10px; right: 10px; background-color: rgba(0,0,0,0.7); color: var(--color-highlight); width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: var(--font-heading); font-size: 16px; font-weight: 700; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
+.album-cover-container:hover .enlarge-icon { opacity: 1; }
+.album-title-display { text-align: center; margin-bottom: 12px; }
+.album-title-display h3 {text-align: center; font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-highlight); font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;}
+.album-info-editable { text-align: center;text-align: left; width: 100%; max-width: 260px; font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 20px; padding: 15px; background-color: rgba(0,0,0,0.15); border-radius: 4px; border: 1px solid var(--color-border); }
+.album-info-editable p {text-align: center; margin-bottom: 7px; line-height: 1.5; }
+.album-info-editable strong {text-align: center; color: var(--color-text-primary); display: block; margin-bottom: 2px;}
+.album-info-description { margin-top: 12px; }
+.album-info-description h4 { font-family: var(--font-heading); font-size: 0.85rem; color: var(--color-text-primary); margin-bottom: 6px; font-weight: 600; }
+.album-info-description p { font-size: 0.78rem; line-height: 1.6; margin-bottom: 0; }
+.album-download-section { width: 100%; max-width: 260px; margin-bottom: 20px; text-align: center; }
+.download-album-btn { display: inline-block; background-color: var(--color-accent); color: var(--color-highlight); font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; text-decoration: none; padding: 9px 18px; border-radius: 4px; border: 1px solid transparent; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: background-color 0.2s ease, transform 0.15s ease; }
+.download-album-btn:hover { background-color: var(--color-accent-hover); transform: translateY(-1px); }
+.band-photo-section-aside { width: 100%; max-width: 260px; margin-top: auto; padding-top: 20px; }
+.band-photo-section-aside img { width: 100%; border-radius: 4px; border: 1px solid var(--color-border); opacity: 0.7; }
 
-    <div id="main-content-wrapper" class="main-content-wrapper hidden-initially">
+/* COLUMNA DERECHA (TRACKLIST PANEL - BOOKLET STYLE) */
+.booklet-style .tracklist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(var(--color-accent-rgb), 0.4); padding-bottom: 10px; }
+.booklet-style .tracklist-header h2 { font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin:0; }
+.theme-toggle-btn { background-color: var(--color-control-icon); color: var(--color-background); border: 1px solid var(--color-border); padding: 5px 8px; font-size: 0.9rem; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; }
+.theme-toggle-btn:hover { background-color: var(--color-accent); color: var(--color-highlight); }
+.booklet-style .track-list-accordion { list-style: none; padding: 0; margin: 0; }
+.booklet-style .track-item { border-bottom: 1px solid rgba(var(--color-border-rgb), 0.5); transition: background-color 0.2s ease; }
+.booklet-style .track-item:last-child { border-bottom: none; }
+.booklet-style .track-item.active { background-color: rgba(transparent(--color-accent-rgb), 0.08); }
+.booklet-style .track-item.active .track-info .track-name { color: var(--color-accent-hover); font-style: italic; }
+.booklet-style .track-item.active .track-info .track-number { color: var(--color-accent-hover); }
+.booklet-style .track-title-container { display: flex; align-items: center; width: 100%; cursor: default; padding: 6px 0px; }
+.booklet-style .track-title-container:hover { background-color: rgba(transparent(--color-panel-bg-rgb), 0.3); }
+.booklet-style .play-track-btn { color: var(--color-text-secondary); font-size: 1rem; width: 32px; height: 32px; margin-right: 10px; background: transparent; border: none; cursor: pointer; padding: 0; line-height: 1; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.15s ease; flex-shrink: 0; }
+.booklet-style .play-track-btn:hover { color: var(--color-accent-hover); }
+.booklet-style .track-item.playing .play-track-btn { color: var(--color-accent); }
+.booklet-style .track-info { flex-grow: 1; display: flex; align-items: baseline; cursor: pointer; padding: 5px 0; }
+.booklet-style .track-number { min-width: 25px; font-family: var(--font-booklet-text); font-weight: normal; color: var(--color-text-secondary); font-size: 0.9rem; margin-right: 10px; }
+.booklet-style .track-name { font-family: var(--font-booklet-text); color: #d1c7b8; font-size: 1rem; font-weight: normal; }
+.booklet-style .expand-details-btn { background: transparent; border: none; color: var(--color-text-secondary); font-size: 1.2rem; font-weight: bold; padding: 8px; cursor: pointer; margin-left: auto; transition: transform 0.25s ease, color 0.2s ease; flex-shrink: 0; }
+.booklet-style .expand-details-btn:hover { color: var(--color-accent-hover); }
+.booklet-style .track-item.open .expand-details-btn .expand-icon { transform: rotate(45deg); color: var(--color-accent-hover); }
+.booklet-style .track-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out, padding 0.35s ease-out, border-top-color 0.3s ease; padding: 0 15px 0 60px; border-top: 1px solid transparent; background-color: rgba(0,0,0,0.05); }
+.booklet-style .track-item.open .track-details { padding-top: 15px; padding-bottom: 20px; border-top-color: rgba(var(--color-border-rgb), 0.3); }
+.booklet-style .track-details h4 { display:none; }
+.booklet-style .track-details pre { font-family: var(--font-lyrics); background-color: transparent; padding: 0; color: #c8bdae; font-size: 0.9rem; border-left: none; white-space: pre-wrap; line-height: 1.7; }
+.booklet-style .track-details .track-extra-info { font-family: var(--font-booklet-text); font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 12px; font-style: italic; text-align: right; }
+.tracklist-panel-footer { text-align: center; margin-top: 25px; padding: 15px 0; border-top: 1px solid rgba(var(--color-accent-rgb), 0.2); font-size: 0.7rem; font-family: var(--font-booklet-text); color: var(--color-text-secondary); }
+.photo-gallery-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(var(--color-accent-rgb), 0.25); }
+.gallery-title { font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-accent-hover); text-align: center; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+.photo-gallery { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+.gallery-item { flex-basis: calc(25% - 15px); max-width: 150px; text-align: center; transition: transform 0.2s ease-out; }
+.gallery-item:hover { transform: scale(1.05); }
+.gallery-thumbnail { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 4px; border: 1px solid var(--color-border); box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; transition: box-shadow 0.2s ease-out; }
+.gallery-thumbnail:hover { box-shadow: 0 4px 12px rgba(var(--color-accent-rgb), 0.3); }
+.thumbnail-caption { font-size: 0.7rem; color: var(--color-text-secondary); margin-top: 5px; font-family: var(--font-booklet-text); }
 
-        <header class="main-page-header">
-            <h1><a href="index.html" class="header-band-link">MONOCIEN Y LOS CUERPOS CELESTES</a></h1>
-        </header>
+/* ÚNICO REPRODUCTOR FIJO INFERIOR */
+.fixed-bottom-player {
+    display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
+    background-color: rgba(12,12,12,0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 6px 10px; box-shadow: 0 -1px 12px rgba(0,0,0,0.75);
+    z-index: 1000; align-items: center; gap: 10px; height: var(--player-fixed-height);
+    border-top: 1px solid #000;
+}
+.fixed-bottom-player .player-info-progress { flex-grow: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 2px; margin-right: 8px; min-width: 70px; }
+.fixed-bottom-player #player-current-track-title { font-size: 0.8rem; color: var(--color-text-primary); margin-bottom: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; font-weight: 600; font-family: var(--font-heading); }
+.fixed-bottom-player .progress-container { width: 100%; height: 4.5px; margin-bottom: 0; background-color: var(--color-slider-track); border-radius: 2.25px; cursor: pointer; }
+.fixed-bottom-player .progress-bar { background-color: transparent; height: 100%; border-radius: 2.25px; overflow: hidden;}
+.fixed-bottom-player .progress { background-color: var(--color-accent); height: 100%; width: 0%; border-radius: 2.25px; display: block; transition: width 0.1s linear;}
+.fixed-bottom-player .player-buttons { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.player-btn { background-color: transparent; border: none; color: var(--color-control-icon); padding: 5px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; transition: all 0.15s ease-out; width: 36px; height: 36px; display: inline-flex; justify-content: center; align-items: center; line-height: 1; }
+.player-btn:hover:not(:disabled) { color: var(--color-highlight); background-color: rgba(var(--color-accent-rgb),0.2); }
+.player-btn:active:not(:disabled) { transform: scale(0.95); }
+.player-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.player-btn.play-btn { font-size: 1.5rem; width: 42px; height: 42px; color: var(--color-highlight); background-color: transparent; }
+.player-btn.play-btn:hover:not(:disabled) { background-color: rgba(var(--color-accent-rgb),0.2); }
+.fixed-bottom-player .volume-control-container { display: flex; align-items: center; gap: 5px; flex-basis: 100px; max-width: 120px; flex-shrink: 1; min-width: 60px;}
+.fixed-bottom-player .volume-icon-btn { font-size: 1rem; width: 28px; height: 28px; }
+.fixed-bottom-player .volume-slider { height: 3.5px; }
+.fixed-bottom-player .volume-slider::-webkit-slider-thumb { width: 10px; height: 10px; }
+.fixed-bottom-player .volume-slider::-moz-range-thumb { width: 10px; height: 10px; }
 
-        <div class="main-container">
+/* MODAL */
+.modal { display: none; position: fixed; z-index: 2001; /* Encima del header */ left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: var(--color-modal-bg); padding-top: 30px; opacity: 0; transition: opacity 0.25s ease-in-out; }
+.modal.active { display: flex; align-items: center; justify-content: center; opacity: 1; }
+.modal-content { margin: 15px; display: block; width: auto; max-width: 90%; max-height: calc(100vh - 60px); animation: zoomInModal 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); background-color: var(--color-modal-content-bg); padding: 5px; border: 1px solid var(--color-border); border-radius: 4px; box-shadow: 0 5px 25px rgba(0,0,0,0.6); }
+@keyframes zoomInModal { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+.modal-caption { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: auto; max-width: calc(100% - 30px); text-align: center; color: var(--color-text-secondary); font-size: 0.8rem; background-color: rgba(var(--color-panel-bg-rgb), 0.85); padding: 4px 8px; border-radius: 3px; }
+.modal-close { position: absolute; top: 10px; right: 15px; color: var(--color-highlight); font-size: 30px; font-weight: bold; transition: color 0.2s ease, transform 0.2s ease; cursor: pointer; line-height: 1; padding: 4px; background-color: rgba(var(--color-panel-bg-rgb),0.4); border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;}
+.modal-close:hover, .modal-close:focus { color: var(--color-accent-hover); transform: scale(1.12); }
 
-            <aside class="album-panel">
-                <div class="album-cover-container" id="album-cover-clickable-area"> <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC" id="album-cover-img-panel"
-                        class="enlargeable-cover">
-                    <div class="enlarge-icon" title="Agrandar Portada">+</div>
-                </div>
+/* ----------------------------- */
+/* -- RESPONSIVIDAD -- */
+/* ----------------------------- */
+@media (max-width: 1024px) { /* Tablets */
+    .main-content-wrapper.visible { padding-top: var(--header-height-tablet); }
+    .main-page-header { height: var(--header-height-tablet); }
+    .main-page-header h1 { font-size: 1.15rem; }
+    .main-container { flex-direction: column; }
+    .album-panel {
+    flex: 0 0 360px; /* O el valor que tengas */
+    /* background-color: var(--color-panel-bg); */ /* COMENTA O ELIMINA ESTA LÍNEA */
+    background-color: transparent; /* AÑADE ESTA LÍNEA */
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10; /* Asegúrate de que el contenido del panel esté sobre el video de fondo general */
+    min-height: calc(100vh - var(--header-height) - var(--player-fixed-height));
+    justify-content: flex-start;
+    padding-top: 30px;
+    border-right: 1px solid #e40b0b; /* Este borde podría verse flotando, considera si lo quieres */
+}
+    .album-cover-container, .album-title-display, .album-info-editable, .album-download-section, .band-photo-section-aside { max-width: 320px; margin-left: auto; margin-right: auto; }
+    .band-photo-section-aside { margin-top: 20px; }
+    .tracklist-panel.booklet-style {
+    flex-grow: 1;
+    padding: 25px 35px;
+    overflow-y: auto;
+    /* background-color: var(--booklet-bg-original); */ /* COMENTA O ELIMINA ESTA LÍNEA */
+    background-color: transparent; /* AÑADE ESTA LÍNEA */
+    color: #d1c7b8; /* El color del texto podría necesitar ajuste para contraste sobre el fondo general */
+    font-family: var(--font-booklet-text);
+    border-left: 1px solid #0a0a0a; /* Este borde también podría flotar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) var(--color-background);
+    transition: background-color 0.5s ease-in-out;
+    position: relative; /* Mantener si usas ::before para overlays */
+    z-index: 10; /* Asegúrate de que el contenido del panel esté sobre el video de fondo general */
+}
 
-                <div class="album-title-display">
-                    <h3>MYLCC</h3>
-                </div>
+/* Si tienes la clase .alt-bg para el fondo celeste y quieres que siga funcionando: */
+.tracklist-panel.booklet-style.alt-bg {
+    background-color: var(--booklet-bg-celeste); /* Esto sobreescribirá el 'transparent' */
+}
+    .fixed-bottom-player .volume-control-container { flex-basis: 100px; max-width: 120px; }
+}
 
-                <div class="album-info-editable">
-                    <p class="album-info-artist"><strong></strong> <strong> MONOCIEN Y LOS CUERPOS CELESTES</strong></p>
-                     <p class="album-info-credits">El disco fue grabado en una sola toma el 15 de abril de 2018 en Estudios Marfil</p>
-                    <div class="album-info-description">
-                    </div>
-                    <p class="album-info-credits"><strong>Arte de tapa:</strong> Mario Damian Gomez</p>
-                </div>
+@media (max-width: 768px) { /* Móviles Grandes */
+    .main-content-wrapper.visible { padding-bottom: var(--player-fixed-height); }
+    .album-cover-container { width: 50%; max-width: 180px; }
+    .album-title-display h3 { font-size: 1.2rem; }
+    .album-info-editable { max-width: 90%; font-size: 0.75rem; }
+    .download-album-btn { font-size: 0.8rem; }
+    .band-photo-section-aside img { max-width: 60%; }
 
-                <div class="album-download-section">
-                    <a href="https://drive.google.com/file/d/1gdTvuKxpTl2R_UQj9hVdDothueoTefTP/view?usp=sharing" class="download-album-btn" download="MYLCC_Album.zip" target="_blank" title="Descargar Álbum Completo">Descargar Álbum</a>
-                </div>
+    .fixed-bottom-player { height: var(--player-fixed-height); gap: 8px; padding: 5px 8px; }
+    .fixed-bottom-player #player-current-track-title { font-size: 0.7rem; }
+    .fixed-bottom-player .player-btn { font-size: 1.1rem; width: 34px; height: 34px; }
+    .fixed-bottom-player .player-btn.play-btn { font-size: 1.3rem; width: 40px; height: 40px; }
+    .fixed-bottom-player .volume-control-container { display: none; } /* Ocultar volumen */
 
-                <div class="band-photo-section-aside">
-                    <img src="img/band-photo.jpg" alt="Monocien y los cuerpos celestes en vivo">
-                </div>
-                 <audio id="audio-player"></audio>
-            </aside>
+    .tracklist-panel.booklet-style { padding: 18px 10px; }
+    .booklet-style .tracklist-header { flex-direction: column; gap: 10px; align-items: stretch; }
+    .booklet-style .tracklist-header h2 { font-size: 1.3rem; text-align: center;}
+    .theme-toggle-btn { align-self: center; margin-top: 5px; width: 60%; max-width: 150px;}
+    .booklet-style .track-info .track-name { font-size: 0.85rem; }
+    .booklet-style .play-track-btn { font-size: 1rem; width: 30px; height: 30px; margin-right: 8px; }
+    .booklet-style .track-item.open .track-details { padding-left: 35px; }
+    .booklet-style .track-details pre { font-size: 0.75rem; }
+    .gallery-item { flex-basis: calc(33.33% - 10px); max-width: 120px; }
+}
 
-            <main class="tracklist-panel booklet-style" id="tracklist-panel-main"> <div class="tracklist-header">
-                    <h2>MYLCC</h2>
-                    <button id="toggle-booklet-bg-btn" class="theme-toggle-btn" title="Cambiar Fondo del Booklet">🎨</button>
-                </div>
+@media (max-width: 480px) { /* Móviles Pequeños */
+    .main-content-wrapper.visible { padding-top: var(--header-height-mobile); padding-bottom: var(--player-fixed-height); }
+    .main-page-header { height: var(--header-height-mobile); }
+    .main-page-header h1 { font-size: 0.95rem; }
 
-               <ul class="track-list-accordion">
-                    <li class="track-item" data-track-index="0" data-src="audio/track1.mp3">
-                        <div class="track-title-container">
-                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                            <div class="track-info" tabindex="0"> <span class="track-number">1.</span>
-                                <span class="track-name">Oeste</span>
-                            </div>
-                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra"> <span class="expand-icon">+</span>
-                            </button>
-                        </div>
-                        <div class="track-details">
-                            <pre>
-A no ser que la luz
-me quiera dejar
-solo con el mar.
-Ohhh Ohhh Ohhh
+    .album-cover-container { width: 55%; max-width: 150px; }
+    .album-title-display h3 { font-size: 1rem; }
+    .album-info-editable { font-size: 0.7rem; }
+    .download-album-btn { font-size: 0.75rem; }
 
-A no ser que la luz
-me quiera dejar
-solo sin estar.
-Ohhh no puede ser así.
+    .fixed-bottom-player {
+        height: var(--player-fixed-height);
+        padding: 4px 6px;
+        gap: 3px;
+    }
+    .fixed-bottom-player .player-info-progress { margin-right: 3px; min-width: 60px; /* Asegurar que no colapse */}
+    .fixed-bottom-player #player-current-track-title { font-size: 0.65rem; }
+    .fixed-bottom-player .progress-container { height: 3px; }
+    .fixed-bottom-player .player-buttons { gap: 1px; }
+    .fixed-bottom-player .player-btn { font-size: 0.9rem; width: 30px; height: 30px; }
+    .fixed-bottom-player .player-btn.play-btn { font-size: 1.1rem; width: 34px; height: 34px; }
+    .fixed-bottom-player .volume-control-container { display: none; } /* Oculto */
 
-Un montón de colores viene hacia mí
-en forma de montañas y algo más.
-Ohhh estaré mejor aquí.
-                            </pre>
-                            <p class="track-extra-info"><em>Grabado en Estudios Marfil.</em></p>
-                        </div>
-                    </li>
-
-                    <li class="track-item" data-track-index="1" data-src="audio/track2.mp3">
-                        <div class="track-title-container">
-                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                            <div class="track-info" tabindex="0">
-                                <span class="track-number">2.</span>
-                                <span class="track-name">Nada es Perfecto</span>
-                            </div>
-                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                                <span class="expand-icon">+</span>
-                            </button>
-                        </div>
-                        <div class="track-details">
-                            <pre>
-Hoy, puede que camine con la piel mi voz,
-no se va a notar, quieren más...
-Y que la sangre caiga en su alimento,
-por disimular, dónde están
-los que iban a venir tan pronto.
-Quieren libertad de esa que no hay,
-que la piel sea plástica visión.
-
-Tal vez mañana no recuerden el problema de hoy,
-y para mí llega, va a llegar.
-
-Tal vez mañana no recuerden lo que tengan que hacer,
-y para mí llega, va a llegar.
-
-Debajo del árbol puede haber,
-ya no hay más nada.
-
-Que se vayan, que no vuelvan más,
-que nunca regresen, que solo el tiempo está.
-
-Que se vayan, que no vuelvan más,
-que nunca regresen, que solo el tiempo está.
-
-Que se vayan, que no vuelvan más,
-que nunca regresen, que solo el tiempo está.
-                            </pre>
-                        </div>
-                    </li>
-
-                    <li class="track-item" data-track-index="2" data-src="audio/track3.mp3">
-                        <div class="track-title-container">
-                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                            <div class="track-info" tabindex="0">
-                                <span class="track-number">3.</span>
-                                <span class="track-name">Caída Libre</span>
-                            </div>
-                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                                <span class="expand-icon">+</span>
-                            </button>
-                        </div>
-                        <div class="track-details">
-                            <pre>
-Desatándonos, soltando lo que era uno.
-Rompiéndonos del pasado.
-La arteria que nos fundía se secó para no volver,
-y esperas que de algún modo puedas volver a caer.
-
-Oxidándonos, desnudos por separado,
-mineral que se desprende de su fuente.
-Si todo lo que nos queda se fuera a reventar,
-si no sabes cómo, puedes volver a caer.
-
-Recordándonos, derrotando un poco al tiempo.
-Nostalgia que mantiene vivo lo que ha muerto.
-Espero escaparme de este lugar,
-si no logro cómo, tendré que volver a caer.
-
-Es la hora y te solté la mano,
-es momento de que el viento traslade el amor.
-Nuestra unión ha cambiado para siempre.
-                            </pre>
-                        </div>
-                    </li>
-
-                    <li class="track-item" data-track-index="3" data-src="audio/track4.mp3">
-                        <div class="track-title-container">
-                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                            <div class="track-info" tabindex="0">
-                                <span class="track-number">4.</span>
-                                <span class="track-name">Liberanos</span>
-                            </div>
-                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                                <span class="expand-icon">+</span>
-                            </button>
-                        </div>
-                        <div class="track-details">
-                            <pre>
-Agua que de agua cuelga,
-solo el río sabe cómo llegar.
-Noche que es laguna, sin luna,
-solo el río sabe cómo, que puedas progresar.
-
-Agua, libéranos del mal,
-                            </pre>
-                        </div>
-                    </li>
-
-                    <li class="track-item" data-track-index="4" data-src="audio/track5.mp3">
-                        <div class="track-title-container">
-                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                            <div class="track-info" tabindex="0">
-                                <span class="track-number">5.</span>
-                                <span class="track-name">Buda Mono</span>
-                            </div>
-                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                                <span class="expand-icon">+</span>
-                            </button>
-                        </div>
-                        <div class="track-details">
-                            <pre>
-Tanta medicina, tanta vitamina, mira,
-mono buda va a bostezar.
-Sobre la colina busca parafina, mira,
-mono buda va a despegar.
-De un salto mortal va a evolucionar,
-mono buda, intento del mal.
-Como en la cocina,
-ama a su vecina, mira,
-mono buda, exento del mal.
-
-En la esquina universal
-busca un sol que devorar.
-                            </pre>
-                            <p class="track-extra-info"><em>.</em></p>
-                        </div>
-                    </li>
-                </ul> <section class="photo-gallery-section">
-                   
-                    <div class="photo-gallery">
-                        <div class="gallery-item">
-                            <img src="img/foto1.jpg" alt="MYLCC en concierto" class="gallery-thumbnail" data-large-src="img/foto1.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto2.jpg" alt="Banda en escenario" class="gallery-thumbnail" data-large-src="img/foto2.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto3.jpg" alt="Detalle de guitarra" class="gallery-thumbnail" data-large-src="img/foto3.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto4.jpg" alt="Baterista en acción" class="gallery-thumbnail" data-large-src="img/foto4.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto5.jpg" alt="Monocien y los cuerpos celestes - show" class="gallery-thumbnail" data-large-src="img/foto5.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto6.jpg" alt="Bajista en concierto" class="gallery-thumbnail" data-large-src="img/foto6.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto7.jpg" alt="Vista del público" class="gallery-thumbnail" data-large-src="img/foto7.jpg">
-                        </div>
-                    </div>
-                </section>
-
-                <footer class="tracklist-panel-footer">
-                    <p>&copy; <span id="current-year-main"></span> Monocien y los cuerpos celestes. Mendoza, Argentina.</p>
-                </footer>
-            </main>
-        </div> </div> <div class="fixed-bottom-player">
-        <div class="player-info-progress">
-            <h3 id="player-current-track-title">--</h3>
-            <div class="progress-container" id="progress-container">
-                <div class="progress-bar">
-                    <div class="progress" id="progress"></div>
-                </div>
-            </div>
-        </div>
-        <div class="player-buttons">
-            <button id="prev-btn" class="player-btn" title="Anterior">&#x23EE;</button>
-            <button id="play-pause-btn" class="player-btn play-btn" title="Reproducir/Pausar">&#x25B6;</button>
-            <button id="next-btn" class="player-btn" title="Siguiente">&#x23ED;</button>
-        </div>
-        <div class="volume-control-container">
-             <button id="mute-btn" class="player-btn volume-icon-btn" title="Silenciar/Activar Sonido">&#x1F50A;</button>
-            <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="80" title="Volumen">
-        </div>
-    </div>
-
-    <div id="imageModal" class="modal">
-        <span class="modal-close" title="Cerrar">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <div class="modal-caption" id="modalCaption">Imagen</div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    .tracklist-panel.booklet-style { padding: 12px 5px; }
+    .booklet-style .tracklist-header h2 { font-size: 1.1rem; }
+    .theme-toggle-btn { font-size: 0.8rem; padding: 4px 6px; margin-top: 5px; width: 70%;}
+    .booklet-style .track-info .track-name { font-size: 0.75rem; }
+    .booklet-style .track-details pre { font-size: 0.68rem; }
+    .gallery-item { flex-basis: calc(50% - 8px); max-width: 120px;}
+}
