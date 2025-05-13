@@ -332,70 +332,195 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-border-secondary) var
 .modal-close:hover, .modal-close:focus { color: var(--color-accent-interactive); transform: scale(1.1); }
 
 /* ----------------------------- */
-/* -- RESPONSIVIDAD (Ajustes) -- */
+/* -- RESPONSIVIDAD -- */
 /* ----------------------------- */
-@media (max-width: 900px) {
-    body { padding-top: 60px; }
-    .main-page-header { height: 60px; padding: 12px 20px; }
-    .main-page-header h1 { font-size: 1.6em; padding-top: 4px;}
+
+/* --- Estilos para Tablets y Móviles (Punto de cambio principal para el reproductor fijo) --- */
+@media (max-width: 768px) {
+    body {
+        /* Añadir padding inferior para compensar la altura del reproductor fijo */
+        /* Ajusta este valor (ej: 70px o 80px) según la altura final de tu reproductor fijo */
+        padding-bottom: 75px;
+    }
+
+    .main-container {
+        flex-direction: column;
+        /* Ya no necesita el padding-top para el header de página, el body lo maneja */
+    }
+
+    /* El header principal de la página sigue igual (fijo arriba) */
+    .main-page-header {
+        /* ... (sin cambios, o ajusta altura si es necesario y actualiza padding-top del body) ... */
+    }
+
+
     .album-panel {
-    flex: 1 1 400px;
-    min-width: 300px;
-    background-color: var(--color-panel-bg);
-    padding: 40px 30px;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: flex-start; */ /* (O simplemente no poner nada aquí para el default) */
-    align-items: center;
-    border-right: 1px solid var(--color-border);
-    z-index: 10;
-    min-height: calc(100vh - 70px);
-}
-    .album-cover-container { max-width: 280px; margin-bottom: 15px;}
-    .album-title-display h3 { font-size: 1.3em; }
-    .album-info-editable { font-size: 0.82em; margin-bottom: 20px;}
-    .tracklist-panel { padding: 25px 15px; }
-    .tracklist-header h2 { font-size: 1.7em; }
-    .about-band-section { padding: 20px; }
+        position: relative; /* Ya no es sticky */
+        height: auto;
+        width: 100%;
+        padding: 20px; /* Padding reducido, ya no contiene el reproductor */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        /* Centrar solo la portada ahora */
+        display: flex; /* Asegurar que sigue siendo flex para alinear portada */
+        justify-content: center;
+        align-items: center;
+    }
+    .album-cover-container {
+        width: 50%; /* Portada puede ser un poco más pequeña */
+        max-width: 220px;
+        margin-bottom: 0; /* Ya no necesita margen inferior para el reproductor */
+    }
+
+    /* --- REPRODUCTOR FIJO EN LA PARTE INFERIOR --- */
+    .main-player-controls {
+        position: fixed; /* Fijo en la pantalla */
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-panel-bg); /* O un color más oscuro si prefieres */
+        padding: 8px 10px; /* Padding interno del reproductor */
+        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.4); /* Sombra arriba */
+        z-index: 1002; /* Por encima del header principal si es necesario */
+        display: flex; /* Para alinear elementos internos horizontalmente */
+        align-items: center; /* Centrar verticalmente */
+        gap: 10px; /* Espacio entre elementos principales del reproductor */
+        height: 75px; /* Altura fija para el reproductor (ajusta padding-bottom del body) */
+        max-width: 100%; /* Sobrescribir max-width anterior */
+        text-align: left; /* Alinear texto a la izquierda */
+    }
+
+    /* Contenedor para título y barra de progreso (para agruparlos) */
+    .player-info-progress {
+        flex-grow: 1; /* Ocupa el espacio disponible */
+        overflow: hidden; /* Para el ellipsis del título */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px; /* Espacio pequeño entre título y barra */
+    }
+
+    #player-current-track-title {
+        font-size: 0.8em; /* Título más pequeño */
+        color: var(--color-text-primary);
+        margin-bottom: 0; /* Sin margen inferior */
+        white-space: nowrap; /* Evitar que el título se rompa en varias líneas */
+        overflow: hidden; /* Ocultar exceso */
+        text-overflow: ellipsis; /* Añadir '...' si es muy largo */
+        line-height: 1.2;
+        padding-right: 5px; /* Espacio para que no se pegue al borde si no hay botones */
+    }
+
+    .progress-container {
+        width: 100%; /* Ocupa todo el ancho de su contenedor (player-info-progress) */
+        height: 6px; /* Barra más delgada */
+        margin-bottom: 0; /* Sin margen inferior */
+        cursor: pointer;
+    }
+    .time-display {
+        display: none; /* Ocultar tiempo individual para ahorrar espacio, la barra es suficiente */
+        /* Si quieres mostrarlo: */
+        /* font-size: 0.7em; margin-top: 2px; */
+    }
+
+    .main-player-controls .buttons {
+        margin-top: 0; /* Sin margen superior */
+        display: flex; /* Ya es flex, pero asegurar */
+        align-items: center;
+        gap: 8px; /* Espacio entre botones un poco más pequeño */
+        /* No ocupan todo el espacio, se ajustan a su contenido */
+        flex-shrink: 0; /* Evitar que los botones se encojan demasiado */
+    }
+
+    .main-player-controls button {
+        padding: 6px 10px; /* Botones más pequeños */
+        font-size: 1.1em; /* Iconos un poco más grandes para fácil tap */
+        border-radius: 50%; /* Hacer botones redondos */
+        width: 38px; /* Ancho y alto fijos para botones redondos */
+        height: 38px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1; /* Centrar iconos mejor */
+    }
+    .main-player-controls button#play-pause-btn {
+        font-size: 1.3em; /* Play/Pause ligeramente más grande */
+        width: 42px;
+        height: 42px;
+    }
+    .main-player-controls button#play-all-btn {
+        display: none; /* Ocultar "Reproducir Álbum" en la barra fija para ahorrar espacio */
+        /* Si quieres mantenerlo, usa un icono y hazlo pequeño: */
+        /* font-size: 0.8em; padding: 5px; width: auto; height: auto; border-radius: 4px; */
+    }
+
+
+    /* Ajustes para la columna derecha (tracklist) */
+    .tracklist-panel {
+        padding: 20px 15px; /* Padding general */
+        min-height: auto;
+    }
+    .tracklist-header h2 { font-size: 1.6em; }
+    .track-title-button { font-size: 0.95em; }
+    .play-track-btn { font-size: 1.1em; width: 32px; height: 32px; }
+    .track-item.open .track-details { padding: 15px 15px 20px 25px; }
+    .track-details h4 { font-size: 1em; }
+    .track-details pre { font-size: 0.9em; padding: 10px; }
+
+    .about-band-section { padding: 20px 15px; }
     .about-band-section h2 { font-size: 1.5em; }
-    .band-members h4, .band-bio h4 { font-size: 1.15em; }
-    .band-members li, .band-bio p { font-size: 0.92em; }
-    .track-title-button { font-size: 1em; }
-    .play-track-btn { font-size: 1.15em; width: 32px; height: 32px; }
-    .track-item.open .track-details { padding: 15px 15px 20px 30px; }
-    .track-details pre { font-size: 0.88em; padding: 10px; }
-    .band-photo-section img { max-width: 90%; filter: grayscale(0.7) contrast(1.05); }
-    .tracklist-panel footer { font-size: 0.82em; }
-    .modal-content { max-width: 90%; max-height: 80vh; }
+    .band-members li, .band-bio p { font-size: 0.9em; }
+
+    .band-photo-section img { max-width: 90%; }
+    .tracklist-panel footer { font-size: 0.8em; }
+
+    .modal-content { width: 90%; }
 }
 
+
+/* --- Estilos para Móviles AÚN Más Pequeños (Hasta 480px) --- */
 @media (max-width: 480px) {
-    body { padding-top: 50px; }
-    .main-page-header { height: 50px; padding: 10px 15px; }
-    .main-page-header h1 { font-size: 1.25em; }
-    .main-page-header .band-alias { display: block; font-size: 0.5em; margin-left:0; }
-    .album-panel { padding: 20px 15px; }
-    .album-cover-container { width: 70%; max-width: 200px; margin-bottom: 12px;}
-    .album-title-display h3 { font-size: 1.1em; }
-    .album-info-editable { font-size: 0.8em; margin-bottom: 18px;}
-    .album-info-editable .album-info-description p { font-size: 0.8em; }
-    .main-player-controls .buttons { gap: 6px; }
-    .main-player-controls button { font-size: 0.8em; padding: 5px 8px; }
-    .main-player-controls button#play-pause-btn { font-size: 1em; padding: 5px 10px; width: 38px; }
-    .main-player-controls button#play-all-btn { margin-top: 8px; width: 75%; padding: 7px 12px; }
-    .tracklist-panel { padding: 20px 10px; }
+    body {
+        padding-bottom: 65px; /* Ajustar si la altura del reproductor cambia */
+         /* padding-top sigue siendo para el header de página, no para el reproductor */
+    }
+    .album-panel { padding: 15px; }
+    .album-cover-container { width: 60%; max-width: 160px; }
+
+    /* Reproductor fijo en pantallas muy pequeñas */
+    .main-player-controls {
+        padding: 6px 8px;
+        gap: 8px;
+        height: 65px; /* Altura un poco menor */
+    }
+    #player-current-track-title {
+        font-size: 0.75em; /* Título aún más pequeño */
+        /* Considerar ocultarlo si no cabe bien con los botones */
+        /* display: none; */
+    }
+    .progress-container { height: 5px; } /* Barra más fina */
+
+    .main-player-controls .buttons { gap: 5px; }
+    .main-player-controls button {
+        padding: 5px;
+        font-size: 1em;
+        width: 32px;
+        height: 32px;
+    }
+    .main-player-controls button#play-pause-btn {
+        font-size: 1.2em;
+        width: 36px;
+        height: 36px;
+    }
+
+
+    /* Resto de ajustes para contenido en 480px */
+    .tracklist-panel { padding: 15px 8px; }
     .tracklist-header h2 { font-size: 1.4em; }
-    .about-band-section { padding: 15px; }
-    .about-band-section h2 { font-size: 1.3em; }
-    .band-members h4, .band-bio h4 { font-size: 1.1em; }
-    .band-members li, .band-bio p { font-size: 0.88em; }
-    .track-title-button { font-size: 0.88em; }
-    .play-track-btn { font-size: 1.05em; width: 28px; height: 28px; padding: 4px 7px; margin: 0 2px 0 4px; }
+    .track-title-button { font-size: 0.85em; }
+    .play-track-btn { font-size: 1em; width: 28px; height: 28px; }
     .track-item.open .track-details { padding: 10px 10px 15px 20px; }
-    .track-details pre { font-size: 0.82em; line-height: 1.55; padding: 8px; }
-    .band-photo-section { margin-top: 25px; padding-top: 15px; }
-    .band-photo-section img { max-width: 95%; filter: grayscale(0.8) contrast(1.0); }
-    .tracklist-panel footer { font-size: 0.78em; }
-    .modal-content { max-width: 95%; max-height: 75vh; }
-    .modal-close { font-size: 30px; top: 8px; right: 12px; }
+    .track-details pre { font-size: 0.8em; line-height: 1.45; }
+    .about-band-section { padding: 15px 10px; }
+    .about-band-section h2 { font-size: 1.3em; }
+    .band-members li, .band-bio p { font-size: 0.85em; }
 }
