@@ -1,526 +1,379 @@
 /* -------------------------------- */
 /* -- VARIABLES Y ESTILOS BASE -- */
 /* -------------------------------- */
-
-/* Opcional: Importar fuentes */
-/* @import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=UnifrakturMaguntia&family=Open+Sans:wght@400;600&family=Montserrat:wght@400;700&display=swap'); */
-
 :root {
-    /* ===== PALETA MINIMALISTA / APPLE / BLACK SABBATH ===== */
-    --color-bg-primary: #121212;
-    --color-bg-secondary: #1E1E1E;
-    --color-bg-tertiary: #2C2C2C;
-    --color-text-primary: #F5F5F7;
-    --color-text-secondary: #A0A0A4;
-    --color-text-muted: #6E6E73;
-    --color-text-on-accent: #FFFFFF;
-    --color-accent-interactive: #0A84FF;
-    --color-accent-interactive-hover: #0060D0;
-    --color-accent-sabbath-deep: #3B003B; /* Violeta muy oscuro */
-    --color-accent-sabbath-highlight: #D4AF37; /* Oro viejo */
-    --color-border-primary: #38383A;
-    --color-border-secondary: #505052;
-    --color-border-accented: var(--color-accent-sabbath-deep);
-    --shadow-color-soft: rgba(0, 0, 0, 0.3);
-    --shadow-color-medium: rgba(0, 0, 0, 0.5);
-    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --font-heading: var(--font-main);
-    --font-mono: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    /* --font-sabbath-display: 'Metamorphous', 'UnifrakturMaguntia', serif; */
+    --color-background: #101010;
+    --color-panel-bg: #181818;
+    --color-text-primary: #e8e8e8;
+    --color-text-secondary: #b3b3b3;
+    --color-accent: #a8835f;
+    --color-accent-hover: #c5a07c;
+    --color-highlight: #f0f0f0;
+    --color-border: #2a2a2a;
+    --color-control-icon: var(--color-text-secondary);
+    --color-control-icon-hover: var(--color-highlight);
+    --color-slider-track: #383838;
+    --color-slider-thumb: var(--color-accent);
+    --color-slider-thumb-hover: var(--color-accent-hover);
+    --color-modal-bg: rgba(0, 0, 0, 0.96);
+    --color-modal-content-bg: #0a0a0a;
+    --font-main: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: 'Montserrat', "Helvetica Neue", Arial, sans-serif;
+    --font-lyrics: 'Montserrat' , 'Montserrat', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    --font-booklet-text: 'Montserrat', 'Montserrat', Times, serif;
+    --header-height: 55px;
+    --player-fixed-height: 60px;
+    --color-accent-rgb: 168, 131, 95;
+    --color-panel-bg-rgb: 24, 24, 24;
+    --color-border-rgb: 42, 42, 42; /* Para #2a2a2a */
+    --color-text-secondary-rgb: 179,179,179; /* Para #b3b3b3 */
+    --video-opacity: 0.18;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 15px; }
 body {
     font-family: var(--font-main);
-    background-color: var(--color-bg-primary);
+    background-color: var(--color-background);
     color: var(--color-text-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    padding-top: 70px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Scrollbar estilizado */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--color-bg-secondary); }
-::-webkit-scrollbar-thumb { background-color: var(--color-border-secondary); border-radius: 5px; border: 2px solid var(--color-bg-secondary); }
-html { scrollbar-width: thin; scrollbar-color: var(--color-border-secondary) var(--color-bg-secondary); }
+/* ------------------------------------ */
+/* -- GALERÍA DE FOTOS EN MINIATURA -- */
+/* ------------------------------------ */
+.photo-gallery-section {
+    margin-top: 30px; /* Espacio sobre la galería */
+    padding-top: 20px;
+    border-top: 1px solid rgba(var(--color-accent-rgb), 0.25); /* Separador estilo booklet */
+}
+
+.gallery-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--color-accent-hover);
+    text-align: center; /* O left si prefieres */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.photo-gallery {
+    display: flex; /* Usar flexbox para alinear miniaturas */
+    flex-wrap: wrap; /* Permitir que pasen a la siguiente línea */
+    gap: 15px; /* Espacio entre miniaturas */
+    justify-content: center; /* Centrar las miniaturas si no llenan toda la fila */
+}
+
+.gallery-item {
+    flex-basis: calc(25% - 15px); /* 4 miniaturas por fila, ajustando por el gap */
+                                  /* Puedes cambiar 25% a 33.33% para 3 por fila, 20% para 5, etc. */
+    /* O un tamaño fijo si prefieres: flex-basis: 120px; */
+    max-width: 150px; /* Tamaño máximo para cada miniatura */
+    text-align: center; /* Para centrar la leyenda si la usas */
+    transition: transform 0.2s ease-out;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05); /* Ligero zoom al pasar el mouse */
+}
+
+.gallery-thumbnail {
+    width: 100%; /* Que la imagen ocupe todo el .gallery-item */
+    height: auto; /* Mantener proporción */
+    aspect-ratio: 1 / 1; /* Forzar a que sean cuadradas, puedes quitarlo si tus imágenes no lo son */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio, puede recortar */
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    cursor: pointer; /* Indicar que se puede hacer clic (para futuro lightbox) */
+    transition: box-shadow 0.2s ease-out;
+}
+
+.gallery-thumbnail:hover {
+    box-shadow: 0 4px 12px rgba(var(--color-accent-rgb), 0.3); /* Sombra con acento al pasar el mouse */
+}
+
+.thumbnail-caption {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    margin-top: 5px;
+    font-family: var(--font-booklet-text);
+}
+
+/* Ajustes responsivos para la galería */
+@media (max-width: 1024px) {
+    .gallery-item {
+        flex-basis: calc(33.33% - 15px); /* 3 por fila */
+        max-width: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-title { font-size: 1.2rem; margin-bottom: 15px;}
+    .photo-gallery { gap: 10px; }
+    .gallery-item {
+        flex-basis: calc(33.33% - 10px); /* 3 por fila con menos gap */
+        /* O si quieres menos por fila en móvil: */
+        /* flex-basis: calc(50% - 10px); */ /* 2 por fila */
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-item {
+        flex-basis: calc(50% - 10px); /* 2 por fila en móviles pequeños */
+        max-width: 130px; /* Permitir que sean un poco más grandes si solo hay 2 */
+    }
+    .thumbnail-caption { font-size: 0.65rem; }
+}
+
+/* ------------------------------------ */
+/* -- VIDEO DE FONDO DINÁMICO -- */
+/* ------------------------------------ */
+.background-video-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -2; }
+#background-video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out; }
+#background-video.visible { opacity: var(--video-opacity); }
+.splash-screen ~ .background-video-container #background-video { opacity: 0 !important; }
+
+/* -------------------------------- */
+/* -- SPLASH SCREEN -- */
+/* -------------------------------- */
+.splash-screen {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: var(--color-background);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    z-index: 2000;
+    cursor: pointer;
+    opacity: 1; visibility: visible; /* Visible por defecto */
+    transform: scale(1);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0s linear 0.6s; /* Sincronizar con JS setTimeout si se usa */
+}
+.splash-screen.hidden {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+    visibility: hidden; /* Ocultarlo después de la transición */
+}
+#splash-cover-img { max-width: 75vmin; max-height: 75vmin; width: auto; height: auto; object-fit: contain; box-shadow: 0 8px 25px rgba(0,0,0,0.6); border-radius: 5px; transition: transform 0.3s ease-out; }
+.splash-screen:hover #splash-cover-img { transform: scale(1.02); }
+.splash-enter-prompt { margin-top: 20px; color: var(--color-text-secondary); font-size: 0.85rem; font-family: var(--font-heading); letter-spacing: 0.5px; opacity: 0.6; transition: opacity 0.3s ease-out; }
+.splash-screen:hover .splash-enter-prompt { opacity: 0.9; }
+
+/* ----------------------------------------- */
+/* -- CONTENEDOR PRINCIPAL DEL CONTENIDO -- */
+/* ----------------------------------------- */
+.main-content-wrapper {
+    opacity: 0;
+    transform: translateY(15px);
+    visibility: hidden;
+    transition: opacity 0.5s ease-in 0.1s, transform 0.5s ease-in 0.1s, visibility 0s linear 0s; /* Delay menor para entrada */
+    position: relative;
+    z-index: 1;
+    padding-bottom: var(--player-fixed-height);
+}
+.main-content-wrapper.visible {
+    opacity: 1;
+    transform: translateY(0);
+    padding-top: var(--header-height);
+    visibility: visible;
+}
 
 /* -------------------------------- */
 /* -- ENCABEZADO PRINCIPAL -- */
 /* -------------------------------- */
 .main-page-header {
-    background-color: var(--color-bg-secondary);
-    padding: 15px 30px;
-    border-bottom: 1px solid var(--color-border-primary);
-    box-shadow: 0 2px 8px var(--shadow-color-soft);
+    background-color: rgba(10,10,10,0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0 25px;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
     text-align: center;
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 1001; height: 70px;
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 1001;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.main-page-header h1 {
-    margin: 0; font-family: var(--font-heading); font-size: 1.8em; font-weight: 600;
-    color: var(--color-text-primary); letter-spacing: 0.5px; line-height: 1; padding-top: 7px;
-}
-.main-page-header .band-alias {
-    font-size: 0.65em; color: var(--color-text-secondary); font-weight: 400;
-    margin-left: 8px; vertical-align: middle; text-shadow: none;
-}
+.main-page-header h1 { margin: 0; font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-text-primary); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.main-page-header h1 a.header-band-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+.main-page-header h1 a.header-band-link:hover { color: var(--color-accent-hover); }
 
 /* -------------------------------- */
-/* -- LAYOUT Y PANELES -- */
+/* -- LAYOUT PRINCIPAL DE DOS COLUMNAS -- */
 /* -------------------------------- */
-.main-container { display: flex; flex-wrap: wrap; }
-.album-panel {
-    flex: 1 1 380px; min-width: 280px; background-color: var(--color-bg-secondary);
-    padding: 30px 25px; display: flex; flex-direction: column; align-items: center;
-    border-right: 1px solid var(--color-border-primary); z-index: 10;
-    min-height: calc(100vh - 70px);
-}
-.tracklist-panel {
-    flex: 2 1 620px; padding: 35px 40px; overflow-y: auto;
-    background-color: var(--color-bg-primary); min-height: calc(100vh - 70px);
-}
+.main-container { display: flex; flex-wrap: nowrap; width: 100%; max-width: 1400px; margin: 0 auto; }
+.album-panel { flex: 0 0 360px; background-color: var(--color-panel-bg); padding: 25px; display: flex; flex-direction: column; align-items: center; z-index: 10; min-height: calc(100vh - var(--header-height) - var(--player-fixed-height)); justify-content: flex-start; padding-top: 30px; border-right: 1px solid #0a0a0a; }
+.tracklist-panel.booklet-style { flex-grow: 1; padding: 25px 35px; overflow-y: auto; background-color: #1e1c1b; color: #d1c7b8; font-family: var(--font-booklet-text); border-left: 1px solid #0a0a0a; scrollbar-width: thin; scrollbar-color: var(--color-border) var(--color-background); }
+.tracklist-panel.booklet-style::-webkit-scrollbar { width: 7px; }
+.tracklist-panel.booklet-style::-webkit-scrollbar-track { background: var(--color-background); }
+.tracklist-panel.booklet-style::-webkit-scrollbar-thumb { background-color: var(--color-border); border-radius: 3px; border: 1px solid var(--color-background); }
 
-/* -------------------------------- */
-/* -- ELEMENTOS EN COLUMNA IZQUIERDA -- */
-/* -------------------------------- */
-.album-cover-container {
-    width: 85%; max-width: 320px; margin-bottom: 20px; /* Reducido para dar espacio al título e info */
-    position: relative; cursor: pointer; overflow: hidden;
-    border-radius: 6px; box-shadow: 0 8px 25px var(--shadow-color-medium);
-}
-#album-cover-img {
-    width: 100%; height: auto; display: block; border: none;
-    transition: transform 0.3s ease-out;
-}
-.album-cover-container:hover #album-cover-img { transform: scale(1.04); }
-.enlarge-icon {
-    position: absolute; bottom: 12px; right: 12px; background-color: rgba(0, 0, 0, 0.5);
-    color: var(--color-text-on-accent); width: 28px; height: 28px; border-radius: 50%;
-    display: flex; justify-content: center; align-items: center; font-family: sans-serif;
-    font-size: 16px; font-weight: bold; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
-}
+/* COLUMNA IZQUIERDA (ALBUM PANEL) */
+.album-cover-container { width: 100%; max-width: 260px; margin-bottom: 18px; position: relative; cursor: pointer; border-radius: 5px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.45); }
+#album-cover-img-panel { width: 100%; display: block; transition: transform 0.3s ease-out, filter 0.3s ease-out; }
+.album-cover-container:hover #album-cover-img-panel { transform: scale(1.04); filter: brightness(1.12); }
+.enlarge-icon { position: absolute; bottom: 10px; right: 10px; background-color: rgba(0,0,0,0.7); color: var(--color-highlight); width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: var(--font-heading); font-size: 16px; font-weight: 700; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
 .album-cover-container:hover .enlarge-icon { opacity: 1; }
+.album-title-display { text-align: center; margin-bottom: 12px; }
+.album-title-display h3 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-highlight); font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;}
+.album-info-editable { width: 100%; max-width: 260px; font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 20px; padding: 15px; background-color: rgba(0,0,0,0.15); border-radius: 4px; border: 1px solid var(--color-border); text-align: left;}
+.album-info-editable p { margin-bottom: 7px; line-height: 1.5; }
+.album-info-editable p strong { color: var(--color-text-primary); }
+.album-info-description { margin-top: 12px; }
+.album-info-description h4 { font-family: var(--font-heading); font-size: 0.85rem; color: var(--color-text-primary); margin-bottom: 6px; font-weight: 600; }
+.album-info-description p { font-size: 0.78rem; line-height: 1.6; margin-bottom: 0; }
+.album-download-section { width: 100%; max-width: 260px; margin-bottom: 20px; text-align: center; }
+.download-album-btn { display: inline-block; background-color: var(--color-accent); color: var(--color-highlight); font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; text-decoration: none; padding: 9px 18px; border-radius: 4px; border: 1px solid transparent; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: background-color 0.2s ease, transform 0.15s ease; }
+.download-album-btn:hover { background-color: var(--color-accent-hover); transform: translateY(-1px); }
+.band-photo-section-aside { width: 100%; max-width: 260px; margin-top: auto; padding-top: 20px; }
+.band-photo-section-aside img { width: 100%; border-radius: 4px; border: 1px solid var(--color-border); opacity: 0.7; }
 
-/* Título del Álbum Debajo de Portada */
-.album-title-display {
-    width: 100%; text-align: center; margin-top: 0; /* El cover ya tiene margin-bottom */
-    margin-bottom: 15px; /* Espacio antes de la info del álbum */
-}
-.album-title-display h3 {
-    font-family: var(--font-heading); font-size: 1.5em; color: var(--color-text-primary);
-    font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin: 0;
-}
+/* COLUMNA DERECHA (TRACKLIST PANEL - BOOKLET STYLE) */
+.booklet-style .tracklist-header { margin-bottom: 20px; text-align: left; border-bottom: 1px solid rgba(var(--color-accent-rgb), 0.4); padding-bottom: 10px; }
+.booklet-style .tracklist-header h2 { font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; }
+.booklet-style .track-list-accordion { list-style: none; padding: 0; margin: 0; }
+.booklet-style .track-item { border-bottom: 1px solid rgba(var(--color-border-rgb), 0.5); transition: background-color 0.2s ease; }
+.booklet-style .track-item:last-child { border-bottom: none; }
+.booklet-style .track-item.active { background-color: rgba(var(--color-accent-rgb), 0.08); }
+.booklet-style .track-item.active .track-info .track-name { color: var(--color-accent-hover); font-style: italic; }
+.booklet-style .track-item.active .track-info .track-number { color: var(--color-accent-hover); }
+.booklet-style .track-title-container { display: flex; align-items: center; width: 100%; cursor: default; padding: 6px 0px; /* Aumentar padding vertical */ }
+.booklet-style .track-title-container:hover { background-color: rgba(var(--color-panel-bg-rgb), 0.3); }
+.booklet-style .play-track-btn { color: var(--color-text-secondary); font-size: 1rem; width: 32px; height: 32px; margin-right: 10px; background: transparent; border: none; cursor: pointer; padding: 0; line-height: 1; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.15s ease; flex-shrink: 0; }
+.booklet-style .play-track-btn:hover { color: var(--color-accent-hover); }
+.booklet-style .track-item.playing .play-track-btn { color: var(--color-accent); }
+.booklet-style .track-info { flex-grow: 1; display: flex; align-items: baseline; cursor: pointer; padding: 5px 0; }
+.booklet-style .track-number { min-width: 25px; font-family: var(--font-booklet-text); font-weight: normal; color: var(--color-text-secondary); font-size: 0.9rem; margin-right: 10px; }
+.booklet-style .track-name { font-family: var(--font-booklet-text); color: #d1c7b8; font-size: 1rem; font-weight: normal; pointer-events: none; }
+.booklet-style .expand-details-btn { background: transparent; border: none; color: var(--color-text-secondary); font-size: 1.2rem; font-weight: bold; padding: 8px; cursor: pointer; margin-left: auto; transition: transform 0.25s ease, color 0.2s ease; flex-shrink: 0; }
+.booklet-style .expand-details-btn:hover { color: var(--color-accent-hover); }
+.booklet-style .track-item.open .expand-details-btn .expand-icon { transform: rotate(45deg); color: var(--color-accent-hover); }
+.booklet-style .track-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out, border-top-color 0.3s ease; padding: 0 15px 0 60px; /* Mayor indentación */ border-top: 1px solid transparent; background-color: rgba(0,0,0,0.05); }
+.booklet-style .track-item.open .track-details { padding-top: 15px; padding-bottom: 20px; border-top-color: rgba(var(--color-border-rgb), 0.3); }
+.booklet-style .track-details h4 { font-family: var(--font-heading); color: var(--color-accent); margin-bottom: 10px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; }
+.booklet-style .track-details pre { font-family: var(--font-lyrics); background-color: transparent; padding: 0; color: #c8bdae; font-size: 0.9rem; border-left: none; white-space: pre-wrap; line-height: 1.7; }
+.booklet-style .track-details .track-extra-info { font-family: var(--font-booklet-text); font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 12px; font-style: italic; text-align: right; }
+.tracklist-panel-footer { text-align: center; margin-top: 25px; padding: 15px 0; border-top: 1px solid rgba(var(--color-accent-rgb), 0.2); font-size: 0.7rem; font-family: var(--font-booklet-text); color: var(--color-text-secondary); }
 
-/* ========= NUEVOS ESTILOS: INFORMACIÓN DEL ÁLBUM EDITABLE ========= */
-.album-info-editable {
-    width: 100%;
-    max-width: 320px; /* Para que no se extienda demasiado */
-    text-align: center;
-    margin-bottom: 25px; /* Espacio antes de los controles */
-    padding: 0 10px; /* Padding lateral si es necesario */
-    font-size: 0.85em; /* Tamaño base para esta sección */
-    color: var(--color-text-secondary);
+/* ÚNICO REPRODUCTOR FIJO INFERIOR */
+.fixed-bottom-player {
+    display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
+    background-color: rgba(12,12,12,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 7px 12px; box-shadow: 0 -1px 10px rgba(0,0,0,0.7);
+    z-index: 1000; align-items: center; gap: 12px; height: var(--player-fixed-height);
+    border-top: 1px solid var(--color-border);
 }
-.album-info-editable p {
-    margin-bottom: 6px; /* Espaciado entre líneas de info */
-    line-height: 1.5;
-}
-.album-info-editable .album-info-artist {
-    font-weight: 500;
-    color: var(--color-text-primary); /* Artista un poco más destacado */
-    font-size: 0.95em;
-}
-.album-info-editable .album-info-year,
-.album-info-editable .album-info-label,
-.album-info-editable .album-info-credits {
-    color: var(--color-text-muted); /* Detalles en color más apagado */
-}
-.album-info-editable .album-info-description {
-    margin-top: 12px;
-    text-align: left; /* Descripción puede ser más larga, mejor alineada a la izquierda */
-    border-top: 1px solid var(--color-border-primary);
-    padding-top: 12px;
-}
-.album-info-editable .album-info-description h4 {
-    font-family: var(--font-heading);
-    font-size: 0.9em;
-    color: var(--color-text-secondary);
-    font-weight: 500;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.album-info-editable .album-info-description p {
-    font-size: 0.85em; /* Descripción del álbum un poco más pequeña */
-    color: var(--color-text-secondary);
-    margin-bottom: 0;
-}
-.album-info-editable .album-info-purchase-link { /* Estilo para enlace opcional */
-    display: inline-block;
-    margin-top: 10px;
-    color: var(--color-accent-interactive);
-    font-size: 0.9em;
-}
-.album-info-editable .album-info-purchase-link:hover {
-    color: var(--color-accent-interactive-hover);
-}
-/* ================================================================= */
+.fixed-bottom-player .player-info-progress { flex-grow: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 2px; margin-right: 10px; }
+.fixed-bottom-player #player-current-track-title { font-size: 0.8rem; color: var(--color-text-primary); margin-bottom: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; font-weight: 600; font-family: var(--font-heading); }
+.fixed-bottom-player .progress-container { width: 100%; height: 4.5px; margin-bottom: 0; background-color: var(--color-slider-track); border-radius: 2.25px; cursor: pointer; }
+.fixed-bottom-player .progress-bar { background-color: transparent; height: 100%; border-radius: 2.25px; overflow: hidden; }
+.fixed-bottom-player .progress { background-color: var(--color-accent); height: 100%; width: 0%; border-radius: 2.25px; display: block; transition: width 0.1s linear; }
+.fixed-bottom-player .player-buttons { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.player-btn { background-color: transparent; border: none; color: var(--color-control-icon); padding: 6px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; transition: all 0.15s ease-out; width: 38px; height: 38px; display: inline-flex; justify-content: center; align-items: center; line-height: 1; }
+.player-btn:hover:not(:disabled) { color: var(--color-highlight); background-color: rgba(var(--color-accent-rgb),0.2); }
+.player-btn:active:not(:disabled) { transform: scale(0.95); }
+.player-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.player-btn.play-btn { font-size: 1.6rem; width: 46px; height: 46px; color: var(--color-highlight); background-color: rgba(var(--color-accent-rgb),0.1); }
+.player-btn.play-btn:hover:not(:disabled) { background-color: rgba(var(--color-accent-rgb),0.25); }
+.fixed-bottom-player .volume-control-container { display: flex; align-items: center; gap: 6px; flex-basis: 110px; max-width: 140px; flex-shrink: 1; }
+.fixed-bottom-player .volume-icon-btn { font-size: 1rem; width: 30px; height: 30px; }
+.fixed-bottom-player .volume-slider { height: 4px; /* Hereda estilos de .volume-slider */ }
 
+/* MODAL */
+.modal { /* ... (como estaba antes) ... */ }
+.modal.active { /* ... (como estaba antes) ... */ }
+.modal-content { /* ... (como estaba antes) ... */ }
+@keyframes zoomInModal { /* ... (como estaba antes) ... */ }
+.modal-caption { /* ... (como estaba antes) ... */ }
+.modal-close { /* ... (como estaba antes) ... */ }
 
-/* Controles del Reproductor */
-.main-player-controls {
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    color: var(--color-text-secondary);
-    /* margin-top: auto; ELIMINADO */
-    margin-top: 40px; /* <-- AÑADIDO: Espacio fijo debajo de la portada */
-    padding-top: 0; /* Quitado o ajustado si es necesario */
-}
-#player-current-track-title {
-    font-family: var(--font-heading); color: var(--color-text-primary); font-size: 1.05em;
-    margin-bottom: 15px; min-height: 1.2em; font-weight: 500; transition: color 0.3s;
-}
-.progress-container {
-    width: 100%; cursor: pointer; margin-bottom: 10px; background-color: var(--color-border-primary);
-    height: 6px; border-radius: 3px; position: relative; transition: opacity 0.3s;
-}
-.progress-bar { background-color: var(--color-bg-tertiary); height: 100%; border-radius: 3px; overflow: hidden; }
-.progress { background-color: var(--color-accent-interactive); height: 100%; width: 0%; border-radius: 3px; transition: width 0.1s linear; }
-.time-display { display: flex; justify-content: space-between; font-size: 0.75em; color: var(--color-text-secondary); margin-top: 6px; padding: 0 3px; }
-.main-player-controls .buttons { margin-top: 18px; display: flex; justify-content: center; align-items: center; gap: 12px; }
-.main-player-controls button {
-    background-color: transparent; border: 1px solid var(--color-border-secondary); color: var(--color-text-secondary);
-    padding: 7px 10px; border-radius: 5px; cursor: pointer; font-size: 0.95em; transition: all 0.2s ease;
-}
-.main-player-controls button:hover:not(:disabled) {
-    background-color: var(--color-accent-interactive); color: var(--color-text-on-accent);
-    border-color: var(--color-accent-interactive); transform: translateY(-1px);
-}
-.main-player-controls button:disabled { opacity: 0.4; cursor: not-allowed; background-color: transparent !important; transform: none; }
-.main-player-controls button#play-pause-btn { font-size: 1.2em; padding: 7px 13px; width: 42px; text-align: center; }
-.main-player-controls button#play-all-btn {
-    background-color: var(--color-accent-interactive); color: var(--color-text-on-accent);
-    border-color: var(--color-accent-interactive); padding: 8px 15px; font-weight: 500;
-}
-.main-player-controls button#play-all-btn:hover:not(:disabled) { background-color: var(--color-accent-interactive-hover); }
-
-/* -------------------------------- */
-/* -- ELEMENTOS EN COLUMNA DERECHA -- */
-/* -------------------------------- */
-.tracklist-header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid var(--color-border-primary); padding-bottom: 18px; }
-.tracklist-header h2 {
-    font-family: var(--font-heading); font-size: 2em; color: var(--color-text-primary);
-    text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;
-}
-.track-list-accordion {
-    list-style: none; padding: 0; margin: 0; border: 1px solid var(--color-border-primary);
-    border-radius: 8px; overflow: hidden; background-color: var(--color-bg-secondary);
-}
-.track-item { border-bottom: 1px solid var(--color-border-primary); margin-bottom: 0; transition: background-color 0.15s ease-out; }
-.track-item:last-child { border-bottom: none; }
-.track-item.active { background-color: var(--color-bg-tertiary); border-left: 3px solid var(--color-accent-interactive); margin-left: -3px; }
-.track-item.active .track-title-button { color: var(--color-text-primary); font-weight: 600;}
-.track-item.active .track-number { color: var(--color-accent-interactive); }
-.track-title-container { display: flex; align-items: center; width: 100%; cursor: default; transition: background-color 0.15s ease-out; padding: 3px 0 3px 5px; }
-.play-track-btn {
-    background: transparent; border: none; color: var(--color-text-secondary); font-size: 1.3em;
-    cursor: pointer; padding: 7px 10px; margin: 0 4px 0 5px; line-height: 1; border-radius: 50%;
-    width: 34px; height: 34px; display: inline-flex; justify-content: center; align-items: center; transition: all 0.15s ease-out;
-}
-.play-track-btn:hover { color: var(--color-text-on-accent); background-color: var(--color-accent-interactive); }
-.track-item.playing .play-track-btn { color: var(--color-text-on-accent); background-color: var(--color-accent-interactive-hover); }
-.track-title-button {
-    flex-grow: 1; background: transparent; border: none; padding: 10px 8px 10px 0; text-align: left;
-    font-family: var(--font-main); color: var(--color-text-secondary); font-size: 1.05em;
-    display: flex; align-items: center; cursor: pointer; width: 100%;
-    transition: background-color 0.15s ease-out, color 0.15s ease-out; border-radius: 5px;
-}
-.track-title-button:hover { background-color: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.track-number { min-width: 22px; font-weight: 500; color: var(--color-text-secondary); transition: color 0.15s ease-out; }
-.track-name { flex-grow: 1; margin-left: 8px; pointer-events: none; transition: color 0.15s ease-out; }
-.expand-icon {
-    font-size: 1.3em; font-weight: bold; margin-left: 12px; padding: 5px;
-    pointer-events: none; transition: transform 0.25s ease-out, color 0.15s ease-out;
-}
-.track-item.open .expand-icon { transform: rotate(45deg); color: var(--color-accent-interactive); }
-.track-details {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), padding 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
-    background-color: transparent; padding: 0 20px 0 50px; border-top: 1px solid transparent;
-}
-.track-item.open .track-details { padding-top: 18px; padding-bottom: 25px; border-top-color: var(--color-border-primary); }
-.track-details h4 {
-    font-family: var(--font-heading); color: var(--color-text-primary); font-weight: 600;
-    margin-bottom: 12px; font-size: 1.1em;
-}
-.track-details pre {
-    font-family: var(--font-mono); background-color: var(--color-bg-primary); padding: 12px 15px;
-    border-radius: 6px; color: var(--color-text-secondary); font-size: 0.9em; line-height: 1.6;
-    border: 1px solid var(--color-border-primary); white-space: pre-wrap;
-}
-.track-details .track-extra-info { font-size: 0.8em; color: var(--color-text-muted); margin-top: 12px; font-style: italic; }
-
-/* Sección Sobre la Banda */
-.about-band-section {
-    background-color: var(--color-bg-secondary); padding: 25px 30px; margin-top: 35px; margin-bottom: 35px;
-    border-radius: 8px; border: 1px solid var(--color-border-primary);
-}
-.about-band-section h2 {
-    font-family: var(--font-heading); font-size: 1.7em; color: var(--color-text-primary);
-    margin-bottom: 20px; text-align: left; border-bottom: 1px solid var(--color-border-secondary);
-    padding-bottom: 12px; font-weight: 600;
-}
-.about-band-section h2::after { display: none; }
-.band-members, .band-bio { margin-bottom: 20px; }
-.band-members:last-child, .band-bio:last-child { margin-bottom: 0; }
-.band-members h4, .band-bio h4 {
-    font-family: var(--font-heading); color: var(--color-text-primary); font-size: 1.2em;
-    margin-bottom: 12px; border-bottom: 1px solid var(--color-border-secondary);
-    padding-bottom: 6px; font-weight: 500;
-}
-.band-members ul { list-style: none; padding-left: 0; }
-.band-members li { margin-bottom: 7px; font-size: 0.95em; color: var(--color-text-secondary); }
-.band-members li strong { color: var(--color-text-primary); font-weight: 500; }
-.band-bio p { font-size: 0.95em; color: var(--color-text-secondary); margin-bottom: 0.9em; line-height: 1.65; text-align: left; }
-
-/* Sección Foto Banda */
-.band-photo-section { margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--color-border-primary); }
-.band-photo-section img {
-    display: block; max-width: 100%; height: auto; margin: 0 auto;
-    border: 1px solid var(--color-border-secondary); box-shadow: 0 5px 15px var(--shadow-color-soft);
-    border-radius: 6px; filter: grayscale(0.8) contrast(1.1);
-}
-
-/* Footer */
-.tracklist-panel footer {
-    text-align: center; margin-top: 35px; padding: 18px 0; border-top: 1px solid var(--color-border-primary);
-    font-size: 0.85em; color: var(--color-text-muted);
-}
-.tracklist-panel footer a { color: var(--color-text-secondary); margin: 0 8px; transition: color 0.2s; }
-.tracklist-panel footer a:hover { color: var(--color-accent-interactive); }
-
-/* ----------------------------- */
-/* -- ESTILOS DEL MODAL IMAGEN -- */
-/* ----------------------------- */
-.modal {
-    display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%;
-    overflow: auto; background-color: var(--color-modal-bg); padding-top: 50px;
-    opacity: 0; transition: opacity 0.3s ease-out;
-}
-.modal.active { display: block; opacity: 1; }
-.modal-content {
-    margin: auto; display: block; width: auto; max-width: 90%; max-height: 85vh;
-    animation: zoomInModal 0.3s ease-out; background-color: var(--color-bg-secondary);
-    padding: 6px; border: 1px solid var(--color-border-secondary); border-radius: 6px;
-    box-shadow: 0 10px 30px var(--shadow-color-medium);
-}
-@keyframes zoomInModal {
-    from { transform: scale(0.85) translateY(20px); opacity: 0; }
-    to { transform: scale(1) translateY(0px); opacity: 1; }
-}
-.modal-caption {
-    margin: 12px auto; display: block; width: 80%; max-width: 700px; text-align: center;
-    color: var(--color-text-secondary); font-size: 0.85em;
-}
-.modal-close {
-    position: absolute; top: 12px; right: 25px; color: var(--color-text-primary);
-    font-size: 35px; font-weight: bold; transition: color 0.2s ease, transform 0.2s ease;
-    cursor: pointer; text-shadow: 0 0 8px var(--color-bg-primary);
-}
-.modal-close:hover, .modal-close:focus { color: var(--color-accent-interactive); transform: scale(1.1); }
 
 /* ----------------------------- */
 /* -- RESPONSIVIDAD -- */
 /* ----------------------------- */
-
-/* --- Estilos para Tablets y Móviles (Punto de cambio principal para el reproductor fijo) --- */
-@media (max-width: 768px) {
-    body {
-        /* Añadir padding inferior para compensar la altura del reproductor fijo */
-        /* Ajusta este valor (ej: 70px o 80px) según la altura final de tu reproductor fijo */
-        padding-bottom: 75px;
-    }
-
-    .main-container {
-        flex-direction: column;
-        /* Ya no necesita el padding-top para el header de página, el body lo maneja */
-    }
-
-    /* El header principal de la página sigue igual (fijo arriba) */
-    .main-page-header {
-        /* ... (sin cambios, o ajusta altura si es necesario y actualiza padding-top del body) ... */
-    }
-
-
+@media (max-width: 1024px) {
+    .main-content-wrapper.visible { padding-top: var(--header-height-tablet); }
+    .main-page-header { height: var(--header-height-tablet); }
+    .main-page-header h1 { font-size: 1.15rem; }
+    .main-container { flex-direction: column; }
     .album-panel {
-        position: relative; /* Ya no es sticky */
-        height: auto;
-        width: 100%;
-        padding: 20px; /* Padding reducido, ya no contiene el reproductor */
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        /* Centrar solo la portada ahora */
-        display: flex; /* Asegurar que sigue siendo flex para alinear portada */
-        justify-content: center;
-        align-items: center;
-    }
-    .album-cover-container {
-        width: 50%; /* Portada puede ser un poco más pequeña */
-        max-width: 220px;
-        margin-bottom: 0; /* Ya no necesita margen inferior para el reproductor */
-    }
-
-    /* --- REPRODUCTOR FIJO EN LA PARTE INFERIOR --- */
-    .main-player-controls {
-        position: fixed; /* Fijo en la pantalla */
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: var(--color-panel-bg); /* O un color más oscuro si prefieres */
-        padding: 8px 10px; /* Padding interno del reproductor */
-        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.4); /* Sombra arriba */
-        z-index: 1002; /* Por encima del header principal si es necesario */
-        display: flex; /* Para alinear elementos internos horizontalmente */
-        align-items: center; /* Centrar verticalmente */
-        gap: 10px; /* Espacio entre elementos principales del reproductor */
-        height: 75px; /* Altura fija para el reproductor (ajusta padding-bottom del body) */
-        max-width: 100%; /* Sobrescribir max-width anterior */
-        text-align: left; /* Alinear texto a la izquierda */
-    }
-
-    /* Contenedor para título y barra de progreso (para agruparlos) */
-    .player-info-progress {
-        flex-grow: 1; /* Ocupa el espacio disponible */
-        overflow: hidden; /* Para el ellipsis del título */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 4px; /* Espacio pequeño entre título y barra */
-    }
-
-    #player-current-track-title {
-        font-size: 0.8em; /* Título más pequeño */
-        color: var(--color-text-primary);
-        margin-bottom: 0; /* Sin margen inferior */
-        white-space: nowrap; /* Evitar que el título se rompa en varias líneas */
-        overflow: hidden; /* Ocultar exceso */
-        text-overflow: ellipsis; /* Añadir '...' si es muy largo */
-        line-height: 1.2;
-        padding-right: 5px; /* Espacio para que no se pegue al borde si no hay botones */
-    }
-
-    .progress-container {
-        width: 100%; /* Ocupa todo el ancho de su contenedor (player-info-progress) */
-        height: 6px; /* Barra más delgada */
-        margin-bottom: 0; /* Sin margen inferior */
-        cursor: pointer;
-    }
-    .time-display {
-        display: none; /* Ocultar tiempo individual para ahorrar espacio, la barra es suficiente */
-        /* Si quieres mostrarlo: */
-        /* font-size: 0.7em; margin-top: 2px; */
-    }
-
-    .main-player-controls .buttons {
-        margin-top: 0; /* Sin margen superior */
-        display: flex; /* Ya es flex, pero asegurar */
-        align-items: center;
-        gap: 8px; /* Espacio entre botones un poco más pequeño */
-        /* No ocupan todo el espacio, se ajustan a su contenido */
-        flex-shrink: 0; /* Evitar que los botones se encojan demasiado */
-    }
-
-    .main-player-controls button {
-        padding: 6px 10px; /* Botones más pequeños */
-        font-size: 1.1em; /* Iconos un poco más grandes para fácil tap */
-        border-radius: 50%; /* Hacer botones redondos */
-        width: 38px; /* Ancho y alto fijos para botones redondos */
-        height: 38px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        line-height: 1; /* Centrar iconos mejor */
-    }
-    .main-player-controls button#play-pause-btn {
-        font-size: 1.3em; /* Play/Pause ligeramente más grande */
-        width: 42px;
-        height: 42px;
-    }
-    .main-player-controls button#play-all-btn {
-        display: none; /* Ocultar "Reproducir Álbum" en la barra fija para ahorrar espacio */
-        /* Si quieres mantenerlo, usa un icono y hazlo pequeño: */
-        /* font-size: 0.8em; padding: 5px; width: auto; height: auto; border-radius: 4px; */
-    }
-
-
-    /* Ajustes para la columna derecha (tracklist) */
-    .tracklist-panel {
-        padding: 20px 15px; /* Padding general */
+        flex-basis: auto; width: 100%;
         min-height: auto;
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid #0a0a0a;
+        padding-top: 20px;
     }
-    .tracklist-header h2 { font-size: 1.6em; }
-    .track-title-button { font-size: 0.95em; }
-    .play-track-btn { font-size: 1.1em; width: 32px; height: 32px; }
-    .track-item.open .track-details { padding: 15px 15px 20px 25px; }
-    .track-details h4 { font-size: 1em; }
-    .track-details pre { font-size: 0.9em; padding: 10px; }
-
-    .about-band-section { padding: 20px 15px; }
-    .about-band-section h2 { font-size: 1.5em; }
-    .band-members li, .band-bio p { font-size: 0.9em; }
-
-    .band-photo-section img { max-width: 90%; }
-    .tracklist-panel footer { font-size: 0.8em; }
-
-    .modal-content { width: 90%; }
+    .album-cover-container, .album-title-display, .album-info-editable, .album-download-section, .band-photo-section-aside {
+        max-width: 320px; margin-left: auto; margin-right: auto;
+    }
+    .band-photo-section-aside { margin-top: 20px; }
+    .tracklist-panel.booklet-style { padding: 20px; border-left: none; }
+    .fixed-bottom-player .volume-control-container { flex-basis: 100px; max-width: 120px; }
 }
 
+@media (max-width: 768px) {
+    .main-content-wrapper.visible { padding-bottom: var(--player-fixed-height); }
+    /* .desktop-player-controls ya no existe */
+    /* .mobile-player-controls-fixed ahora es .fixed-bottom-player y siempre visible (flex) */
+    .album-cover-container { width: 50%; max-width: 180px; }
+    .album-title-display h3 { font-size: 1.2rem; }
+    .album-info-editable { max-width: 90%; font-size: 0.75rem; }
+    .download-album-btn { font-size: 0.8rem; }
+    .band-photo-section-aside img { max-width: 60%; }
 
-/* --- Estilos para Móviles AÚN Más Pequeños (Hasta 480px) --- */
+    .fixed-bottom-player { height: var(--player-fixed-height); gap: 10px; padding: 6px 10px; }
+    .fixed-bottom-player #player-current-track-title { font-size: 0.8rem; }
+    .fixed-bottom-player .player-btn { font-size: 1.1rem; width: 36px; height: 36px; }
+    .fixed-bottom-player .player-btn.play-btn { font-size: 1.4rem; width: 42px; height: 42px; }
+    .fixed-bottom-player .volume-control-container { flex-basis: 90px; max-width: 100px; gap: 5px;}
+    .fixed-bottom-player .volume-icon-btn { font-size: 1rem; width: 30px; height: 30px; }
+
+    .tracklist-panel.booklet-style { padding: 18px 10px; }
+    .booklet-style .tracklist-header h2 { font-size: 1.3rem; }
+    .booklet-style .track-title-button { font-size: 0.85rem; } /* Se refiere al track-info ahora */
+    .booklet-style .play-track-btn { font-size: 1rem; width: 30px; height: 30px; margin-right: 8px; }
+    .booklet-style .track-item.open .track-details { padding-left: 45px; }
+    .booklet-style .track-details pre { font-size: 0.75rem; }
+}
+
 @media (max-width: 480px) {
-    body {
-        padding-bottom: 65px; /* Ajustar si la altura del reproductor cambia */
-         /* padding-top sigue siendo para el header de página, no para el reproductor */
-    }
-    .album-panel { padding: 15px; }
-    .album-cover-container { width: 60%; max-width: 160px; }
+    .main-content-wrapper.visible { padding-top: var(--header-height-mobile); padding-bottom: var(--player-fixed-height); } /* O --player-height-small-mobile */
+    .main-page-header { height: var(--header-height-mobile); }
+    .main-page-header h1 { font-size: 0.95rem; }
 
-    /* Reproductor fijo en pantallas muy pequeñas */
-    .main-player-controls {
-        padding: 6px 8px;
-        gap: 8px;
-        height: 65px; /* Altura un poco menor */
-    }
-    #player-current-track-title {
-        font-size: 0.75em; /* Título aún más pequeño */
-        /* Considerar ocultarlo si no cabe bien con los botones */
-        /* display: none; */
-    }
-    .progress-container { height: 5px; } /* Barra más fina */
+    .album-cover-container { width: 55%; max-width: 150px; }
+    .album-title-display h3 { font-size: 1rem; }
+    .album-info-editable { font-size: 0.7rem; }
+    .download-album-btn { font-size: 0.75rem; }
 
-    .main-player-controls .buttons { gap: 5px; }
-    .main-player-controls button {
-        padding: 5px;
-        font-size: 1em;
-        width: 32px;
-        height: 32px;
-    }
-    .main-player-controls button#play-pause-btn {
-        font-size: 1.2em;
-        width: 36px;
-        height: 36px;
-    }
+    .fixed-bottom-player { height: var(--player-fixed-height); /* O --player-height-small-mobile */ padding: 4px 6px; gap: 3px; }
+    .fixed-bottom-player #player-current-track-title { font-size: 0.65rem; }
+    .fixed-bottom-player .progress-container { height: 3px; }
+    .fixed-bottom-player .player-buttons { gap: 1px; }
+    .fixed-bottom-player .player-btn { font-size: 0.9rem; width: 30px; height: 30px; }
+    .fixed-bottom-player .player-btn.play-btn { font-size: 1.1rem; width: 34px; height: 34px; }
+    .fixed-bottom-player .volume-control-container { flex-basis: 60px; min-width: 45px; gap: 2px;}
+    .fixed-bottom-player .volume-icon-btn { font-size: 0.8rem; width: 24px; height: 24px; }
 
+    .tracklist-panel.booklet-style { padding: 12px 5px; }
+    .booklet-style .tracklist-header h2 { font-size: 1.1rem; }
+    /* .booklet-style .track-title-button ahora es .track-info */
+    .booklet-style .track-info .track-name { font-size: 0.75rem; }
+    .booklet-style .track-details pre { font-size: 0.68rem; }
+}
 
-    /* Resto de ajustes para contenido en 480px */
-    .tracklist-panel { padding: 15px 8px; }
-    .tracklist-header h2 { font-size: 1.4em; }
-    .track-title-button { font-size: 0.85em; }
-    .play-track-btn { font-size: 1em; width: 28px; height: 28px; }
-    .track-item.open .track-details { padding: 10px 10px 15px 20px; }
-    .track-details pre { font-size: 0.8em; line-height: 1.45; }
-    .about-band-section { padding: 15px 10px; }
-    .about-band-section h2 { font-size: 1.3em; }
-    .band-members li, .band-bio p { font-size: 0.85em; }
+/* Asegurar variables RGB para opacidad */
+:root {
+    /* ... (otras variables) ... */
+    --color-text-secondary-rgb: 179,179,179; /* Para #b3b3b3 */
+    --color-border-rgb: 42,42,42; /* Para #2a2a2a */
 }
