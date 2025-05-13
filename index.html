@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONOCIEN Y LOS CUERPOS CELESTES - MYLCC</title>
+    <title>MONOCIEN Y LOS CUERPOS CELESTES</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,8 +33,7 @@
         <div class="main-container">
 
             <aside class="album-panel">
-                <div class="album-cover-container">
-                    <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC" id="album-cover-img-panel"
+                <div class="album-cover-container" id="album-cover-clickable-area"> <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC" id="album-cover-img-panel"
                         class="enlargeable-cover">
                     <div class="enlarge-icon" title="Agrandar Portada">+</div>
                 </div>
@@ -44,47 +43,40 @@
                 </div>
 
                 <div class="album-info-editable">
-                    <p class="album-info-artist">Artista: Monocien y los cuerpos celestes</p>
-                    <p class="album-info-year">Año: 2018</p>
-                    <p class="album-info-credits">Grabado y Mezclado en: Marfil Estudios</p>
+                    <p class="album-info-artist"><strong></strong> <strong> MONOCIEN Y LOS CUERPOS CELESTES</strong></p>
+                     <p class="album-info-credits">El disco fue grabado en una sola toma el 15 de abril de 2018 en Estudios Marfil</p>
                     <div class="album-info-description">
-                        <h4>Sobre el Álbum:</h4>
-                        <p>
-                            "MYLCC" es una exploración sonora que se sumerge en las texturas del rock alternativo
-                            con tintes introspectivos. Cada pista es un capítulo en un relato de búsqueda y reflexión...
-                        </p>
                     </div>
+                    <p class="album-info-credits"><strong>Arte de tapa:</strong> Mario Damian Gomez</p>
                 </div>
 
                 <div class="album-download-section">
-                    <a href="audio/MYLCC_Album_Completo.zip" class="download-album-btn" download title="Descargar Álbum Completo">Descargar Álbum</a>
-                    </div>
+                    <a href="https://drive.google.com/file/d/1gdTvuKxpTl2R_UQj9hVdDothueoTefTP/view?usp=sharing" class="download-album-btn" download="MYLCC_Album.zip" target="_blank" title="Descargar Álbum Completo">Descargar Álbum</a>
+                </div>
 
                 <div class="band-photo-section-aside">
                     <img src="img/band-photo.jpg" alt="Monocien y los cuerpos celestes en vivo">
                 </div>
+                 <audio id="audio-player"></audio>
+            </aside>
 
-                 <audio id="audio-player"></audio> </aside>
-
-            <main class="tracklist-panel booklet-style">
-                <div class="tracklist-header">
+            <main class="tracklist-panel booklet-style" id="tracklist-panel-main"> <div class="tracklist-header">
                     <h2>MYLCC</h2>
+                    <button id="toggle-booklet-bg-btn" class="theme-toggle-btn" title="Cambiar Fondo del Booklet">🎨</button>
                 </div>
 
                <ul class="track-list-accordion">
-                <li class="track-item" data-track-index="0" data-src="audio/track1.mp3">
-                    <div class="track-title-container">
-                        <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                        <div class="track-info" tabindex="0">
-                            <span class="track-number">1.</span>
-                            <span class="track-name">Oeste</span>
+                    <li class="track-item" data-track-index="0" data-src="audio/track1.mp3">
+                        <div class="track-title-container">
+                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
+                            <div class="track-info" tabindex="0"> <span class="track-number">1.</span>
+                                <span class="track-name">Oeste</span>
+                            </div>
+                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra"> <span class="expand-icon">+</span>
+                            </button>
                         </div>
-                        <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                            <span class="expand-icon">+</span>
-                        </button>
-                    </div>
-                    <div class="track-details">
-                                                <pre>
+                        <div class="track-details">
+                            <pre>
 A no ser que la luz
 me quiera dejar
 solo con el mar.
@@ -98,25 +90,24 @@ Ohhh no puede ser así.
 Un montón de colores viene hacia mí
 en forma de montañas y algo más.
 Ohhh estaré mejor aquí.
-                        </pre>
-                        <p class="track-extra-info"><em>Grabado en Estudios Marfil.</em></p>
-                    </div>
-                </li>
-
-                <li class="track-item" data-track-index="1" data-src="audio/track2.mp3">
-                    <div class="track-title-container">
-                        <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                        <div class="track-info" tabindex="0">
-                            <span class="track-number">2.</span>
-                            <span class="track-name">Nada es Perfecto</span>
+                            </pre>
+                            <p class="track-extra-info"><em>Grabado en Estudios Marfil.</em></p>
                         </div>
-                        <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                            <span class="expand-icon">+</span>
-                        </button>
-                    </div>
-                    <div class="track-details">
-                   
-                        <pre>
+                    </li>
+
+                    <li class="track-item" data-track-index="1" data-src="audio/track2.mp3">
+                        <div class="track-title-container">
+                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
+                            <div class="track-info" tabindex="0">
+                                <span class="track-number">2.</span>
+                                <span class="track-name">Nada es Perfecto</span>
+                            </div>
+                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
+                                <span class="expand-icon">+</span>
+                            </button>
+                        </div>
+                        <div class="track-details">
+                            <pre>
 Hoy, puede que camine con la piel mi voz,
 no se va a notar, quieren más...
 Y que la sangre caiga en su alimento,
@@ -142,24 +133,23 @@ que nunca regresen, que solo el tiempo está.
 
 Que se vayan, que no vuelvan más,
 que nunca regresen, que solo el tiempo está.
-                        </pre>
-                    </div>
-                </li>
-
-                <li class="track-item" data-track-index="2" data-src="audio/track3.mp3">
-                    <div class="track-title-container">
-                        <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                        <div class="track-info" tabindex="0">
-                            <span class="track-number">3.</span>
-                            <span class="track-name">Caída Libre</span>
+                            </pre>
                         </div>
-                        <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                            <span class="expand-icon">+</span>
-                        </button>
-                    </div>
-                    <div class="track-details">
-                       
-                        <pre>
+                    </li>
+
+                    <li class="track-item" data-track-index="2" data-src="audio/track3.mp3">
+                        <div class="track-title-container">
+                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
+                            <div class="track-info" tabindex="0">
+                                <span class="track-number">3.</span>
+                                <span class="track-name">Caída Libre</span>
+                            </div>
+                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
+                                <span class="expand-icon">+</span>
+                            </button>
+                        </div>
+                        <div class="track-details">
+                            <pre>
 Desatándonos, soltando lo que era uno.
 Rompiéndonos del pasado.
 La arteria que nos fundía se secó para no volver,
@@ -178,48 +168,46 @@ si no logro cómo, tendré que volver a caer.
 Es la hora y te solté la mano,
 es momento de que el viento traslade el amor.
 Nuestra unión ha cambiado para siempre.
-                        </pre>
-                    </div>
-                </li>
-
-                <li class="track-item" data-track-index="3" data-src="audio/track4.mp3">
-                    <div class="track-title-container">
-                        <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                        <div class="track-info" tabindex="0">
-                            <span class="track-number">4.</span>
-                            <span class="track-name">Liberanos</span>
+                            </pre>
                         </div>
-                        <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                            <span class="expand-icon">+</span>
-                        </button>
-                    </div>
-                    <div class="track-details">
-                       
-                        <pre>
+                    </li>
+
+                    <li class="track-item" data-track-index="3" data-src="audio/track4.mp3">
+                        <div class="track-title-container">
+                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
+                            <div class="track-info" tabindex="0">
+                                <span class="track-number">4.</span>
+                                <span class="track-name">Liberanos</span>
+                            </div>
+                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
+                                <span class="expand-icon">+</span>
+                            </button>
+                        </div>
+                        <div class="track-details">
+                            <pre>
 Agua que de agua cuelga,
 solo el río sabe cómo llegar.
 Noche que es laguna, sin luna,
 solo el río sabe cómo, que puedas progresar.
 
 Agua, libéranos del mal,
-                        </pre>
-                    </div>
-                </li>
-
-                <li class="track-item" data-track-index="4" data-src="audio/track5.mp3">
-                    <div class="track-title-container">
-                        <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                        <div class="track-info" tabindex="0">
-                            <span class="track-number">5.</span>
-                            <span class="track-name">Buda Mono</span>
+                            </pre>
                         </div>
-                        <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
-                            <span class="expand-icon">+</span>
-                        </button>
-                    </div>
-                    <div class="track-details">
-                       
-                        <pre>
+                    </li>
+
+                    <li class="track-item" data-track-index="4" data-src="audio/track5.mp3">
+                        <div class="track-title-container">
+                            <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
+                            <div class="track-info" tabindex="0">
+                                <span class="track-number">5.</span>
+                                <span class="track-name">Buda Mono</span>
+                            </div>
+                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
+                                <span class="expand-icon">+</span>
+                            </button>
+                        </div>
+                        <div class="track-details">
+                            <pre>
 Tanta medicina, tanta vitamina, mira,
 mono buda va a bostezar.
 Sobre la colina busca parafina, mira,
@@ -232,52 +220,42 @@ mono buda, exento del mal.
 
 En la esquina universal
 busca un sol que devorar.
-                        </pre>
-                        <p class="track-extra-info"><em>.</em></p>
-                    </div>
-                </li>
-            </ul>
-
-            <ul class="track-list-accordion">
-                </ul>
-            <section class="photo-gallery-section">
-                              <div class="photo-gallery">
-                    <div class="gallery-item">
-                        <img src="img/foto1.jpg" alt="Descripción de la foto 1" class="gallery-thumbnail">
+                            </pre>
+                            <p class="track-extra-info"><em>.</em></p>
                         </div>
-                    <div class="gallery-item">
-                        <img src="img/foto2.jpg" alt="Descripción de la foto 2" class="gallery-thumbnail">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="img/foto3.jpg" alt="Descripción de la foto 3" class="gallery-thumbnail">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="img/foto4.jpg" alt="Descripción de la foto 4" class="gallery-thumbnail">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="img/foto5.jpg" alt="Monocien y los cuerpos celestes en vivo" class="gallery-thumbnail">
-                         
-                    </div>
-                     <div class="gallery-item">
-                        <img src="img/foto6.jpg" alt="Portada del Álbum" class="gallery-thumbnail">
-                      
-                    </div>
-                     <div class="gallery-item">
-                        <img src="img/foto7.jpg" alt="Portada del Álbum" class="gallery-thumbnail">
-                        
-                       
-                    </div>
-                </div>
-            </section>
-            <footer class="tracklist-panel-footer">
-                <p>&copy; <span id="current-year-main"></span> Monocien y los cuerpos celestes. Mendoza, Argentina.</p>
-            </footer>
-        </main>
-
+                    </li>
+                </ul> <section class="photo-gallery-section">
+                   
+                    <div class="photo-gallery">
+                        <div class="gallery-item">
+                            <img src="img/foto1.jpg" alt="MYLCC en concierto" class="gallery-thumbnail" data-large-src="img/foto1.jpg">
                         </div>
-    </div>
+                        <div class="gallery-item">
+                            <img src="img/foto2.jpg" alt="Banda en escenario" class="gallery-thumbnail" data-large-src="img/foto2.jpg">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="img/foto3.jpg" alt="Detalle de guitarra" class="gallery-thumbnail" data-large-src="img/foto3.jpg">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="img/foto4.jpg" alt="Baterista en acción" class="gallery-thumbnail" data-large-src="img/foto4.jpg">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="img/foto5.jpg" alt="Monocien y los cuerpos celestes - show" class="gallery-thumbnail" data-large-src="img/foto5.jpg">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="img/foto6.jpg" alt="Bajista en concierto" class="gallery-thumbnail" data-large-src="img/foto6.jpg">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="img/foto7.jpg" alt="Vista del público" class="gallery-thumbnail" data-large-src="img/foto7.jpg">
+                        </div>
+                    </div>
+                </section>
 
-    <div class="fixed-bottom-player">
+                <footer class="tracklist-panel-footer">
+                    <p>&copy; <span id="current-year-main"></span> Monocien y los cuerpos celestes. Mendoza, Argentina.</p>
+                </footer>
+            </main>
+        </div> </div> <div class="fixed-bottom-player">
         <div class="player-info-progress">
             <h3 id="player-current-track-title">--</h3>
             <div class="progress-container" id="progress-container">
@@ -300,7 +278,7 @@ busca un sol que devorar.
     <div id="imageModal" class="modal">
         <span class="modal-close" title="Cerrar">&times;</span>
         <img class="modal-content" id="modalImage">
-        <div class="modal-caption">Portada del Álbum - MYLCC</div>
+        <div class="modal-caption" id="modalCaption">Imagen</div>
     </div>
 
     <script src="script.js"></script>
