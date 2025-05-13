@@ -41,15 +41,23 @@
                 </div>
                 </div>
             <div class="main-player-controls">
-                <h3 id="player-current-track-title">----</h3>
-                <div class="progress-container" id="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress" id="progress"></div>
-                    </div>
-                    <div class="time-display">
-                        <span id="current-time">0:00</span>  <span id="duration">0:00</span>
+                <div class="player-info-progress">
+                    <h3 id="player-current-track-title">-- Selecciona una Pista --</h3>
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <div class="time-display"> <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                        </div>
                     </div>
                 </div>
+                <div class="buttons">
+                    <button id="prev-btn" title="Anterior">⏮</button>
+                    <button id="play-pause-btn" title="Reproducir/Pausar">▶</button>
+                    <button id="next-btn" title="Siguiente">⏭</button>
+                    <button id="play-all-btn" title="Reproducir Todo">Reproducir Álbum</button> </div>
+                 <audio id="audio-player"></audio>
+            </div>
                 <div class="buttons">
                     <button id="prev-btn" title="Anterior">⏮</button>
                     <button id="play-pause-btn" title="Reproducir/Pausar">▶</button>
