@@ -269,7 +269,7 @@ body {
 
 @media (max-width: 768px) {
     .main-content-wrapper.visible { padding-bottom: var(--player-fixed-height); }
-    .album-cover-container { width: 50%; max-width: 180px; }
+    .album-cover-container { width: 75%; max-width: 180px; }
     .album-title-display h3 { font-size: 1.2rem; }
     .album-info-editable { max-width: 90%; font-size: 0.75rem; }
     .download-album-btn { font-size: 0.8rem; }
@@ -292,6 +292,7 @@ body {
 }
 
 @media (max-width: 480px) {
+    
     .main-content-wrapper.visible { padding-top: var(--header-height-mobile); padding-bottom: var(--player-fixed-height); }
     .main-page-header { height: var(--header-height-mobile); }
     .main-page-header h1 { font-size: 0.95rem; }
@@ -299,10 +300,10 @@ body {
     .header-content .band-name-header { text-align: center; flex-grow: 0;} /* Centrar nombre de banda */
 
 
-    .album-cover-container { width: 55%; max-width: 150px; }
+    .album-cover-container { width: 75%; max-width: 220px; }
     .album-title-display h3 { font-size: 1rem; }
     .album-info-editable { font-size: 0.7rem; }
-    .download-album-btn { font-size: 0.75rem; }
+    .download-album-btn { font-size: 0.65rem; }
 
     .fixed-bottom-player {
         height: var(--player-fixed-height);
