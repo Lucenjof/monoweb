@@ -20,20 +20,23 @@
     <div id="splash-screen" class="splash-screen">
         <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC - Clic para entrar" id="splash-cover-img">
         <div class="splash-enter-prompt">
-            <p>Clic en la portada para escuchar</p>
+            <p>Click en la portada para escuchar</p>
         </div>
     </div>
 
+    <header class="main-page-header">
+        <div class="header-content">
+            <span class="band-name-header"><a href="index.html" class="header-band-link">MONOCIEN Y LOS CUERPOS CELESTES</a></span>
+            <span class="album-title-header">MYLCC</span>
+            <span class="album-year-header">2018</span>
+        </div>
+    </header>
     <div id="main-content-wrapper" class="main-content-wrapper hidden-initially">
-
-        <header class="main-page-header">
-            <h1><a href="index.html" class="header-band-link"><strong>MONOCIEN Y LOS CUERPOS CELESTES</strong></a></h1>
-        </header>
-
         <div class="main-container">
 
             <aside class="album-panel">
-                <div class="album-cover-container" id="album-cover-clickable-area"> <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC" id="album-cover-img-panel"
+                <div class="album-cover-container" id="album-cover-clickable-area">
+                    <img src="img/album-cover.jpg" alt="Portada del Álbum MYLCC" id="album-cover-img-panel"
                         class="enlargeable-cover">
                     <div class="enlarge-icon" title="Agrandar Portada">+</div>
                 </div>
@@ -43,23 +46,28 @@
                 </div>
 
                 <div class="album-info-editable">
-                    <p class="album-info-artist"><strong></strong> <strong> MONOCIEN Y LOS CUERPOS CELESTES</strong></p>
-                     <p class="album-info-credits">El disco fue grabado en una sola toma el 15 de abril de 2018 en Estudios Marfil</p>
+                    <p class="album-info-artist"><strong>Artista:</strong> MONOCIEN Y LOS CUERPOS CELESTES</p>
+                   
                     <div class="album-info-description">
+                        <h4>Sobre el Álbum:</h4>
+                        <p>"MYLCC" fue grabado en una sola toma en Estudios Marfil en Abril del 2018.</p>
                     </div>
-                    <p class="album-info-credits"><strong>Arte de tapa:</strong> Mario Damian Gomez</p>
+                     <div class="album-info-description"></div>
+                    <p class="album-info-credits"><strong>Arte de tapa:</strong> Mario Damían Gomez</p>
                 </div>
 
                 <div class="album-download-section">
                     <a href="https://drive.google.com/file/d/1gdTvuKxpTl2R_UQj9hVdDothueoTefTP/view?usp=sharing" class="download-album-btn" download="MYLCC_Album.zip" target="_blank" title="Descargar Álbum Completo">Descargar Álbum</a>
                 </div>
 
-              
+                <div class="band-photo-section-aside"> <img src="img/band-photo.jpg" alt="Monocien y los cuerpos celestes en vivo">
+                </div>
                  <audio id="audio-player"></audio>
             </aside>
 
-            <main class="tracklist-panel booklet-style" id="tracklist-panel-main"> <div class="tracklist-header">
-                    <h2>Canciones</h2>
+            <main class="tracklist-panel booklet-style" id="tracklist-panel-main">
+                <div class="tracklist-header">
+                    <h2>MYLCC</h2>
                     <button id="toggle-booklet-bg-btn" class="theme-toggle-btn" title="Cambiar Fondo del Booklet">🎨</button>
                 </div>
 
@@ -67,10 +75,12 @@
                     <li class="track-item" data-track-index="0" data-src="audio/track1.mp3">
                         <div class="track-title-container">
                             <button class="play-track-btn" title="Reproducir Pista">&#x25B6;</button>
-                            <div class="track-info" tabindex="0"> <span class="track-number">1.</span>
+                            <div class="track-info" tabindex="0">
+                                <span class="track-number">1.</span>
                                 <span class="track-name">Oeste</span>
                             </div>
-                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra"> <span class="expand-icon">+</span>
+                            <button class="expand-details-btn" aria-label="Mostrar/Ocultar Letra">
+                                <span class="expand-icon">+</span>
                             </button>
                         </div>
                         <div class="track-details">
@@ -92,6 +102,7 @@ Ohhh estaré mejor aquí.
                             <p class="track-extra-info"><em>Grabado en Estudios Marfil.</em></p>
                         </div>
                     </li>
+                 
 
                     <li class="track-item" data-track-index="1" data-src="audio/track2.mp3">
                         <div class="track-title-container">
@@ -221,32 +232,19 @@ busca un sol que devorar.
                             </pre>
                             <p class="track-extra-info"><em>.</em></p>
                         </div>
-                    </li>
-                </ul> <section class="photo-gallery-section">
-                   
+                </ul>
+
+                <section class="photo-gallery-section">
+                    <h1 class="gallery-title">Imágenes del Álbum</h1>
                     <div class="photo-gallery">
-                        <div class="gallery-item">
-                            <img src="img/foto1.jpg" alt="MYLCC en concierto" class="gallery-thumbnail" data-large-src="img/foto1.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto2.jpg" alt="Salvador Bucolo" class="gallery-thumbnail" data-large-src="img/foto2.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto3.jpg" alt="Gira San Luis" class="gallery-thumbnail" data-large-src="img/foto3.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto4.jpg" alt="Juan Pablo Inzirillo" class="gallery-thumbnail" data-large-src="img/foto4.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto5.jpg" alt="MYLCC en concierto" class="gallery-thumbnail" data-large-src="img/foto5.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="img/foto6.jpg" alt="Luis Rodrigo Cuesta" class="gallery-thumbnail" data-large-src="img/foto6.jpg">
-                        </div>
-                         <div class="gallery-item">
-                            <img src="img/foto7.jpg" alt="En el estudio" class="gallery-thumbnail" data-large-src="img/foto7.jpg">
-                        </div>
-                       </div>
+                        <div class="gallery-item"><img src="img/foto1.jpg" alt="MYLCC en concierto" class="gallery-thumbnail" data-large-src="img/foto1.jpg"></div>
+                        <div class="gallery-item"><img src="img/foto2.jpg" alt="Salvador Bucolo Batería" class="gallery-thumbnail" data-large-src="img/foto2.jpg"></div>
+                        <div class="gallery-item"><img src="img/foto3.jpg" alt="Gira San Luis" class="gallery-thumbnail" data-large-src="img/foto3.jpg"></div>
+                        <div class="gallery-item"><img src="img/foto4.jpg" alt="Juan Pablo Inzirillo Bajo" class="gallery-thumbnail" data-large-src="img/foto4.jpg"></div>
+                        <div class="gallery-item"><img src="img/foto5.jpg" alt="Monocien y los cuerpos celestes show" class="gallery-thumbnail" data-large-src="img/foto5.jpg"></div>
+                        <div class="gallery-item"><img src="img/foto6.jpg" alt="Luis Rodrigo Cuesta Guitarra" class="gallery-thumbnail" data-large-src="img/foto6.jpg"></div>
+                        <div class="gallery-item"><img src="img/foto7.jpg" alt="En el estudio de grabación" class="gallery-thumbnail" data-large-src="img/foto7.jpg"></div>
+                    </div>
                 </section>
 
                 <footer class="tracklist-panel-footer">

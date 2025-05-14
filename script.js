@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const modalCaption = document.getElementById('modalCaption');
-    const coverImageClickableArea = document.getElementById('album-cover-clickable-area');
+    const coverImageClickableArea = document.getElementById('album-cover-clickable-area'); // Contenedor de portada en panel izq
     const closeModalBtn = document.querySelector('.modal-close');
     const galleryThumbnails = document.querySelectorAll('.gallery-thumbnail');
     const toggleBookletBgBtn = document.getElementById('toggle-booklet-bg-btn');
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let previousVolumeBeforeMute = currentVolume;
     let bookletBgToggled = false;
 
-    const backgroundVideos = [
+    const backgroundVideos = [ // Definir ANTES de que gatherTrackData lo use
         "videos/video1.mp4", "videos/video2.mp4", "videos/video3.mp4",
         "videos/video4.mp4", "videos/video5.mp4"
     ];
@@ -107,7 +107,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 audioPlayer.onloadedmetadata = () => {
                     updatePlayerUI(); checkAudioButtonsAvailability();
                     if (playImmediately) playTrack();
-                    if (autoPlayNext) closeAllAccordions();
+                    if (autoPlayNext) {
+                        closeAllAccordions();
+                        // Opcional: abrir acordeón de la pista actual al auto-reproducir
+                        // const currentTrackElement = tracksData[currentTrackIndex]?.element;
+                        // if (currentTrackElement) {
+                        //    toggleAccordion(currentTrackElement, true); // true para forzar apertura
+                        // }
+                    }
                 };
                 audioPlayer.onerror = (e) => {
                     console.error(`Error al cargar audio: ${trackData.src}`, e);
@@ -134,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function playTrack() {
         if (currentTrackIndex === -1 && tracksData.length > 0) { loadTrack(0, true, true); return; }
         if (currentTrackIndex !== -1 && tracksData[currentTrackIndex]) {
-            if (audioPlayer.readyState >= 2) {
+            if (audioPlayer.readyState >= 2) { // HAVE_CURRENT_DATA o superior
                 audioPlayer.play().catch(error => { isPlaying = false; updatePlayerUI(); updateActiveTrackVisuals(); });
             } else {
                 const tryPlayWhenReady = () => { if (!isPlaying && currentTrackIndex !== -1) playTrack(); audioPlayer.removeEventListener('canplaythrough', tryPlayWhenReady, { once: true }); };
@@ -157,16 +164,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleAccordion(itemToToggle, forceOpen = false) {
         const detailsDiv = itemToToggle.querySelector('.track-details'); if (!detailsDiv) return;
         const icon = itemToToggle.querySelector('.expand-icon'); const currentlyOpen = itemToToggle.classList.contains('open');
-        if (!forceOpen) closeAllAccordions(itemToToggle);
+        if (!forceOpen) closeAllAccordions(itemToToggle); // Solo cierra otros si no es una apertura forzada (ej. autoPlayNext)
+
         if (forceOpen || !currentlyOpen) {
             itemToToggle.classList.add('open');
-            detailsDiv.style.display = 'block'; // Necesario para medir scrollHeight correctamente
+            // Forzar reflow para asegurar que scrollHeight se mida con el elemento visible
+            detailsDiv.style.display = 'block'; // Mostrar temporalmente para medir
             const scrollHeight = detailsDiv.scrollHeight;
-            // detailsDiv.style.display = ''; // No es necesario volver a quitarlo si .open lo maneja con block
-            requestAnimationFrame(() => { detailsDiv.style.maxHeight = scrollHeight + "px"; });
+            detailsDiv.style.display = ''; // Volver al display por defecto del CSS (manejado por .open y max-height)
+            
+            requestAnimationFrame(() => { // Aplicar max-height en el siguiente frame para la transición
+                detailsDiv.style.maxHeight = scrollHeight + "px";
+            });
             if (icon) icon.textContent = '−';
         } else if (!forceOpen && currentlyOpen) {
-            itemToToggle.classList.remove('open'); detailsDiv.style.maxHeight = null; if (icon) icon.textContent = '+';
+            itemToToggle.classList.remove('open');
+            detailsDiv.style.maxHeight = null;
+            if (icon) icon.textContent = '+';
         }
     }
     function closeAllAccordions(exceptItem = null) { trackItems.forEach(item => { if (item !== exceptItem && item.classList.contains('open')) { item.classList.remove('open'); const details = item.querySelector('.track-details'); if (details) details.style.maxHeight = null; const icon = item.querySelector('.expand-icon'); if (icon) icon.textContent = '+'; } }); }
@@ -189,26 +203,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const expandButton = item.querySelector('.expand-details-btn');
         const trackInfoArea = item.querySelector('.track-info');
         const playButton = item.querySelector('.play-track-btn');
+
+        // Evento de expansión/colapso
         if (expandButton) expandButton.addEventListener('click', (e) => { e.stopPropagation(); toggleAccordion(item);});
-        if (trackInfoArea) trackInfoArea.addEventListener('click', () => toggleAccordion(item));
+        if (trackInfoArea) trackInfoArea.addEventListener('click', () => toggleAccordion(item)); // También al hacer clic en la info
+
+        // Evento de reproducción para el botón individual
         if (playButton) { playButton.addEventListener('click', (event) => { event.stopPropagation(); const trackIndex = parseInt(item.getAttribute('data-track-index'), 10); if (trackIndex === currentTrackIndex && isPlaying) pauseTrack(); else loadTrack(trackIndex, true, false); }); }
     });
 
-    if (coverImageClickableArea) { // Usar el ID del contenedor de la portada del panel
+    // Listener para agrandar portada del panel
+    if (coverImageClickableArea) {
         coverImageClickableArea.addEventListener('click', () => {
-            const imgElement = coverImageClickableArea.querySelector('img.enlargeable-cover'); // Obtener la imagen dentro
-            if (imgElement) {
-                openModal(imgElement.src, imgElement.alt || "Portada del Álbum");
+            // El ID de la imagen dentro del panel es 'album-cover-img-panel'
+            const panelImageElement = document.getElementById('album-cover-img-panel');
+            if (panelImageElement) {
+                openModal(panelImageElement.src, panelImageElement.alt || "Portada del Álbum");
             }
         });
     }
+    // Listeners para agrandar imágenes de la galería
     if (galleryThumbnails) {
         galleryThumbnails.forEach(thumbnail => {
             thumbnail.addEventListener('click', () => {
                 const largeImageSrc = thumbnail.dataset.largeSrc || thumbnail.src;
                 let caption = thumbnail.alt || "Imagen de la galería";
                 const captionElement = thumbnail.closest('.gallery-item')?.querySelector('.thumbnail-caption');
-                if (captionElement) caption = captionElement.textContent.trim();
+                if (captionElement) caption = captionElement.textContent.trim(); // Usar caption si existe
                 openModal(largeImageSrc, caption);
             });
         });
@@ -230,5 +251,4 @@ document.addEventListener('DOMContentLoaded', function() {
     gatherTrackData();
     const currentYearSpanMain = document.getElementById('current-year-main');
     if (currentYearSpanMain) currentYearSpanMain.textContent = new Date().getFullYear();
-
 });
