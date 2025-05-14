@@ -296,6 +296,7 @@ body {
 .booklet-style .tracklist-header h2 {
     font-size: 1.3rem; /* O el tamaño que prefieras para móvil */
     text-align: left; /* <<<--- CAMBIO: Alinear título a la izquierda */
+    padding-left: 20px;
     margin: 3; /* Quitar márgenes extra si los tuviera */
     flex-grow: 1; /* Permitir que el título ocupe espacio si es necesario */
     /* Opcional: para truncar texto si es muy largo y no cabe */
@@ -309,7 +310,7 @@ body {
     margin-top: 0; /* <<<--- CAMBIO: Quitar margen superior si ya no se apila */
     width: auto;   /* <<<--- CAMBIO: Que el ancho se ajuste al contenido del botón (icono) */
     max-width: none; /* Quitar max-width si el botón es solo un icono */
-    padding: 6px; /* Ajustar padding para el icono redondo */
+    padding: 1px; /* Ajustar padding para el icono redondo */
     font-size: 1.1rem; /* Ajustar tamaño del icono */
     border-radius: 50%; /* Para que sea redondo */
     /* Otros estilos que ya tenías para el botón (color, background-color en hover, etc.) */
@@ -357,6 +358,7 @@ body {
 
     .tracklist-panel.booklet-style { padding: 12px 5px; }
     .booklet-style .tracklist-header h2 { font-size: 1.1rem; }
+    
     .theme-toggle-btn { font-size: 0.8rem; padding: 4px 6px; margin-top: 5px; width: auto; }
     .booklet-style .track-info .track-name { font-size: 0.75rem; }
     .booklet-style .track-details pre { font-size: 0.68rem; }
