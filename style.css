@@ -182,7 +182,6 @@ body {
     border-bottom: 1px solid rgba(var(--color-border-rgb), 0.3);
     transition: background-color 0.2s ease;
     background-color: rgba(var(--color-panel-bg-rgb), 0.1);
-    padding-right: 25px;
     margin-bottom: 2px;
     border-radius: 3px;
 }
@@ -291,6 +290,7 @@ body {
     gap: 10px; /* Espacio entre título y botón si están muy cerca */
     padding-bottom: 10px; /* Mantener el padding si lo tenías */
     margin-bottom: 15px;  /* Mantener el margen si lo tenías */
+     padding-right: 25px;
     border-bottom: 1px solid rgba(var(--color-accent-rgb), 0.4); /* Mantener borde */
 }
 
