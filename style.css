@@ -3,7 +3,7 @@
 /* -------------------------------- */
 :root {
     --color-background: #101010;
-    --color-panel-bg-opaque: #181818; /* Para elementos que SÍ necesitan un fondo opaco */
+    --color-panel-bg-opaque: #181818;
     --color-text-primary: #e8e8e8;
     --color-text-secondary: #b3b3b3;
     --color-accent: #a8835f;
@@ -23,18 +23,19 @@
     --font-booklet-text: 'Georgia', 'Times New Roman', Times, serif;
 
     --header-height: 40px; /* Altura unificada para el header fijo estilo "canto de CD" */
-  --header-height-tablet: 80px;
-    --header-height-mobile: 70px;
+    --header-height-tablet: 50px; /* Mantener o ajustar para tablet */
+    --header-height-mobile: 45px; /* Header más delgado en móvil */
 
-    --player-fixed-height: 80px;
+    --player-fixed-height: 55px; /* Altura base para el reproductor fijo */
+    /* --player-fixed-height-small-mobile: 50px;  No la estabas usando, la quito por simplicidad */
 
     --color-accent-rgb: 168, 131, 95;
-    --color-panel-bg-rgb: 24, 24, 24; /* Para fondos semitransparentes */
+    --color-panel-bg-rgb: 24, 24, 24;
     --color-border-rgb: 42, 42, 42;
     --color-text-secondary-rgb: 179,179,179;
     --video-opacity: 0.15;
-    --booklet-bg-original: transparent; /* Fondo por defecto del booklet transparente */
-    --booklet-bg-celeste: #010306;
+    --booklet-bg-original: transparent;
+    --booklet-bg-celeste: #3a506b; /* Celeste/azul acero oscuro y desaturado */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,7 +47,6 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     transition: background-color 0.3s, color 0.3s;
-    /* El padding-top lo maneja .main-content-wrapper.visible */
 }
 
 /* VIDEO, SPLASH, MAIN CONTENT WRAPPER */
@@ -66,7 +66,7 @@ body {
 /* -------------------------------- */
 /* -- ENCABEZADO PRINCIPAL FIJO -- */
 /* -------------------------------- */
-.main-page-header { /* Aplicará a <header class="main-page-header cd-spine-header"> */
+.main-page-header { /* Tu HTML usa class="main-page-header cd-spine-header" */
     background-color: #080808;
     padding: 0 15px;
     border-bottom: 1px solid #222;
@@ -77,15 +77,15 @@ body {
     height: var(--header-height);
     display: flex;
     align-items: center;
-    justify-content: center; /* Para centrar .header-content */
+    justify-content: center; /* Centra el .header-content */
     overflow: hidden;
 }
 .header-content {
     display: flex;
     align-items: baseline;
     width: 100%;
-    max-width: 1400px; /* Para que coincida con .main-container si es necesario */
-    padding: 0 10px; /* Espacio si el contenido es muy ancho */
+    max-width: 1400px; /* Para que no se extienda demasiado en pantallas muy anchas */
+    padding: 0 10px; /* Espacio interno si el contenido es más ancho que max-width */
     white-space: nowrap;
     justify-content: space-between; /* Distribuye los elementos internos */
 }
@@ -102,46 +102,16 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.band-name-header {
-    font-size: 0.9rem;
-    flex-grow: 1; /* Ocupa espacio disponible */
-    text-align: left;
-    padding-right: 10px;
-}
-.band-name-header a.header-band-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+.band-name-header { font-size: 0.9rem; flex-grow: 1; text-align: left; padding-right: 10px; }
+.band-name-header a.header-band-link { color: inherit; text-decoration: none; transition: color 0.2s ease;}
 .band-name-header a.header-band-link:hover { color: var(--color-accent-hover); }
-.album-title-header {
-    font-size: 0.8rem;
-    color: var(--color-text-primary);
-    flex-shrink: 0; /* No se encoge */
-    padding: 0 10px;
-}
-.album-year-header {
-    font-size: 0.75rem;
-    flex-shrink: 0;
-    text-align: right;
-    padding-left: 10px;
-}
+.album-title-header { font-size: 0.8rem; color: var(--color-text-primary); flex-shrink: 0; padding: 0 10px; }
+.album-year-header { font-size: 0.75rem; flex-shrink: 0; text-align: right; padding-left: 10px; }
 
 /* LAYOUT PRINCIPAL DE DOS COLUMNAS */
 .main-container { display: flex; flex-wrap: nowrap; width: 100%; max-width: 1400px; margin: 0 auto; }
-.album-panel {
-    flex: 0 0 360px;
-    background-color: transparent; /* FONDO TRANSPARENTE */
-    padding: 25px; display: flex; flex-direction: column; align-items: center; z-index: 2;
-    min-height: calc(100vh - var(--header-height) - var(--player-fixed-height));
-    justify-content: flex-start; padding-top: 30px;
-    border-right: 1px solid rgba(var(--color-border-rgb),0.15);
-}
-.tracklist-panel.booklet-style {
-    flex-grow: 1; padding: 25px 35px; overflow-y: auto;
-    background-color: var(--booklet-bg-original); /* Inicia transparente */
-    color: #d1c7b8; font-family: var(--font-booklet-text);
-    border-left: 1px solid rgba(var(--color-border-rgb),0.15);
-    scrollbar-width: thin; scrollbar-color: var(--color-border) var(--color-background);
-    transition: background-color 0.5s ease-in-out;
-    position: relative; z-index: 2;
-}
+.album-panel { flex: 0 0 360px; background-color: transparent; padding: 25px; display: flex; flex-direction: column; align-items: center; z-index: 2; min-height: calc(100vh - var(--header-height) - var(--player-fixed-height)); justify-content: flex-start; padding-top: 30px; border-right: 1px solid rgba(var(--color-border-rgb),0.15); }
+.tracklist-panel.booklet-style { flex-grow: 1; padding: 25px 35px; overflow-y: auto; background-color: var(--booklet-bg-original); color: #d1c7b8; font-family: var(--font-booklet-text); border-left: 1px solid rgba(var(--color-border-rgb),0.15); scrollbar-width: thin; scrollbar-color: var(--color-border) var(--color-background); transition: background-color 0.5s ease-in-out; position: relative; z-index: 2; }
 .tracklist-panel.booklet-style.alt-bg { background-color: var(--booklet-bg-celeste); }
 .tracklist-panel.booklet-style::-webkit-scrollbar { width: 7px; }
 .tracklist-panel.booklet-style::-webkit-scrollbar-track { background: var(--color-background); }
@@ -155,13 +125,7 @@ body {
 .album-cover-container:hover .enlarge-icon { opacity: 1; }
 .album-title-display { text-align: center; margin-bottom: 12px; }
 .album-title-display h3 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-highlight); font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;}
-.album-info-editable {
-    text-align: left; width: 100%; max-width: 260px;
-    font-size: 0.8rem; color: var(--color-text-secondary);
-    margin-bottom: 20px; padding: 15px;
-    background-color: rgba(var(--color-panel-bg-rgb), 0.75);
-    border-radius: 4px; border: 1px solid rgba(var(--color-border-rgb), 0.4);
-}
+.album-info-editable { text-align: left; width: 100%; max-width: 260px; font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 20px; padding: 15px; background-color: rgba(var(--color-panel-bg-rgb), 0.75); border-radius: 4px; border: 1px solid rgba(var(--color-border-rgb), 0.4); }
 .album-info-editable p { margin-bottom: 7px; line-height: 1.5; text-align: center; }
 .album-info-editable strong { color: var(--color-text-primary); display: block; margin-bottom: 2px;}
 .album-info-description { margin-top: 12px; }
@@ -170,21 +134,15 @@ body {
 .album-download-section { width: 100%; max-width: 260px; margin-bottom: 20px; text-align: center; }
 .download-album-btn { display: inline-block; background-color: var(--color-accent); color: var(--color-highlight); font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; text-decoration: none; padding: 9px 18px; border-radius: 4px; border: 1px solid transparent; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: background-color 0.2s ease, transform 0.15s ease; }
 .download-album-btn:hover { background-color: var(--color-accent-hover); transform: translateY(-1px); }
-.band-photo-section-aside { display: none !important; } /* Asegurar que no se muestre */
+.band-photo-section-aside { display: none !important; }
 
 /* COLUMNA DERECHA (TRACKLIST PANEL - BOOKLET STYLE) */
 .booklet-style .tracklist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(var(--color-accent-rgb), 0.4); padding-bottom: 10px; }
-.booklet-style .tracklist-header h2 { font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin:0; }
+.booklet-style .tracklist-header h2 { font-family: var(--font-heading);padding-left: 10px; font-size: 1.6rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin:0; }
 .theme-toggle-btn { background-color: transparent; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); padding: 6px; font-size: 1.1rem; border-radius: 50%; cursor: pointer; transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s ease; width: 32px; height: 32px; display: inline-flex; justify-content: center; align-items: center; line-height: 1; }
 .theme-toggle-btn:hover { color: var(--color-highlight); background-color: rgba(var(--color-accent-rgb), 0.15); transform: scale(1.05); }
 .booklet-style .track-list-accordion { list-style: none; padding: 0; margin: 0; }
-.booklet-style .track-item {
-    border-bottom: 1px solid rgba(var(--color-border-rgb), 0.3);
-    transition: background-color 0.2s ease;
-    background-color: rgba(var(--color-panel-bg-rgb), 0.1);
-    margin-bottom: 2px;
-    border-radius: 3px;
-}
+.booklet-style .track-item { border-bottom: 1px solid rgba(var(--color-border-rgb), 0.3); transition: background-color 0.2s ease; background-color: rgba(var(--color-panel-bg-rgb), 0.1); margin-bottom: 2px; border-radius: 3px; }
 .booklet-style .track-item:last-child { border-bottom: none; }
 .booklet-style .track-item.active { background-color: rgba(var(--color-accent-rgb), 0.15); }
 .booklet-style .track-item.active .track-info .track-name { color: var(--color-accent-hover); font-style: italic; }
@@ -215,27 +173,71 @@ body {
 .gallery-thumbnail:hover { box-shadow: 0 4px 12px rgba(var(--color-accent-rgb), 0.3); }
 .thumbnail-caption { font-size: 0.7rem; color: var(--color-text-secondary); margin-top: 5px; font-family: var(--font-booklet-text); }
 
-/* ÚNICO REPRODUCTOR FIJO INFERIOR */
-.fixed-bottom-player { display: flex; position: fixed; bottom: 0; left: 0; width: 95%; background-color: rgba(12,12,12,0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 7px 10px; box-shadow: 0 -1px 12px rgba(0,0,0,0.75); z-index: 1000; align-items: center; gap: 10px; height: var(--player-fixed-height); border-top: 1px solid #000; }
-.fixed-bottom-player .player-info-progress { flex-grow: 1; width:100%; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 1px; margin-right: 8px; min-width: 70px; }
+/* --------------------------------------------- */
+/* -- ÚNICO REPRODUCTOR FIJO INFERIOR (GLOBAL) -- */
+/* --------------------------------------------- */
+.fixed-bottom-player {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; width: 100%; /* Ocupa todo el ancho */
+    background-color: rgba(12,12,12,0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 7px 12px;
+    box-shadow: 0 -1px 12px rgba(0,0,0,0.75);
+    z-index: 1000;
+    align-items: center;
+    /* justify-content: space-between; Para distribuir espacio entre los grupos */
+    gap: 10px; /* Espacio entre los 3 grupos principales del reproductor */
+    height: var(--player-fixed-height);
+    border-top: 1px solid #000;
+}
+.fixed-bottom-player .player-info-progress {
+    flex-grow: 1; /* Permitir que crezca para ocupar espacio a la izquierda */
+    flex-shrink: 1; /* Permitir que se encoja si es necesario */
+    flex-basis: 40%; /* Base inicial, pero puede crecer/encogerse */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    margin-right: 8px; /* Espacio antes del siguiente grupo */
+    min-width: 100px; /* Mínimo para que no desaparezca en pantallas pequeñas */
+}
 .fixed-bottom-player #player-current-track-title { font-size: 1.5rem; color: var(--color-text-primary); margin-bottom: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; font-weight: 600; font-family: var(--font-heading); }
-.fixed-bottom-player .progress-container { width: 95%; height: 5.5px; margin-bottom: 0; background-color: var(--color-slider-track); border-radius: 2.25px; cursor: pointer; }
+.fixed-bottom-player .progress-container { width: 100%; height:4.5px; margin-bottom: 0; background-color: var(--color-slider-track); border-radius: 2.25px; cursor: pointer; }
 .fixed-bottom-player .progress-bar { background-color: transparent; height: 100%; border-radius: 2.25px; overflow: hidden;}
 .fixed-bottom-player .progress { background-color: var(--color-accent); height: 100%; width: 0%; border-radius: 2.25px; display: block; transition: width 0.1s linear;}
-.fixed-bottom-player .player-buttons { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+
+.fixed-bottom-player .player-buttons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0; /* No se encogen los botones */
+}
 .player-btn { background-color: transparent; border: none; color: var(--color-control-icon); padding: 5px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; transition: all 0.15s ease-out; width: 36px; height: 36px; display: inline-flex; justify-content: center; align-items: center; line-height: 1; }
 .player-btn:hover:not(:disabled) { color: var(--color-highlight); background-color: rgba(var(--color-accent-rgb),0.2); }
 .player-btn:active:not(:disabled) { transform: scale(0.95); }
 .player-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .player-btn.play-btn { font-size: 1.5rem; width: 42px; height: 42px; color: var(--color-highlight); background-color: transparent; }
 .player-btn.play-btn:hover:not(:disabled) { background-color: rgba(var(--color-accent-rgb),0.2); }
-.fixed-bottom-player .volume-control-container { display: flex; align-items: center; gap: 5px; flex-basis: 100px; max-width: 120px; flex-shrink: 1; min-width: 60px;}
+
+.fixed-bottom-player .volume-control-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-basis: 120px; /* Ancho base del control de volumen */
+    max-width: 150px; /* Máximo */
+    flex-shrink: 0; /* No se encoge por defecto */
+    margin-left: auto; /* <<<--- ESTO EMPUJA EL VOLUMEN (Y LOS BOTONES SI NO HAY NADA ENTRE ELLOS) A LA DERECHA */
+}
 .fixed-bottom-player .volume-icon-btn { font-size: 1rem; width: 28px; height: 28px; }
 .fixed-bottom-player .volume-slider { height: 3.5px; }
 .fixed-bottom-player .volume-slider::-webkit-slider-thumb { width: 10px; height: 10px; }
 .fixed-bottom-player .volume-slider::-moz-range-thumb { width: 10px; height: 10px; }
 
 /* MODAL */
+/* ... (Estilos del modal sin cambios) ... */
 .modal { display: none; position: fixed; z-index: 2001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: var(--color-modal-bg); padding-top: 30px; opacity: 0; transition: opacity 0.25s ease-in-out; }
 .modal.active { display: flex; align-items: center; justify-content: center; opacity: 1; }
 .modal-content { margin: 15px; display: block; width: auto; max-width: 90%; max-height: calc(100vh - 60px); animation: zoomInModal 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); background-color: var(--color-modal-content-bg); padding: 5px; border: 1px solid var(--color-border); border-radius: 4px; box-shadow: 0 5px 25px rgba(0,0,0,0.6); }
@@ -244,122 +246,94 @@ body {
 .modal-close { position: absolute; top: 10px; right: 15px; color: var(--color-highlight); font-size: 30px; font-weight: bold; transition: color 0.2s ease, transform 0.2s ease; cursor: pointer; line-height: 1; padding: 4px; background-color: rgba(var(--color-panel-bg-rgb),0.4); border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;}
 .modal-close:hover, .modal-close:focus { color: var(--color-accent-hover); transform: scale(1.12); }
 
+
 /* ----------------------------- */
 /* -- RESPONSIVIDAD -- */
 /* ----------------------------- */
-@media (max-width: 1024px) {
+@media (max-width: 1024px) { /* Tablets */
     .main-content-wrapper.visible { padding-top: var(--header-height-tablet); }
     .main-page-header { height: var(--header-height-tablet); }
-    .main-page-header h1 { font-size: 1.15rem; }
+    .main-page-header h1 { font-size: 1.1rem; }
+    .header-content .band-name-header { font-size: 0.8rem; }
+    .header-content .album-title-header { font-size: 0.75rem; margin: 0 8px;}
+    .header-content .album-year-header { font-size: 0.7rem; }
+
     .main-container { flex-direction: column; }
     .album-panel {
-        flex-basis: auto; width: 100%;
-        min-height: auto;
-        padding: 20px;
-        border-right: none;
-        border-bottom: 1px solid #0a0a0a;
-        padding-top: 20px;
+        flex-basis: auto; width: 100%; min-height: auto; padding: 20px;
+        border-right: none; border-bottom: 1px solid #0a0a0a; padding-top: 20px;
     }
-    .album-cover-container, .album-title-display, .album-info-editable, .album-download-section {
-        max-width: 320px; margin-left: auto; margin-right: auto;
-    }
+    .album-cover-container, .album-title-display, .album-info-editable, .album-download-section { max-width: 320px; margin-left: auto; margin-right: auto; }
     .tracklist-panel.booklet-style { padding: 20px; border-left: none; }
-    .fixed-bottom-player .volume-control-container { flex-basis: 100px; max-width: 120px; }
+    .fixed-bottom-player .volume-control-container { flex-basis: 100px; max-width: 120px; /* Mantener visible en tablet */ }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* Móviles Grandes */
     .main-content-wrapper.visible { padding-bottom: var(--player-fixed-height); }
-    .album-cover-container { width: 75%; max-width: 180px; }
+    .main-page-header { height: auto; padding-top: 8px; padding-bottom: 8px; } /* Ajustar altura si el contenido interno se apila */
+    .header-content { flex-direction: column; align-items: center; gap: 2px; }
+    .band-name-header, .album-title-header, .album-year-header { text-align: center; width: 100%; line-height: 1.3; padding: 0; }
+    .band-name-header { font-size: 0.9rem; }
+    .album-title-header { font-size: 0.75rem; margin: 0;}
+    .album-year-header { font-size: 0.7rem; }
+
+
+    .album-cover-container { width: 50%; max-width: 180px; }
     .album-title-display h3 { font-size: 1.2rem; }
     .album-info-editable { max-width: 90%; font-size: 0.75rem; }
     .download-album-btn { font-size: 0.8rem; }
 
-    .fixed-bottom-player { height: var(--player-fixed-height); gap: 8px; padding: 5px 8px; }
-    .fixed-bottom-player #player-current-track-title { font-size: 0.7rem; }
+    .fixed-bottom-player { height: var(--player-fixed-height); gap: 5px; padding: 5px 8px; justify-content: space-between;} /* space-between para distribuir los grupos */
+    .fixed-bottom-player .player-info-progress {
+        flex-grow: 1; /* Que tome espacio */
+        flex-basis: auto; /* Resetear basis */
+        min-width: 60px; /* Mínimo para que se vea algo */
+        margin-right: 5px; /* Espacio antes de botones */
+    }
+    .fixed-bottom-player #player-current-track-title { font-size: 1rem; }
+    .fixed-bottom-player .player-buttons { /* Ya tiene flex-shrink: 0 */ margin-left: 0; /* Quitar margen si se usa space-between en padre */ }
     .fixed-bottom-player .player-btn { font-size: 1.1rem; width: 34px; height: 34px; }
-    .fixed-bottom-player .player-btn.play-btn { font-size: 1.3rem; width: 40px; height: 40px; }
-    .fixed-bottom-player .volume-control-container { display: none; }
+    .fixed-bottom-player .player-btn.play-btn { font-size: 1.5rem; width: 40px; height: 40px; }
+    .fixed-bottom-player .volume-control-container { display: none; } /* Ocultar volumen para más espacio */
 
     .tracklist-panel.booklet-style { padding: 18px 10px; }
-    /* Dentro de @media (max-width: 768px) */
-.booklet-style .tracklist-header {
-    display: flex; /* Asegurar que es flex */
-    flex-direction: row; /* <<<--- CAMBIO: Elementos en fila */
-    justify-content: space-between; /* <<<--- CAMBIO: Título a la izq, botón a la der */
-    align-items: center; /* Centrar verticalmente en la fila */
-    gap: 10px; /* Espacio entre título y botón si están muy cerca */
-    padding-bottom: 10px; /* Mantener el padding si lo tenías */
-    margin-bottom: 15px;  /* Mantener el margen si lo tenías */
-     padding-right: 25px;
-    border-bottom: 1px solid rgba(var(--color-accent-rgb), 0.4); /* Mantener borde */
-}
-
-.booklet-style .tracklist-header h2 {
-    font-size: 1.3rem; /* O el tamaño que prefieras para móvil */
-    text-align: left; /* <<<--- CAMBIO: Alinear título a la izquierda */
-    padding-left: 20px;
-    margin: 3; /* Quitar márgenes extra si los tuviera */
-    flex-grow: 1; /* Permitir que el título ocupe espacio si es necesario */
-    /* Opcional: para truncar texto si es muy largo y no cabe */
-    /* white-space: nowrap; */
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
-}
-
-.theme-toggle-btn {
-    align-self: center; /* Ya estaba, centrado verticalmente está bien */
-    margin-top: 0; /* <<<--- CAMBIO: Quitar margen superior si ya no se apila */
-    width: auto;   /* <<<--- CAMBIO: Que el ancho se ajuste al contenido del botón (icono) */
-    max-width: none; /* Quitar max-width si el botón es solo un icono */
-    padding: 1px; /* Ajustar padding para el icono redondo */
-    font-size: 1.1rem; /* Ajustar tamaño del icono */
-    border-radius: 50%; /* Para que sea redondo */
-    /* Otros estilos que ya tenías para el botón (color, background-color en hover, etc.) */
-    background-color: transparent;
-    border: 1px solid var(--color-text-secondary);
-    color: var(--color-text-secondary);
-    /* width: 32px; height: 32px; como lo tenías en la base */
-}
-.theme-toggle-btn:hover {
-    color: var(--color-highlight);
-    background-color: rgba(var(--color-accent-rgb), 0.15);
-    transform: scale(1.05);
-}
+    .booklet-style .tracklist-header { flex-direction: row ; gap: 10px; align-items: center; }
+    .booklet-style .tracklist-header h2 { font-size: 1.3rem; text-align: center;}
+    .theme-toggle-btn { align-self: center; margin-top: 5px; width: auto; max-width: 150px;}
+    .booklet-style .track-info .track-name { font-size: 0.85rem; }
+    .booklet-style .play-track-btn { font-size: 1rem; width: 30px; height: 30px; margin-right: 8px; }
     .booklet-style .track-item.open .track-details { padding-left: 35px; }
     .booklet-style .track-details pre { font-size: 0.75rem; }
     .gallery-item { flex-basis: calc(33.33% - 10px); max-width: 120px; }
 }
 
-@media (max-width: 480px) {
-    
+@media (max-width: 480px) { /* Móviles Pequeños */
     .main-content-wrapper.visible { padding-top: var(--header-height-mobile); padding-bottom: var(--player-fixed-height); }
-    .main-page-header { height: var(--header-height-mobile); }
-    .main-page-header h1 { font-size: 0.95rem; }
-    .header-content .album-title-header, .header-content .album-year-header { display: none; } /* Ocultar en móvil muy pequeño */
-    .header-content .band-name-header { text-align: center; flex-grow: 0;} /* Centrar nombre de banda */
+    .main-page-header { height: auto; }
+    .main-page-header h1 { font-size: 0.9rem; } /* Si solo es h1 */
+    .header-content .band-name-header { font-size: 0.8rem; }
+    .header-content .album-title-header, .header-content .album-year-header { display: none; }
 
-
-    .album-cover-container { width: 75%; max-width: 220px; }
+    .album-cover-container { width: 55%; max-width: 140px; }
     .album-title-display h3 { font-size: 1rem; }
     .album-info-editable { font-size: 0.7rem; }
-    .download-album-btn { font-size: 0.65rem; }
+    .download-album-btn { font-size: 0.75rem; }
 
     .fixed-bottom-player {
-        height: var(--player-fixed-height);
-        padding: 4px 6px;
+        height: var(--player-fixed-height); /* O --player-fixed-height-small-mobile */
+        padding: 4px 5px;
         gap: 3px;
     }
-    .fixed-bottom-player .player-info-progress { margin-right: 3px; min-width: 60px; }
-    .fixed-bottom-player #player-current-track-title { font-size: 0.65rem; }
-    .fixed-bottom-player .progress-container { height: 3px; }
-    .fixed-bottom-player .player-buttons { gap: 1px; }
-    .fixed-bottom-player .player-btn { font-size: 0.9rem; width: 30px; height: 30px; }
-    .fixed-bottom-player .player-btn.play-btn { font-size: 1.1rem; width: 34px; height: 34px; }
+    .fixed-bottom-player .player-info-progress { margin-right: 3px; min-width: 50px; flex-basis: 50%; /* Darle más espacio base */}
+    .fixed-bottom-player #player-current-track-title { font-size: 1rem; }
+    .fixed-bottom-player .progress-container { height: 2.5px; }
+    .fixed-bottom-player .player-buttons { gap: 0px; }
+    .fixed-bottom-player .player-btn { font-size: 1rem; width: 28px; height: 28px; }
+    .fixed-bottom-player .player-btn.play-btn { font-size: 1rem; width: 32px; height: 32px; }
     .fixed-bottom-player .volume-control-container { display: none; }
 
     .tracklist-panel.booklet-style { padding: 12px 5px; }
     .booklet-style .tracklist-header h2 { font-size: 1.1rem; }
-    
     .theme-toggle-btn { font-size: 0.8rem; padding: 4px 6px; margin-top: 5px; width: auto; }
     .booklet-style .track-info .track-name { font-size: 0.75rem; }
     .booklet-style .track-details pre { font-size: 0.68rem; }
