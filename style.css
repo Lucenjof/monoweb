@@ -34,7 +34,7 @@
     --color-text-secondary-rgb: 179,179,179;
     --video-opacity: 0.15;
     --booklet-bg-original: transparent; /* Fondo por defecto del booklet transparente */
-    --booklet-bg-celeste: #0a141a;
+    --booklet-bg-celeste: #130c0c;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
