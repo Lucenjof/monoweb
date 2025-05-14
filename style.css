@@ -127,7 +127,7 @@ body {
 
 /* ÚNICO REPRODUCTOR FIJO INFERIOR */
 .fixed-bottom-player {
-    display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
+    display: flex; position: fixed; bottom: 0; left: 0; width: 95%;
     background-color: rgba(12,12,12,0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     padding: 6px 10px; box-shadow: 0 -1px 12px rgba(0,0,0,0.75);
     z-index: 1000; align-items: center; gap: 10px; height: var(--player-fixed-height);
@@ -163,102 +163,280 @@ body {
 /* ----------------------------- */
 /* -- RESPONSIVIDAD -- */
 /* ----------------------------- */
-@media (max-width: 1024px) { /* Tablets */
-    .main-content-wrapper.visible { padding-top: var(--header-height-tablet); }
-    .main-page-header { height: var(--header-height-tablet); }
-    .main-page-header h1 { font-size: 1.15rem; }
-    .main-container { flex-direction: column; }
+@media (max-width: 1024px) { /* Tablets y pantallas medianas */
+    .main-content-wrapper.visible {
+        padding-top: var(--header-height-tablet);
+        /* El padding-bottom para el reproductor fijo ya está en .main-content-wrapper globalmente */
+    }
+    .main-page-header {
+        height: var(--header-height-tablet);
+    }
+    .main-page-header h1 {
+        font-size: 1.15rem;
+    }
+    .main-container {
+        flex-direction: column; /* Apilar columnas */
+    }
     .album-panel {
-    flex: 0 0 360px; /* O el valor que tengas */
-    /* background-color: var(--color-panel-bg); */ /* COMENTA O ELIMINA ESTA LÍNEA */
-    background-color: transparent; /* AÑADE ESTA LÍNEA */
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 10; /* Asegúrate de que el contenido del panel esté sobre el video de fondo general */
-    min-height: calc(100vh - var(--header-height) - var(--player-fixed-height));
-    justify-content: flex-start;
-    padding-top: 30px;
-    border-right: 1px solid #e40b0b; /* Este borde podría verse flotando, considera si lo quieres */
-}
-    .album-cover-container, .album-title-display, .album-info-editable, .album-download-section, .band-photo-section-aside { max-width: 320px; margin-left: auto; margin-right: auto; }
-    .band-photo-section-aside { margin-top: 20px; }
-    .tracklist-panel.booklet-style {
-    flex-grow: 1;
-    padding: 25px 35px;
-    overflow-y: auto;
-    /* background-color: var(--booklet-bg-original); */ /* COMENTA O ELIMINA ESTA LÍNEA */
-    background-color: transparent; /* AÑADE ESTA LÍNEA */
-    color: #d1c7b8; /* El color del texto podría necesitar ajuste para contraste sobre el fondo general */
-    font-family: var(--font-booklet-text);
-    border-left: 1px solid #0a0a0a; /* Este borde también podría flotar */
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-border) var(--color-background);
-    transition: background-color 0.5s ease-in-out;
-    position: relative; /* Mantener si usas ::before para overlays */
-    z-index: 10; /* Asegúrate de que el contenido del panel esté sobre el video de fondo general */
-}
+        flex-basis: auto; /* Permitir que crezca/encoja según contenido */
+        width: 100%;
+        min-height: auto; /* Ya no necesita min-height calculado vs header en modo apilado */
+        padding: 20px; /* Padding general más razonable */
+        border-right: none; /* Quitar borde derecho al apilar */
+        border-bottom: 1px solid #0a0a0a; /* Borde inferior para separar del tracklist */
+        /* Los demás estilos como align-items: center, etc., se mantienen */
+    }
+    .album-cover-container,
+    .album-title-display,
+    .album-info-editable,
+    .album-download-section,
+    .band-photo-section-aside {
+        max-width: 320px; /* Mantener un ancho máximo para estos elementos */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .band-photo-section-aside {
+        margin-top: 20px; /* Espacio si la foto está al final */
+    }
 
-/* Si tienes la clase .alt-bg para el fondo celeste y quieres que siga funcionando: */
-.tracklist-panel.booklet-style.alt-bg {
-    background-color: var(--booklet-bg-celeste); /* Esto sobreescribirá el 'transparent' */
-}
-    .fixed-bottom-player .volume-control-container { flex-basis: 100px; max-width: 120px; }
+    .tracklist-panel.booklet-style {
+        padding: 20px; /* Padding general más razonable */
+        border-left: none; /* Quitar borde izquierdo al apilar */
+        /* El fondo transparente o celeste se hereda o se aplica con .alt-bg */
+    }
+    /* No es necesario background-color: transparent aquí si ya está en la regla base de .tracklist-panel.booklet-style */
+
+    .fixed-bottom-player .volume-control-container {
+        flex-basis: 100px; /* Ajustar ancho del control de volumen */
+        max-width: 120px;
+    }
 }
 
 @media (max-width: 768px) { /* Móviles Grandes */
-    .main-content-wrapper.visible { padding-bottom: var(--player-fixed-height); }
-    .album-cover-container { width: 50%; max-width: 180px; }
-    .album-title-display h3 { font-size: 1.2rem; }
-    .album-info-editable { max-width: 90%; font-size: 0.75rem; }
-    .download-album-btn { font-size: 0.8rem; }
-    .band-photo-section-aside img { max-width: 60%; }
+    .main-content-wrapper.visible {
+        /* padding-top ya definido por la media query anterior si --header-height-tablet es el mismo */
+        padding-bottom: var(--player-fixed-height); /* Espacio para reproductor fijo */
+    }
+    .main-page-header {
+        /* Podría necesitar una altura específica si --header-height-tablet no es --header-height-mobile */
+    }
 
-    .fixed-bottom-player { height: var(--player-fixed-height); gap: 8px; padding: 5px 8px; }
-    .fixed-bottom-player #player-current-track-title { font-size: 0.7rem; }
-    .fixed-bottom-player .player-btn { font-size: 1.1rem; width: 34px; height: 34px; }
-    .fixed-bottom-player .player-btn.play-btn { font-size: 1.3rem; width: 40px; height: 40px; }
-    .fixed-bottom-player .volume-control-container { display: none; } /* Ocultar volumen */
+    .album-cover-container {
+        width: 50%;
+        max-width: 180px;
+    }
+    .album-title-display h3 {
+        font-size: 1.2rem;
+    }
+    .album-info-editable {
+        max-width: 90%;
+        font-size: 0.75rem;
+    }
+    .download-album-btn {
+        font-size: 0.8rem;
+    }
+    .band-photo-section-aside img { /* Si la vuelves a usar en el panel izquierdo */
+        max-width: 60%;
+    }
 
-    .tracklist-panel.booklet-style { padding: 18px 10px; }
-    .booklet-style .tracklist-header { flex-direction: column; gap: 10px; align-items: stretch; }
-    .booklet-style .tracklist-header h2 { font-size: 1.3rem; text-align: center;}
-    .theme-toggle-btn { align-self: center; margin-top: 5px; width: 60%; max-width: 150px;}
-    .booklet-style .track-info .track-name { font-size: 0.85rem; }
-    .booklet-style .play-track-btn { font-size: 1rem; width: 30px; height: 30px; margin-right: 8px; }
-    .booklet-style .track-item.open .track-details { padding-left: 35px; }
-    .booklet-style .track-details pre { font-size: 0.75rem; }
-    .gallery-item { flex-basis: calc(33.33% - 10px); max-width: 120px; }
+    /* Estilos para el reproductor fijo en móviles */
+    .fixed-bottom-player {
+        height: var(--player-fixed-height);
+        gap: 8px;
+        padding: 5px 8px;
+    }
+    .fixed-bottom-player #player-current-track-title {
+        font-size: 0.7rem;
+    }
+    .fixed-bottom-player .player-btn {
+        font-size: 1.1rem;
+        width: 34px;
+        height: 34px;
+    }
+    .fixed-bottom-player .player-btn.play-btn {
+        font-size: 1.3rem;
+        width: 40px;
+        height: 40px;
+    }
+    .fixed-bottom-player .volume-control-container {
+        display: none; /* Ocultar control de volumen para más espacio */
+    }
+
+    /* Estilos para el booklet en móviles */
+    .tracklist-panel.booklet-style {
+        padding: 18px 10px;
+    }
+    .booklet-style .tracklist-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch; /* Para que el botón de tema pueda ocupar ancho */
+    }
+    .booklet-style .tracklist-header h2 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+   .theme-toggle-btn {
+    background-color: transparent; /* SIN FONDO */
+    border: none; /* SIN BORDE, o un borde muy sutil si prefieres */
+    /* border: 1px solid var(--color-border); */ /* Opcional: borde sutil */
+    color: var(--color-text-secondary); /* Color del icono/texto, igual que otros iconos de control */
+    padding: 6px; /* Padding para el área de click, ajusta según el tamaño del icono */
+    font-size: 1.1rem;  /* Tamaño del icono de paleta 🎨 (ajusta para que se vea bien) */
+                        /* Si usas otro símbolo o SVG, ajusta esto */
+    border-radius: 50%; /* Hacerlo redondo como los otros botones de control */
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+    width: 32px; /* Ancho y alto para hacerlo consistentemente redondo */
+    height: 32px;
+    display: inline-flex; /* Para centrar el icono */
+    justify-content: center;
+    align-items: center;
+    line-height: 1; /* Mejorar centrado vertical del icono */
+}
+
+.theme-toggle-btn:hover {
+    color: var(--color-highlight);
+    background-color: rgba(var(--color-accent-rgb), 0.15); /* Fondo muy sutil en hover */
+    transform: scale(1.05);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Ajuste de posición dentro del .tracklist-header si es necesario */
+.booklet-style .tracklist-header {
+    display: flex;
+    justify-content: space-between; /* Mantiene el título a la izq y el botón a la der */
+    align-items: center;
+    /* ... otros estilos del header del booklet ... */
+}
+
+/* Ajustes específicos para cuando el header del booklet se apila en móvil */
+@media (max-width: 768px) {
+    .booklet-style .tracklist-header {
+        flex-direction: column;
+        gap: 10px; /* Espacio entre título y botón cuando se apilan */
+        align-items: center; /* Centrar ambos cuando están apilados */
+    }
+    .theme-toggle-btn {
+        align-self: center; /* Asegurar centrado */
+        margin-top: 0; /* Quitar margen si se había puesto antes para posicionarlo */
+        /* width: auto; */ /* Permitir que se ajuste a su padding si no es redondo */
+        /* max-width: none; */
+        padding: 5px 10px; /* Podría ser rectangular en móvil si prefieres */
+        border-radius: 4px; /* O mantener 50% si quieres que siga redondo */
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 480px) {
+    .theme-toggle-btn {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+        width: auto; /* Para que se ajuste al texto/icono */
+        /* width: 60%; */ /* O si quieres que ocupe un % del ancho */
+        /* max-width: 120px; */
+    }
+}
+    .booklet-style .track-info .track-name { /* El clickable .track-info contiene .track-name */
+        font-size: 0.85rem;
+    }
+    .booklet-style .play-track-btn {
+        font-size: 1rem;
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+    }
+    .booklet-style .track-item.open .track-details {
+        padding-left: 35px; /* Ajustar indentación de letras */
+    }
+    .booklet-style .track-details pre {
+        font-size: 0.75rem;
+    }
+    .gallery-item {
+        flex-basis: calc(33.33% - 10px); /* 3 por fila */
+        max-width: 120px;
+    }
 }
 
 @media (max-width: 480px) { /* Móviles Pequeños */
-    .main-content-wrapper.visible { padding-top: var(--header-height-mobile); padding-bottom: var(--player-fixed-height); }
-    .main-page-header { height: var(--header-height-mobile); }
-    .main-page-header h1 { font-size: 0.95rem; }
+    .main-content-wrapper.visible {
+        padding-top: var(--header-height-mobile);
+        padding-bottom: var(--player-fixed-height); /* O --player-height-small-mobile si lo defines diferente */
+    }
+    .main-page-header {
+        height: var(--header-height-mobile);
+    }
+    .main-page-header h1 {
+        font-size: 0.95rem;
+    }
 
-    .album-cover-container { width: 55%; max-width: 150px; }
-    .album-title-display h3 { font-size: 1rem; }
-    .album-info-editable { font-size: 0.7rem; }
-    .download-album-btn { font-size: 0.75rem; }
+    .album-cover-container {
+        width: 55%;
+        max-width: 150px;
+    }
+    .album-title-display h3 {
+        font-size: 1rem;
+    }
+    .album-info-editable {
+        font-size: 0.7rem;
+    }
+    .download-album-btn {
+        font-size: 0.75rem;
+    }
 
     .fixed-bottom-player {
-        height: var(--player-fixed-height);
+        height: var(--player-fixed-height); /* O --player-height-small-mobile */
         padding: 4px 6px;
         gap: 3px;
     }
-    .fixed-bottom-player .player-info-progress { margin-right: 3px; min-width: 60px; /* Asegurar que no colapse */}
-    .fixed-bottom-player #player-current-track-title { font-size: 0.65rem; }
-    .fixed-bottom-player .progress-container { height: 3px; }
-    .fixed-bottom-player .player-buttons { gap: 1px; }
-    .fixed-bottom-player .player-btn { font-size: 0.9rem; width: 30px; height: 30px; }
-    .fixed-bottom-player .player-btn.play-btn { font-size: 1.1rem; width: 34px; height: 34px; }
-    .fixed-bottom-player .volume-control-container { display: none; } /* Oculto */
+    .fixed-bottom-player .player-info-progress {
+        margin-right: 3px;
+        min-width: 60px; /* Asegurar que no colapse */
+    }
+    .fixed-bottom-player #player-current-track-title {
+        font-size: 0.65rem;
+    }
+    .fixed-bottom-player .progress-container {
+        height: 3px;
+    }
+    .fixed-bottom-player .player-buttons {
+        gap: 1px;
+    }
+    .fixed-bottom-player .player-btn {
+        font-size: 0.9rem;
+        width: 30px;
+        height: 30px;
+    }
+    .fixed-bottom-player .player-btn.play-btn {
+        font-size: 1.1rem;
+        width: 34px;
+        height: 34px;
+    }
+    .fixed-bottom-player .volume-control-container {
+        display: none; /* Oculto */
+    }
 
-    .tracklist-panel.booklet-style { padding: 12px 5px; }
-    .booklet-style .tracklist-header h2 { font-size: 1.1rem; }
-    .theme-toggle-btn { font-size: 0.8rem; padding: 4px 6px; margin-top: 5px; width: 70%;}
-    .booklet-style .track-info .track-name { font-size: 0.75rem; }
-    .booklet-style .track-details pre { font-size: 0.68rem; }
-    .gallery-item { flex-basis: calc(50% - 8px); max-width: 120px;}
+    .tracklist-panel.booklet-style {
+        padding: 12px 5px;
+    }
+    .booklet-style .tracklist-header h2 {
+        font-size: 1.1rem;
+    }
+    .theme-toggle-btn {
+        font-size: 0.8rem;
+        padding: 4px 6px;
+        margin-top: 5px;
+        width: 10%;
+    }
+    .booklet-style .track-info .track-name {
+        font-size: 0.75rem;
+    }
+    .booklet-style .track-details pre {
+        font-size: 0.68rem;
+    }
+    .gallery-item {
+        flex-basis: calc(50% - 8px); /* 2 por fila */
+        max-width: 120px;
+    }
 }
