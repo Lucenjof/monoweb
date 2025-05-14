@@ -281,11 +281,48 @@ body {
     .fixed-bottom-player .volume-control-container { display: none; }
 
     .tracklist-panel.booklet-style { padding: 18px 10px; }
-    .booklet-style .tracklist-header { flex-direction: column; gap: 10px; align-items: stretch; }
-    .booklet-style .tracklist-header h2 { font-size: 1.3rem; text-align: center;}
-    .theme-toggle-btn { align-self: center; margin-top: 5px; width: 60%; max-width: 150px;}
-    .booklet-style .track-info .track-name { font-size: 0.85rem; }
-    .booklet-style .play-track-btn { font-size: 1rem; width: 30px; height: 30px; margin-right: 8px; }
+    /* Dentro de @media (max-width: 768px) */
+.booklet-style .tracklist-header {
+    display: flex; /* Asegurar que es flex */
+    flex-direction: row; /* <<<--- CAMBIO: Elementos en fila */
+    justify-content: space-between; /* <<<--- CAMBIO: Título a la izq, botón a la der */
+    align-items: center; /* Centrar verticalmente en la fila */
+    gap: 10px; /* Espacio entre título y botón si están muy cerca */
+    padding-bottom: 10px; /* Mantener el padding si lo tenías */
+    margin-bottom: 15px;  /* Mantener el margen si lo tenías */
+    border-bottom: 1px solid rgba(var(--color-accent-rgb), 0.4); /* Mantener borde */
+}
+
+.booklet-style .tracklist-header h2 {
+    font-size: 1.3rem; /* O el tamaño que prefieras para móvil */
+    text-align: left; /* <<<--- CAMBIO: Alinear título a la izquierda */
+    margin: 3; /* Quitar márgenes extra si los tuviera */
+    flex-grow: 1; /* Permitir que el título ocupe espacio si es necesario */
+    /* Opcional: para truncar texto si es muy largo y no cabe */
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+}
+
+.theme-toggle-btn {
+    align-self: center; /* Ya estaba, centrado verticalmente está bien */
+    margin-top: 0; /* <<<--- CAMBIO: Quitar margen superior si ya no se apila */
+    width: auto;   /* <<<--- CAMBIO: Que el ancho se ajuste al contenido del botón (icono) */
+    max-width: none; /* Quitar max-width si el botón es solo un icono */
+    padding: 6px; /* Ajustar padding para el icono redondo */
+    font-size: 1.1rem; /* Ajustar tamaño del icono */
+    border-radius: 50%; /* Para que sea redondo */
+    /* Otros estilos que ya tenías para el botón (color, background-color en hover, etc.) */
+    background-color: transparent;
+    border: 1px solid var(--color-text-secondary);
+    color: var(--color-text-secondary);
+    /* width: 32px; height: 32px; como lo tenías en la base */
+}
+.theme-toggle-btn:hover {
+    color: var(--color-highlight);
+    background-color: rgba(var(--color-accent-rgb), 0.15);
+    transform: scale(1.05);
+}
     .booklet-style .track-item.open .track-details { padding-left: 35px; }
     .booklet-style .track-details pre { font-size: 0.75rem; }
     .gallery-item { flex-basis: calc(33.33% - 10px); max-width: 120px; }
