@@ -181,7 +181,7 @@ body {
         flex-basis: auto; /* Permitir que crezca/encoja según contenido */
         width: 100%;
         min-height: auto; /* Ya no necesita min-height calculado vs header en modo apilado */
-        padding: 20px; /* Padding general más razonable */
+        padding: 50px; /* Padding general más razonable */
         border-right: none; /* Quitar borde derecho al apilar */
         border-bottom: 1px solid #0a0a0a; /* Borde inferior para separar del tracklist */
         /* Los demás estilos como align-items: center, etc., se mantienen */
