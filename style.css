@@ -23,10 +23,10 @@
     --font-booklet-text: 'Georgia', 'Times New Roman', Times, serif;
 
     --header-height: 40px; /* Altura unificada para el header fijo estilo "canto de CD" */
-      --header-height-tablet: 50px;
-    --header-height-mobile: 45px;
+  --header-height-tablet: 80px;
+    --header-height-mobile: 70px;
 
-    --player-fixed-height: 65px;
+    --player-fixed-height: 80px;
 
     --color-accent-rgb: 168, 131, 95;
     --color-panel-bg-rgb: 24, 24, 24; /* Para fondos semitransparentes */
