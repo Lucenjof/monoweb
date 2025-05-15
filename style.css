@@ -35,7 +35,7 @@
     --color-text-secondary-rgb: 179,179,179;
     --video-opacity: 0.15;
     --booklet-bg-original: transparent;
-    --booklet-bg-celeste:#010406; /* Celeste/azul acero oscuro y desaturado */
+    --booklet-bg-celeste: #010406; /* Celeste/azul acero oscuro y desaturado */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
